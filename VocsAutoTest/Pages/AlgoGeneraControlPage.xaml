@@ -84,25 +84,25 @@
                         <Label Content="温度(K)" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <Label Content="电压" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <Label Content="实验人员" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <TextBox Grid.Row="0" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox Grid.Row="1" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox Grid.Row="2" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox Grid.Row="3" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox Grid.Row="4" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox Grid.Row="5" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_mach_id" Grid.Row="0" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="txt_room_id" Grid.Row="1" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_in_fine" Grid.Row="2" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_temp" Grid.Row="3" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_vol" Grid.Row="4" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_person" Grid.Row="5" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                         <Label Content="光谱仪ID" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <Label Content="氙灯ID" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <Label Content="输出光纤ID" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <Label Content="压力(Pa)" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <Label Content="光谱平均次数" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <Label Content="Xe峰值位置" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <TextBox Grid.Row="0" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox Grid.Row="1" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox Grid.Row="2" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox Grid.Row="3" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox Grid.Row="4" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox Grid.Row="5" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <Button Content="测量信息导入" Grid.Row="6" Grid.Column="3"  Height="25" Width="80" Style="{StaticResource btnOther}"></Button>
+                        <TextBox x:Name="text_instr_id" Grid.Row="0" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_light_id" Grid.Row="1" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_out_fine" Grid.Row="2" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_press" Grid.Row="3" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_times" Grid.Row="4" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_peak_position" Grid.Row="5" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}">249</TextBox>
+                        <Button Content="测量信息导入" x:Name="button_info_import" Grid.Row="6" Grid.Column="3"  Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_info_import_Click"></Button>
                     </Grid>
                 </TabItem>
             </TabControl>

@@ -3,6 +3,7 @@ using System.IO.Ports;
 using System.Windows;
 using System.Windows.Controls;
 using VocsAutoTest.Log4Net;
+using VocsAutoTestCOMM;
 
 namespace VocsAutoTest
 {
@@ -22,8 +23,10 @@ namespace VocsAutoTest
             if (CheckData())
             {
                 MainWindow main = new MainWindow();
-                main.LogBox.AppendText("北京时间：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                SuperSerialPort.Instance.Close();
                 Log4NetUtil.Info("当前串口信息：串口号:" + portCombo.Text + "，波特率:" + baudCombo.Text + "，校检:" + parityCombo.Text + "，数据位:" + dataCombo.Text + "，停止位:" + stopCombo.Text, main);
+                SuperSerialPort.Instance.SetPortInfo(portCombo.Text, Convert.ToInt32(baudCombo.Text), parityCombo.Text, Convert.ToInt32(dataCombo.Text), Convert.ToInt32(stopCombo.Text));
+                SuperSerialPort.Instance.Open();
                 main.Show();
                 this.Close();
             }

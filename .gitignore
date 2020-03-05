@@ -1,6 +1,2 @@
 /.svn
-*/.vs
-*/bin
-*/obj
-*/Properties
-*/packages
+VocsAutoTest/.vs

@@ -96,6 +96,7 @@
     <Compile Include="Tools\ConstConfig.cs" />
     <Compile Include="Tools\DataConvert.cs" />
     <Compile Include="Tools\FileOperate.cs" />
+    <Compile Include="Tools\ParamInfo.cs" />
     <Compile Include="ViewDelegate.cs" />
     <Page Include="AlgorithmSettingWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -200,6 +201,10 @@
     <ProjectReference Include="..\VocsAutoTestBLL\VocsAutoTestBLL.csproj">
       <Project>{0dce465c-14fc-424a-8b66-de81ae8ed5d3}</Project>
       <Name>VocsAutoTestBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VocsAutoTestCOMM\VocsAutoTestCOMM.csproj">
+      <Project>{ad3a232a-5344-4ba5-a45e-8b8a15e7546f}</Project>
+      <Name>VocsAutoTestCOMM</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

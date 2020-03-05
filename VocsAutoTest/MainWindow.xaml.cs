@@ -7,6 +7,7 @@ using VocsAutoTest.Log4Net;
 using VocsAutoTestBLL.Interface;
 using VocsAutoTestBLL.Impl;
 using System.Windows.Threading;
+using VocsAutoTestCOMM;
 
 namespace VocsAutoTest
 {
@@ -101,7 +102,10 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void ReceievedValues(object sender, PassPortEventArgs e)
         {
+            SuperSerialPort.Instance.Close();
             Log4NetUtil.Info("修改串口信息为：串口号:" + e.portModel.Port + "，波特率:" + e.portModel.Baud + "，校检:" + e.portModel.Parity + "，数据位:" + e.portModel.Data + "，停止位:" + e.portModel.Stop, this);
+            SuperSerialPort.Instance.SetPortInfo(e.portModel.Port, Convert.ToInt32(e.portModel.Baud), e.portModel.Parity, Convert.ToInt32(e.portModel.Data), Convert.ToInt32(e.portModel.Stop));
+            SuperSerialPort.Instance.Open();
         }
         /// <summary>
         /// 关于系统

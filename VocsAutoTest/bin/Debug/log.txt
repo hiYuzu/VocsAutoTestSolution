@@ -1,1 +1,3 @@
-2020-03-05 10:40:40,883[1] INFO  [VocsAutoTest.Log4Net.Log4NetUtil] : 当前串口信息：串口号:COM1，波特率:57600，校检:无校检，数据位:8，停止位:1
+2020-03-05 13:51:26,540[1] INFO  [VocsAutoTest.Log4Net.Log4NetUtil] : 修改串口信息为：串口号:COM1，波特率:57600，校检:无校检，数据位:6，停止位:2
+2020-03-05 13:51:26,551[1] INFO  [VocsAutoTest.Log4Net.Log4NetUtil] : 修改串口信息为：串口号:COM1，波特率:57600，校检:无校检，数据位:6，停止位:2
+2020-03-05 13:51:45,717[1] INFO  [VocsAutoTest.Log4Net.Log4NetUtil] : 修改串口信息为：串口号:COM1，波特率:57600，校检:偶校检，数据位:8，停止位:1

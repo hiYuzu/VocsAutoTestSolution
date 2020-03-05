@@ -755,6 +755,46 @@ namespace VocsAutoTest.Pages
             return returnArray;
         }
 
+        private void Button_info_import_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.InitialDirectory = System.Windows.Forms.Application.StartupPath + "\\ParameterGen\\"; ;//默认的打开路径
+            if (importRoad != null)
+            {
+                op.InitialDirectory = importRoad;
+            }
+            op.RestoreDirectory = true;
+            op.Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* ";
+            if (op.ShowDialog() == true)
+            {
+                importRoad = op.FileName.Substring(0, op.FileName.LastIndexOf('\\'));
+                LoadParameterInfo(op.FileName);
+            }
+        }
+
+        private void LoadParameterInfo(string fileName)
+        {
+            try
+            {
+                ParamInfo paramInfo = new ParamInfo();
+                paramInfo.LoadParameterInfo(fileName);
+                text_mach_id.Text = paramInfo.MachId.Trim();
+                text_instr_id.Text = paramInfo.InstrId.Trim();
+                text_temp.Text = paramInfo.Temp.Trim();
+                text_press.Text = paramInfo.Press.Trim();
+                text_in_fine.Text = paramInfo.InFine.Trim();
+                text_out_fine.Text = paramInfo.OutFine.Trim();
+                txt_room_id.Text = paramInfo.RoomId.Trim();
+                text_light_id.Text = paramInfo.LightId.Trim();
+                text_vol.Text = paramInfo.Vol.Trim();
+                text_times.Text = paramInfo.AvgTimes.Trim();
+                text_person.Text = paramInfo.Person.Trim();
+            }
+            catch (Exception e)
+            {
+                //FpiMessageBox.ShowError(CustomResource.ImpFileErr + e.Message);
+            }
+        }
 
     }
 }
