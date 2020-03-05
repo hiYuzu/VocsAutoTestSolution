@@ -40,7 +40,7 @@ namespace VocsAutoTest.Pages
         private ArrayList listGas4Conc = new ArrayList();
         private ArrayList listTemp = new ArrayList();
         private ArrayList listPress = new ArrayList();
-        private ArrayList listHumidity = new ArrayList();//界面要求去掉湿度
+        //private ArrayList listHumidity = new ArrayList();//界面要求去掉湿度
         private ArrayList listTime = new ArrayList();
         private float[] curConc = null;
         //三条曲线
@@ -48,9 +48,7 @@ namespace VocsAutoTest.Pages
         //文件保存路径
         private string savePath = string.Empty;
         private string saveName = "ConcFiles";
-        //选择文件默认地址
-        private string saveRoad = null;
-        private string importRoad = null;
+        private string importPath = string.Empty;
         public ConcentrationMeasureControlPage()
         {
             InitializeComponent();
@@ -77,16 +75,30 @@ namespace VocsAutoTest.Pages
             {
                 path = ConstConfig.AppPath + @"\ConcFiles";
             }
-            savePath = path;
+            textSelectSaveUrl.Text = savePath = importPath = path;
             if (!Directory.Exists(savePath))
             {
                 Directory.CreateDirectory(savePath);
             }
+        }
+
+        /// <summary>
+        /// 开始浓度测量
+        /// </summary>
+        public void Start_Measure()
+        {
             timer = new Timer(new TimerCallback(TimerDelegate));
             int period = int.Parse(this.textSaveInterval.Text);
-            timer.Change(0, period * 60*1000);
-            //TODO 只是示例，应该放在开始测试那个按钮上
+            timer.Change(0, period * 60 * 1000);
             iSpecMeasure.QuerySpecMeasureCompleted += new QuerySpecMeasureDelegate(GetSpecMeasureData);
+        }
+
+        /// <summary>
+        /// 结束浓度测量
+        /// </summary>
+        public void Stop_Measure() {
+            timer.Dispose();
+            iSpecMeasure.QuerySpecMeasureCompleted -= new QuerySpecMeasureDelegate(GetSpecMeasureData);
         }
 
         private void GetSpecMeasureData(object sender, QuerySpecMeasureEventArgs e) {
@@ -94,6 +106,10 @@ namespace VocsAutoTest.Pages
             {
                 if (e.argSpecMeasureState.ResultsT.Count > 0)
                 {
+                    float[] conData = new float[4] { 1,2,3,4};
+                    float[] pressData = new float[4] { 1, 2, 3, 4 };
+                    float[] tempData = new float[4] { 1, 2, 3, 4 };
+                    UpadateUI(conData, pressData, tempData);
                 }
                 else { 
                 }
@@ -101,8 +117,6 @@ namespace VocsAutoTest.Pages
             else { 
             
             }
-            //有需要的话需要减掉此事件
-            //iSpecMeasure.QuerySpecMeasureCompleted -= new QuerySpecMeasureDelegate(GetSpecMeasureData);
         }
 
         void TimerDelegate(object state)
@@ -122,15 +136,15 @@ namespace VocsAutoTest.Pages
         {
             OpenFileDialog op = new OpenFileDialog();
             op.InitialDirectory = "C:\\";//默认的打开路径
-            if (saveRoad != null) {
-                op.InitialDirectory = saveRoad;
+            if (savePath != null) {
+                op.InitialDirectory = savePath;
             }
             op.RestoreDirectory = true;
             op.Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* ";
             if (op.ShowDialog() == true)
             {
                 textSelectSaveUrl.Text = op.FileName;
-                saveRoad = op.FileName.Substring(0, op.FileName.LastIndexOf('\\'));
+                savePath = op.FileName.Substring(0, op.FileName.LastIndexOf('\\'));
             }
             
         }
@@ -140,15 +154,15 @@ namespace VocsAutoTest.Pages
             try {
                 OpenFileDialog op = new OpenFileDialog();
                 op.InitialDirectory = "C:\\";//默认的打开路径
-                if (importRoad != null)
+                if (importPath != null)
                 {
-                    op.InitialDirectory = importRoad;
+                    op.InitialDirectory = importPath;
                 }
                 op.RestoreDirectory = true;
                 op.Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* ";
                 if (op.ShowDialog() == true)
                 {
-                    importRoad = op.FileName.Substring(0, op.FileName.LastIndexOf('\\'));
+                    importPath = op.FileName.Substring(0, op.FileName.LastIndexOf('\\'));
                     MessageBox.Show(op.FileName, "选择文件", MessageBoxButton.OK, MessageBoxImage.Information);
                     string filenames = op.FileName;
                     int piexNumber = 512;//Global.ConnectInst.Pixels

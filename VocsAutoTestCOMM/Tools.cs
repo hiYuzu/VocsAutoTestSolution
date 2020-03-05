@@ -55,5 +55,23 @@ namespace VocsAutoTestCOMM
             return builder.ToString().ToUpper();
         }
         #endregion
+        /// <summary>
+        /// 直接转化显示
+        /// byte[] ==> string
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static string ByteToHexStr(byte[] bytes)
+        {
+            string returnStr = "";
+            if (bytes != null)
+            {
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    returnStr += bytes[i].ToString("x2") + " ";
+                }
+            }
+            return returnStr;
+        }
     }
 }

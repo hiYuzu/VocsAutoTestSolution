@@ -27,14 +27,14 @@
         </Grid>
         <Grid Grid.Column="0" Grid.Row="1">
             <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="光谱仪测量参数：" FontSize="15" VerticalAlignment="Top"/>
-            <TextBlock HorizontalAlignment="Left" Margin="38,49,0,0" TextWrapping="Wrap" Text="光谱仪平均次数" VerticalAlignment="Top"/>
-            <TextBox x:Name="AvgTimes" HorizontalAlignment="Left" Height="23" Margin="40,69,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80" Style="{DynamicResource textStyle}"/>
-            <TextBlock HorizontalAlignment="Left" Margin="44,97,0,0" TextWrapping="Wrap" Text="氙灯控制电压" VerticalAlignment="Top"/>
-            <TextBox x:Name="ControlVol" HorizontalAlignment="Left" Height="23" Margin="40,117,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80" Style="{DynamicResource textStyle}"/>
-            <TextBlock HorizontalAlignment="Left" Margin="44,145,0,0" TextWrapping="Wrap" Text="氙灯打灯次数" VerticalAlignment="Top"/>
-            <TextBox x:Name="LightTimes" HorizontalAlignment="Left" Height="23" Margin="40,165,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80" Style="{DynamicResource textStyle}"/>
-            <TextBlock HorizontalAlignment="Left" Margin="44,193,0,0" TextWrapping="Wrap" Text="积分时间(ms)" VerticalAlignment="Top"/>
-            <TextBox x:Name="IntegrationTime" HorizontalAlignment="Left" Height="23" Margin="40,213,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80" Style="{DynamicResource textStyle}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="18,49,0,0" TextWrapping="Wrap" Text="光谱仪平均次数(1-100)" VerticalAlignment="Top"/>
+            <TextBox x:Name="AvgTimes" HorizontalAlignment="Left" Height="23" Margin="40,69,0,0" TextWrapping="Wrap" Text="8" VerticalAlignment="Top" Width="80" Style="{DynamicResource textStyle}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="24,97,0,0" TextWrapping="Wrap" Text="氙灯控制电压(3-5V)" VerticalAlignment="Top"/>
+            <TextBox x:Name="ControlVol" HorizontalAlignment="Left" Height="23" Margin="40,117,0,0" TextWrapping="Wrap" Text="4.0" VerticalAlignment="Top" Width="80" Style="{DynamicResource textStyle}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="24,145,0,0" TextWrapping="Wrap" Text="氙灯打灯次数(1-10)" VerticalAlignment="Top"/>
+            <TextBox x:Name="LightTimes" HorizontalAlignment="Left" Height="23" Margin="40,165,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="80" Style="{DynamicResource textStyle}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="24,193,0,0" TextWrapping="Wrap" Text="积分时间(50-9999ms)" VerticalAlignment="Top"/>
+            <TextBox x:Name="IntegrationTime" HorizontalAlignment="Left" Height="23" Margin="40,213,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="80" Style="{DynamicResource textStyle}"/>
             <Button x:Name="ReadBtn" Content="读取" HorizontalAlignment="Left" Height="23" Margin="40,250,0,0" VerticalAlignment="Top" Width="40" Style="{DynamicResource btnOther}" Click="ReadBtn_Click"/>
             <Button x:Name="SetBtn" Content="设置" HorizontalAlignment="Left" Height="23" Margin="80,250,0,0" VerticalAlignment="Top" Width="40" Style="{DynamicResource btnOther}" Click="SetBtn_Click"/>
         </Grid>

@@ -42,8 +42,33 @@ namespace VocsAutoTest.Pages
             else
             {
                 startSave.Content = "开始保存";
-
             }
+        }
+        /// <summary>
+        /// 是否显示标题
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ShowTitle_Checked(object sender, RoutedEventArgs e)
+        {
+            
+        }
+        private void ShowTitle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            
+        }
+        /// <summary>
+        /// 是否显示标签
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ShowTag_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void ShowTag_Unchecked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

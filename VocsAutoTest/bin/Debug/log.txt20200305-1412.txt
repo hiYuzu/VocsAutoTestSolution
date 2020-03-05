@@ -1,0 +1,3 @@
+2020-03-05 14:12:49,768[1] INFO  [VocsAutoTest.Log4Net.Log4NetUtil] : 当前串口信息：串口号:COM1，波特率:57600，校检:无校检，数据位:8，停止位:1
+2020-03-05 14:12:53,549[1] INFO  [VocsAutoTest.Log4Net.Log4NetUtil] : 间隔ms连续测量：平均后的光谱数据
+光谱仪平均次数:，氙灯控制电压:V，氙灯打灯次数:，积分时间:ms

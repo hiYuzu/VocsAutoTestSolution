@@ -20,8 +20,11 @@
         </Grid.RowDefinitions>
         <Grid Grid.Column="0" Grid.Row="0">
             <TextBlock HorizontalAlignment="Left" Margin="20,13,0,0" TextWrapping="Wrap" Text="传感器类型" VerticalAlignment="Top"/>
-            <ComboBox x:Name="sensorType" HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top" Width="120"/>
-            <CheckBox x:Name="showTitle" Content="是否显示标题" HorizontalAlignment="Left" Margin="20,38,0,0" VerticalAlignment="Top" IsChecked="True"/>
+            <ComboBox x:Name="sensorType" HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top" Width="120">
+                <ComboBoxItem Content="COMS" IsSelected="True"/>
+                <ComboBoxItem Content="CCD"/>
+            </ComboBox>
+            <CheckBox x:Name="ShowTitle" Content="是否显示标题" HorizontalAlignment="Left" Margin="20,38,0,0" VerticalAlignment="Top" IsChecked="True" Checked="ShowTitle_Checked" Unchecked="ShowTitle_Unchecked"/>
             <TextBlock HorizontalAlignment="Left" Margin="20,76,0,0" TextWrapping="Wrap" Text="X轴" VerticalAlignment="Top"/>
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="26" Width="100" Margin="16,96,0,0" VerticalAlignment="Top"/>
             <RadioButton x:Name="wavelength" Content="波长" GroupName="xAxis" HorizontalAlignment="Left" Margin="20,102,0,0" VerticalAlignment="Top" IsChecked="True"/>
@@ -31,7 +34,7 @@
             <TextBlock HorizontalAlignment="Left" Margin="0,13,0,0" TextWrapping="Wrap" Text="第一参量" VerticalAlignment="Top"/>
             <TextBox x:Name="firstParam" HorizontalAlignment="Left" Height="18" Margin="53,12,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45" Style="{DynamicResource textStyle}"/>
             <Button Content="设置波长" HorizontalAlignment="Left" Margin="124,8,0,0" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource btnOther}"/>
-            <CheckBox x:Name="showTag" Content="是否显示标签" HorizontalAlignment="Left" Margin="0,42,0,0" VerticalAlignment="Top" IsChecked="True"/>
+            <CheckBox x:Name="ShowTag" Content="是否显示标签" HorizontalAlignment="Left" Margin="0,42,0,0" VerticalAlignment="Top" IsChecked="True" Checked="ShowTag_Checked" Unchecked="ShowTag_Unchecked"/>
             <Border BorderBrush="Gray" BorderThickness="0, 1, 0, 1" HorizontalAlignment="Left" Height="83" Margin="-225,68,0,0" VerticalAlignment="Top" Width="450"/>
             <TextBlock HorizontalAlignment="Left" Margin="0,76,0,0" TextWrapping="Wrap" Text="Y轴" VerticalAlignment="Top"/>
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="26" Width="123" Margin="0,96,0,0" VerticalAlignment="Top"/>

@@ -10,6 +10,10 @@ namespace VocsAutoTest.Pages
     /// </summary>
     public partial class LeftControlPage : Page
     {
+        float voltage;
+        int avgTimes;
+        int lightTimes;
+        int integtationTime;
         public LeftControlPage()
         {
             InitializeComponent();
@@ -53,8 +57,7 @@ namespace VocsAutoTest.Pages
             SuperSerialPort.Instance.Send(command2, true);
             SuperSerialPort.Instance.Send(command3, true);
             SuperSerialPort.Instance.Send(command4, true);
-            //接收
-            //todo..
+            //接收TODO..
         }
 
         /// <summary>
@@ -64,35 +67,55 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void SetBtn_Click(object sender, RoutedEventArgs e)
         {
-            byte[] voltage = BitConverter.GetBytes(Convert.ToSingle(this.ControlVol.Text));
+            if(!CheckData()) {
+                MessageBox.Show("请检查测量参数！");
+                return;
+            }
             Command command1 = new Command
             {
                 Cmn = "20",
                 ExpandCmn = "66",
-                Data = "00 " + voltage + " 00 " + BitConverter.GetBytes(100)
+                Data = "00 " + VocsAutoTestCOMM.Tools.ByteToHexStr(BitConverter.GetBytes(voltage)) + " 00 " + VocsAutoTestCOMM.Tools.ByteToHexStr(BitConverter.GetBytes(100))
             };
+            Console.WriteLine(command1.Data);
             Command command2 = new Command
             {
                 Cmn = "21",
                 ExpandCmn = "66",
-                Data = "00 03 " + BitConverter.GetBytes(Convert.ToSingle(this.AvgTimes.Text))
+                Data = "00 03 " + VocsAutoTestCOMM.Tools.ByteToHexStr(BitConverter.GetBytes(avgTimes))
             };
             Command command3 = new Command
             {
                 Cmn = "21",
                 ExpandCmn = "66",
-                Data = "00 07 " + BitConverter.GetBytes(Convert.ToSingle(this.LightTimes.Text))
+                Data = "00 07 " + VocsAutoTestCOMM.Tools.ByteToHexStr(BitConverter.GetBytes(lightTimes))
             };
             Command command4 = new Command
             {
                 Cmn = "21",
                 ExpandCmn = "66",
-                Data = "00 08 " + BitConverter.GetBytes(Convert.ToSingle(this.IntegrationTime.Text))
+                Data = "00 08 " + VocsAutoTestCOMM.Tools.ByteToHexStr(BitConverter.GetBytes(integtationTime))
             };
             SuperSerialPort.Instance.Send(command1, true);
             SuperSerialPort.Instance.Send(command2, true);
             SuperSerialPort.Instance.Send(command3, true);
             SuperSerialPort.Instance.Send(command4, true);
+        }
+
+        private bool CheckData()
+        {
+            try
+            {
+                voltage = Convert.ToSingle(ControlVol.Text);
+                avgTimes = Convert.ToInt32(AvgTimes.Text);
+                lightTimes = Convert.ToInt32(LightTimes.Text);
+                integtationTime = Convert.ToInt32(IntegrationTime.Text);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

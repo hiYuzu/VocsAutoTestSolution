@@ -33,6 +33,7 @@ namespace VocsAutoTest
             InitializeComponent();
             InitLeftPage();
             InitBottomInfo();
+            InitReadInterval();
             VocsCollectBtn_Click(null, null);
         }
         /// <summary>
@@ -47,7 +48,7 @@ namespace VocsAutoTest
             };
         }
         /// <summary>
-        /// 初始化底层信息
+        /// 初始化底部信息
         /// 版本号/时间
         /// </summary>
         private void InitBottomInfo()
@@ -64,6 +65,20 @@ namespace VocsAutoTest
         private void ShowTimer_Tick(object sender, EventArgs e)
         {
             this.currentTime.Content = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+        }
+        /// <summary>
+        /// 初始化读数间隔
+        /// </summary>
+        private void InitReadInterval()
+        {
+            Command command = new Command
+            {
+                Cmn = "21",
+                ExpandCmn = "55",
+                Data = "00 09"
+            };
+            SuperSerialPort.Instance.Send(command, true);
+            //接收TODO..
         }
 
         /// <summary>
@@ -175,7 +190,12 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void VocsCollectBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(VocsPage == null && VocsControlPage == null)
+            if ("停止测量".Equals(MultiMeasure.Content.ToString()))
+            {
+                MessageBox.Show("请停止测量再切换页面!");
+                return;
+            }
+            if (VocsPage == null && VocsControlPage == null)
             {
                 VocsPage = new VocsMgmtPage();
                 VocsControlPage = new VocsMgmtControlPage();
@@ -196,6 +216,11 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void ConcentrationMeasureBtn_Click(object sender, RoutedEventArgs e)
         {
+            if ("停止测量".Equals(MultiMeasure.Content.ToString()))
+            {
+                MessageBox.Show("请停止测量再切换页面!");
+                return;
+            }
             if (ConcentrationPage == null && ConcentrationControlPage == null)
             {
                 ConcentrationPage = new ConcentrationMeasurePage();
@@ -217,6 +242,11 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void AlgoGeneraBtn_Click(object sender, RoutedEventArgs e)
         {
+            if ("停止测量".Equals(MultiMeasure.Content.ToString()))
+            {
+                MessageBox.Show("请停止测量再切换页面!");
+                return;
+            }
             if (VocsPage == null)
             {
                 VocsPage = new VocsMgmtPage();
@@ -300,13 +330,16 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void MultiMeasure_Click(object sender, RoutedEventArgs e)
         {
-            if(this.ReadInterval.Text.Length > 0)
+            
+            if ("连续测量".Equals(MultiMeasure.Content.ToString()))
             {
+                MultiMeasure.Content = "停止测量";
                 Log4NetUtil.Info("间隔" + this.ReadInterval.Text + "ms连续测量：" + LeftPage.DataType.Text + "\n" + "光谱仪平均次数:" + LeftPage.AvgTimes.Text + "，氙灯控制电压:" + LeftPage.ControlVol.Text + "V，氙灯打灯次数:" + LeftPage.LightTimes.Text + "，积分时间:" + LeftPage.IntegrationTime.Text + "ms", this);
+                //TODO..
             }
             else
             {
-                MessageBox.Show("请输入读数间隔！");
+                MultiMeasure.Content = "连续测量";
             }
         }
     }
