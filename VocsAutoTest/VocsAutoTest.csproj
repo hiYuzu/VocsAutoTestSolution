@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{670BCFB7-4E6E-480E-B893-D22D4F577A84}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>VocsAutoTest</RootNamespace>
+    <AssemblyName>VocsAutoTest</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFVisifire.Charts, Version=5.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\WPFVisifire.Charts.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AlgorithmSettingWindow.xaml.cs">
+      <DependentUpon>AlgorithmSettingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Log4Net\Log4NetUtil.cs" />
+    <Compile Include="Pages\AlgoGeneraControlPage.xaml.cs">
+      <DependentUpon>AlgoGeneraControlPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ConcentrationMeasureControlPage.xaml.cs">
+      <DependentUpon>ConcentrationMeasureControlPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ConcentrationMeasurePage.xaml.cs">
+      <DependentUpon>ConcentrationMeasurePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LeftControlPage.xaml.cs">
+      <DependentUpon>LeftControlPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\VocsMgmtControlPage.xaml.cs">
+      <DependentUpon>VocsMgmtControlPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\VocsMgmtPage.xaml.cs">
+      <DependentUpon>VocsMgmtPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StartWindow.xaml.cs">
+      <DependentUpon>StartWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\ComboxSource.cs" />
+    <Compile Include="Tools\ConstConfig.cs" />
+    <Compile Include="Tools\DataConvert.cs" />
+    <Compile Include="Tools\FileOperate.cs" />
+    <Compile Include="ViewDelegate.cs" />
+    <Page Include="AlgorithmSettingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChartTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ChartTest.xaml.cs">
+      <DependentUpon>ChartTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Pages\AlgoGeneraControlPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ConcentrationMeasureControlPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ConcentrationMeasurePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LeftControlPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\VocsMgmtControlPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\VocsMgmtPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PortSettingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ButtonResource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\ComboxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\TextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StartWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PortSettingWindow.xaml.cs">
+      <DependentUpon>PortSettingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Log4Net\log4net.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VocsAutoTestBLL\VocsAutoTestBLL.csproj">
+      <Project>{0dce465c-14fc-424a-8b66-de81ae8ed5d3}</Project>
+      <Name>VocsAutoTestBLL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Menu\connect.png" />
+    <Resource Include="Images\Menu\connectGray.png" />
+    <Resource Include="Images\Menu\disconnect.png" />
+    <Resource Include="Images\Menu\disconnectGray.png" />
+    <Resource Include="Images\Menu\exit.png" />
+    <Resource Include="Images\Menu\help.png" />
+    <Resource Include="Images\Menu\location.png" />
+    <Resource Include="Images\Menu\logo.png" />
+    <Resource Include="Images\Menu\netout.png" />
+    <Resource Include="Images\Menu\out.png" />
+    <Resource Include="Images\Menu\search.png" />
+    <Resource Include="Images\Menu\search1.png" />
+    <Resource Include="Images\Menu\total.png" />
+    <Resource Include="Images\Menu\total10.png" />
+    <Resource Include="Images\Menu\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\skin\Button\M.png" />
+    <Resource Include="Images\skin\Button\MNI.png" />
+    <Resource Include="Images\skin\Button\x1.png" />
+    <Resource Include="Images\skin\frame.jpg" />
+    <Resource Include="Images\skin\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\layout\accordion_arrows.png" />
+    <Resource Include="Images\layout\layout_arrows.png" />
+    <Resource Include="Images\layout\loading.gif" />
+    <Resource Include="Images\layout\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\skin\Button\MAX.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\skin\Button\Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\skin\ico\noRestore.png" />
+    <Resource Include="Images\skin\ico\Restore.png" />
+    <Resource Include="Images\skin\ico\toolbar_hover.png" />
+    <Resource Include="Images\skin\ico\toolbar_pushed.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

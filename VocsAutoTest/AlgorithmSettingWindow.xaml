@@ -1,0 +1,20 @@
+﻿<Window x:Class="VocsAutoTest.AlgorithmSettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VocsAutoTest"
+        mc:Ignorable="d"
+        Title="浓度算法参数设置" Height="180" Width="250"
+         ResizeMode="NoResize">
+    <Grid>
+        <Label Content="算数平均次数" FontWeight="Bold" HorizontalAlignment="Left" Margin="35,16,0,0" VerticalAlignment="Top" Width="90"/>
+        <TextBox x:Name="countAverageTimes" HorizontalAlignment="Left" Margin="120,16,0,0" VerticalAlignment="Top" Width="80" Height="25" VerticalContentAlignment="Center" Text="1"/>
+        <Label Content="几何平均次数" FontWeight="Bold" HorizontalAlignment="Left" Margin="35,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.494,0.463" Width="90" Height="25"/>
+        <TextBox x:Name="geometryAverageTimes" HorizontalAlignment="Left" Margin="120,46,0,0" VerticalAlignment="Top" Width="80" Height="25" VerticalContentAlignment="Center" Text="1"/>
+        <Label Content="滑动平均次数" FontWeight="Bold" HorizontalAlignment="Left" Margin="35,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.494,0.463" Width="90" Height="25"/>
+        <TextBox x:Name="slideAverageTimes" HorizontalAlignment="Left" Margin="120,76,0,0" VerticalAlignment="Top" Width="80" Height="25" VerticalContentAlignment="Center" Text="1"/>
+        <Button Content="确认" Click="Confirm_Click" HorizontalAlignment="Left" Margin="35,106,0,0" VerticalAlignment="Top" Width="80" Height="25"/>
+        <Button Content="取消" Click="Cancel_Click" HorizontalAlignment="Left" Margin="135,106,0,0" VerticalAlignment="Top" Width="80" Height="25"/>
+    </Grid>
+</Window>

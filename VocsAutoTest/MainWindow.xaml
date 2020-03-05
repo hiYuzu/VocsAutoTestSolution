@@ -1,0 +1,174 @@
+﻿<Window x:Class="VocsAutoTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VocsAutoTest"
+        mc:Ignorable="d"
+        Title="标题"
+        WindowStyle="None" WindowStartupLocation="CenterScreen" WindowState="Maximized" MouseMove="Window_MouseMove"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="MyBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#CFFFFFFF"/>
+            <GradientStop Color="#FF7EBDD8" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
+    <Grid>
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5"  Margin="2,0,2,0" Name="bordertest">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" Opacity="0.8"/>
+            </Border.Effect>
+            <Border.Background>
+                <ImageBrush ImageSource="Images/skin/frame.jpg"/>
+            </Border.Background>
+            <Grid Name="grid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="*" MinWidth="230"/>
+                    <ColumnDefinition Width="450"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25.77"/>
+                    <RowDefinition Height="83.122"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="218"/>
+                    <RowDefinition Height="26"/>
+                    <RowDefinition Height="24.5"/>
+                </Grid.RowDefinitions>
+                <Label Content="窗口标题" HorizontalAlignment="Left" d:LayoutOverrides="Height" Width="171.79" Foreground="#A794E9FF" FontWeight="Bold"/>
+                <TextBlock x:Name="Tt"  Margin="100 0 0  0" d:LayoutOverrides="Height" TextWrapping="Wrap"  VerticalAlignment="Center"
+                           Foreground="#A794E9FF" FontWeight="Bold" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+                </TextBlock>
+                <!--窗口按钮-->
+                <Button Content="关闭" HorizontalAlignment="Right" Margin="0,0,2.625,8" Style="{DynamicResource SysButtonStyle}" Width="44.315" Name="CloseButton" Grid.ColumnSpan="3" Click="CloseButton_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Images/skin/Button/x1.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="最大化" HorizontalAlignment="Right" Margin="0,0,46.94,8" Style="{DynamicResource MaxButtonStyle}" Width="41.5" Name="MaxButton" Click="MaxButton_Click" Grid.Column="2">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Images/skin/Button/MAX.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="normal" HorizontalAlignment="Right" Margin="0,0,46.94,8" Style="{DynamicResource MaxButtonStyle}" Width="41.5" Name="NormalButton" Visibility="Visible" Click="NormalButton_Click" Grid.Column="2">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Images/skin/Button/Normal.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="最小化" HorizontalAlignment="Right" Margin="0,0,88.441,8" Style="{DynamicResource MButtonStyle}" Width="42" Name="MiniButton" Click="MiniButton_Click" Grid.Column="2">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Images/skin/Button/MNI.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+                <!---logo位置-->
+                <Rectangle Margin="0 0 10 0" Stroke="Black" HorizontalAlignment="Right" Width="130" Grid.Row="1" Grid.ColumnSpan="3" StrokeThickness="0" >
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="Images/skin/logo.png" Stretch="Uniform"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <!--头部-->
+                <Grid Name="gridMenu" Grid.ColumnSpan="3"  Grid.Row="1">
+                    <!---Menu按钮-->
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
+                        <Button Content="串口设置" Name="PortBtn" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="PortBtn_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Menu/User.png" Stretch="Uniform"/>
+                            </Button.Background>
+                        </Button>
+                        <Button Content="光谱仪管理" Name="VocsMgmtBtn" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Menu/connect.png" Stretch="Uniform"/>
+                            </Button.Background>
+                        </Button>
+                        <Button Content="光谱采集" Name="VocsCollectBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="VocsCollectBtn_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Menu/disconnect.png" Stretch="Uniform"/>
+                            </Button.Background>
+                        </Button>
+                        <Button Content="浓度测量"  Name="ConcentrationMeasureBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="ConcentrationMeasureBtn_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Menu/search.png" Stretch="Uniform"/>
+                            </Button.Background>
+                        </Button>
+                        <Button Content="算法生成"  Name="AlgoGeneraBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="AlgoGeneraBtn_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Menu/total.png" Stretch="Uniform"/>
+                            </Button.Background>
+                        </Button>
+                        <Button Content="关于系统" Name="AboutSysBtn" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="AboutSysBtn_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Menu/help.png" Stretch="Uniform"/>
+                            </Button.Background>
+                        </Button>
+                        <Button Content="退出系统" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="CloseButton_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Menu/exit.png" Stretch="Uniform"/>
+                            </Button.Background>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                <!--左栏-->
+                <Grid Name="gridLeftColumn" Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Margin="0" Background="White" Opacity="1">
+                    <ContentControl x:Name="LeftControlPage"/>
+                </Grid>
+                <!--中间上部-->
+                <Grid Name="gridCentertopColumn" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource MyBrush}" Margin="0, 0, 0, 1">
+                    <Border Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Margin="5,0,0,0">
+                        <StackPanel Orientation="Horizontal" Height="38" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Text="主要参数设置" FontSize="16" FontWeight="Black" Height="18" Margin="20,0,0,0"/>
+                            <Rectangle Height="10" Margin="70 15 0 0"  Stretch="Fill" Width="10"  VerticalAlignment="Top" Fill="Green"/>
+                            <Label  VerticalContentAlignment="Top" HorizontalContentAlignment="Center" FontStyle="Normal"  Height="23" Width="90" Margin="0,8" Content="读数间隔(ms)"/>
+                            <TextBox x:Name="ReadInterval" Width="80" Margin="0,8,0,7" Style="{DynamicResource textStyle}"/>
+                            <CheckBox x:Name="MTsCheckBox" Content="连续测量次数" Margin="20 13 5 0" VerticalAlignment="Top" Checked="MTsCheckBox_Checked" Unchecked="MTsCheckBox_Unchecked"/>
+                            <TextBox x:Name="MTsTextBox" Width="80" Margin="0,8,0,7" IsEnabled="False" Style="{DynamicResource textStyle}"/>
+                            <Button x:Name="SingleMeasure" Content="单次测量" Click="SingleMeasure_Click" Height="23" Width="60" Margin="50,8,50,7" Style="{StaticResource btnOther}"/>
+                            <Button x:Name="MultiMeasure" Content="连续测量" Click="MultiMeasure_Click" Height="23" Width="60" Margin="0,8,0,7" Style="{StaticResource btnOther}"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <!--中间-->
+                <Grid Name="gridCenterColumn" Grid.Row="3" Grid.Column="1" Background="{StaticResource MyBrush}" Margin="3,0,0,2">
+                    <ContentControl x:Name="ChartPage"/>
+                </Grid>
+                <GridSplitter Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="1" Background="Transparent"></GridSplitter>
+                <!---中间下部-->
+                <Grid Name="gridCenterbottomColumn" Grid.Row="4" Grid.Column="1" Grid.RowSpan="2" Background="{StaticResource MyBrush}" Margin="3,0,0,2">
+                    <Button x:Name="ClearLogBoxBtn" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="999" Width="14" Height="23" Margin="0,0,20,0" Click="ClearLogBoxBtn_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Border Width="30" Height="10" ClipToBounds="True">
+                                    <Image Source="Images/Menu/netout.png" Width="24" Height="24" Margin="0,-13,0,0"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button x:Name="HideLogBoxBtn" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="999" Width="14" Height="23" Click="HideLogBoxBtn_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Border Width="30" Height="10" ClipToBounds="True">
+                                    <Image x:Name="LogBoxImg" Source="Images/layout/accordion_arrows.png" Margin="-30 0 0 0" Width="24" Height="24"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <TabControl VerticalAlignment="Top" HorizontalAlignment="Left"  Name="tabNeteleInfo" Grid.Row="0" Grid.Column="0" Width="{Binding ElementName=gridCenterColumn,Path=ActualWidth}" BorderThickness="1" Height="220" >
+                        <TabItem Header="日志信息" Background="#cfdce7">
+                            <RichTextBox x:Name="LogBox" IsReadOnly="True"/>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+                <!--右侧-->
+                <Grid Name="gridRightColumn" Grid.Row="3" Grid.Column="2" Grid.RowSpan="3" Margin="3,0,0,0" Background="White" Opacity="1">
+                    <ContentControl x:Name="ControlPage"/>
+                </Grid>
+                <!--底部-->
+                <Grid Name="gridBottomColumn" Grid.Column="0" Grid.Row="6"  Grid.ColumnSpan="3">
+                    <Label x:Name="versionNum"  Foreground="#A794E9" FontWeight="Bold" BorderThickness="0" BorderBrush="White" HorizontalAlignment="Left" Width="148" Grid.ColumnSpan="2"/>
+                    <Label x:Name="currentTime" Margin="0 0 5 0" Foreground="#A794E9FF" FontWeight="Bold" BorderThickness="0" BorderBrush="White" HorizontalAlignment="Right" Width="auto" Grid.Column="1"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
