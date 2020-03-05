@@ -1,0 +1,8 @@
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\bin\Debug\VocsAutoTestBLL.dll
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\bin\Debug\VocsAutoTestBLL.pdb
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\bin\Debug\VocsAutoTestCOMM.dll
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\bin\Debug\VocsAutoTestCOMM.pdb
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\obj\Debug\VocsAutoTestBLL.csprojAssemblyReference.cache
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\obj\Debug\VocsAutoTestBLL.csproj.CopyComplete
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\obj\Debug\VocsAutoTestBLL.dll
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\obj\Debug\VocsAutoTestBLL.pdb
