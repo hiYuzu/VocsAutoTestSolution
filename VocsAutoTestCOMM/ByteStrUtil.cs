@@ -3,7 +3,7 @@ using System.Text;
 
 namespace VocsAutoTestCOMM
 {
-    public class Tools
+    public class ByteStrUtil
     {
         #region
         /// <summary>
@@ -56,7 +56,7 @@ namespace VocsAutoTestCOMM
         }
         #endregion
         /// <summary>
-        /// 直接转化显示
+        /// 直接转化显示，效果同方法ByteToKHex，区别是返回字符串第一位为空格
         /// byte[] ==> string
         /// </summary>
         /// <param name="bytes"></param>
@@ -68,7 +68,7 @@ namespace VocsAutoTestCOMM
             {
                 for (int i = 0; i < bytes.Length; i++)
                 {
-                    returnStr += bytes[i].ToString("x2") + " ";
+                    returnStr += " " + bytes[i].ToString("x2");
                 }
             }
             return returnStr;

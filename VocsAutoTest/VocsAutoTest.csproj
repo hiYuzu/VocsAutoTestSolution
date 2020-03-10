@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="Tools\ComboxSource.cs" />
     <Compile Include="Tools\ConstConfig.cs" />
+    <Compile Include="Tools\DataCompute.cs" />
     <Compile Include="Tools\DataConvert.cs" />
     <Compile Include="Tools\FileOperate.cs" />
     <Compile Include="Tools\ParamInfo.cs" />

@@ -8,6 +8,9 @@ using VocsAutoTestBLL.Interface;
 using VocsAutoTestBLL.Impl;
 using System.Windows.Threading;
 using VocsAutoTestCOMM;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Threading;
 
 namespace VocsAutoTest
 {
@@ -16,7 +19,7 @@ namespace VocsAutoTest
     /// </summary>
     public partial class MainWindow : Window
     {
-        //右页面*5
+        //页面*6
         private VocsMgmtPage VocsPage;
         private VocsMgmtControlPage VocsControlPage;
         private ConcentrationMeasurePage ConcentrationPage;
@@ -31,9 +34,9 @@ namespace VocsAutoTest
         public MainWindow()
         {
             InitializeComponent();
-            InitLeftPage();
             InitBottomInfo();
             InitReadInterval();
+            InitLeftPage();
             VocsCollectBtn_Click(null, null);
         }
         /// <summary>
@@ -78,6 +81,7 @@ namespace VocsAutoTest
                 Data = "00 09"
             };
             SuperSerialPort.Instance.Send(command, true);
+            Thread.Sleep(DefaultArgument.INTERVAL_TIME);
             //接收TODO..
         }
 
@@ -198,7 +202,7 @@ namespace VocsAutoTest
             if (VocsPage == null && VocsControlPage == null)
             {
                 VocsPage = new VocsMgmtPage();
-                VocsControlPage = new VocsMgmtControlPage();
+                VocsControlPage = new VocsMgmtControlPage(VocsPage);
             }
             ChartPage.Content = new Frame()
             {
@@ -247,6 +251,7 @@ namespace VocsAutoTest
                 MessageBox.Show("请停止测量再切换页面!");
                 return;
             }
+            //
             if (VocsPage == null)
             {
                 VocsPage = new VocsMgmtPage();

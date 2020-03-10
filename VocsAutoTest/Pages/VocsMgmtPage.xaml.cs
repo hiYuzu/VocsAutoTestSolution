@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using Visifire.Charts;
+using VocsAutoTestBLL.Impl;
+using VocsAutoTestBLL.Interface;
 
 namespace VocsAutoTest.Pages
 {
@@ -17,138 +16,211 @@ namespace VocsAutoTest.Pages
     /// </summary>
     public partial class VocsMgmtPage : Page
     {
-        private List<DateTime> LsTime = new List<DateTime>()
-            {
-               new DateTime(2012,1,1),
-               new DateTime(2012,2,1),
-               new DateTime(2012,3,1),
-               new DateTime(2012,4,1),
-               new DateTime(2012,5,1),
-               new DateTime(2012,6,1),
-               new DateTime(2012,7,1),
-               new DateTime(2012,8,1),
-               new DateTime(2012,9,1),
-               new DateTime(2012,10,1),
-               new DateTime(2012,11,1),
-               new DateTime(2012,12,1),
-            };
-        private List<string> cherry = new List<string>() { "33", "75", "60", "98", "67", "88", "39", "45", "13", "22", "45", "80" };
-        private List<string> pineapple = new List<string>() { "13", "34", "38", "12", "45", "76", "36", "80", "97", "22", "76", "39" };
+        private const string HEAD_SPEC = "SPEC";
+        private string name;
+        private List<int> xList;
+        private List<List<string>> yListCollect;
+        private int lineNum = 0;
+        private Title title = null;
+        public bool IsVoltage { get; set; }
+        public string XAxisTitle { get; set; }
+        public string YAxisTitle { get; set; }
+        public bool TitleEnabled { get; set; }
+        //电压积分转换系数
+        private const double FACTOR_VOL_TO_INTEG = 2.5 / 65536.0;
+
         public VocsMgmtPage()
         {
             InitializeComponent();
             SpectrumChart.Children.Clear();
-            CreateChartSpline("2013年樱桃、菠萝销量", LsTime, cherry, pineapple);
+            InitParam();
+        }
+        private void InitParam()
+        {
+            IsVoltage = true;
+            XAxisTitle = "像素";
+            YAxisTitle = "电压值(V)";
+        }
+        public void ImportHistoricalData(string fileName)
+        {
+            FileInfo file = new FileInfo(fileName);
+            TextReader textReader = file.OpenText();
+            string line;
+            bool startAnalyze = false;
+            List<string[]> vocsCollectData = new List<string[]>();
+            while ((line = textReader.ReadLine()) != null)
+            {
+                if (startAnalyze)
+                {
+                    string[] lineData = ParseLine(line);
+                    vocsCollectData.Add(lineData);
+                }
+                if (line.Trim().Equals(HEAD_SPEC))
+                {
+                    startAnalyze = true;
+                }
+            }
+            ParseVocsCollectData(vocsCollectData);
+        }
+        public void IsShow(int isShow)
+        {
+            if(title != null)
+            {
+                switch (isShow)
+                {
+                    case 0:
+                        title.Enabled = false;
+                        break;
+                    case 1:
+                        title.Enabled = true;
+                        break;
+                    case 2:
+                        Console.WriteLine("隐藏Tag");
+                        break;
+                    case 3:
+                        Console.WriteLine("显示Tag");
+                        break;
+                    default:
+                        break;
+                }
+            }    
+        }
+        private void ParseVocsCollectData(List<string[]> vocsCollectData)
+        {
+            List<int> xList = new List<int>();
+            List<List<string>> yListCollect = new List<List<string>>();
+            if(vocsCollectData.Count > 0)
+            {
+                int lineNum = vocsCollectData[0].Length;
+                //y轴集合
+                for(int i = 0; i < lineNum; i++)
+                {
+                    yListCollect.Add(new List<string>());
+                }
+                //x轴，从1递增;y轴
+                for (int i = 1; i < vocsCollectData.Count; i++)
+                {
+                    xList.Add(i);
+                    for (int j = 0; j < lineNum; j++)
+                    {
+                        yListCollect[j].Add(vocsCollectData[i][j]);
+                    }
+                }
+                name = "光谱曲线";
+                this.xList = xList;
+                this.yListCollect = yListCollect;
+                this.lineNum = lineNum;
+                CreateChartSpline();
+            }           
+        }
+        private string[] ParseLine(string line)
+        {
+            if (line == null)
+                return new string[0];
+            ArrayList list = new ArrayList();
+            line = line.Trim();
+            while (line.Length > 0)
+            {
+                int index = line.IndexOf('\t');
+                if (index > 0)
+                {
+                    list.Add(line.Substring(0, index).Trim());
+                    line = line.Substring(index + 1).Trim();
+                }
+                else
+                {
+                    list.Add(line);
+                    break;
+                }
+            }
+
+            string[] returnArray = new string[list.Count];
+            for (int i = 0; i < list.Count; i++)
+            {
+                returnArray[i] = (string)list[i];
+            }
+            return returnArray;
         }
 
         #region 折线图
-        private void CreateChartSpline(string name, List<DateTime> lsTime, List<string> cherry, List<string> pineapple)
+        public void CreateChartSpline()
         {
+            if (lineNum == 0)
+            {
+                return;
+            }
             //创建一个图标
-            Chart chart = new Chart();
-
-            chart.Margin = new Thickness(5, 5, 5, 5);
-            //是否启用打印和保持图片
-            chart.ToolBarEnabled = false;
-
-            //设置图标的属性
-            chart.ScrollingEnabled = false;//是否启用或禁用滚动
-            chart.View3D = true;//3D效果显示
+            Chart chart = new Chart
+            {
+                Margin = new Thickness(5, 5, 5, 5),
+                ToolBarEnabled = false,
+                //禁用滚动
+                ScrollingEnabled = false,
+                //3D效果显示
+                View3D = true
+            };
 
             //创建一个标题的对象
-            Title title = new Title();
-
-            //设置标题的名称
-            title.Text = name;
-            title.Padding = new Thickness(0, 10, 5, 0);
-
+            title = new Title
+            {
+                Text = name,
+                Padding = new Thickness(0, 10, 5, 0)
+            };
             //向图标添加标题
             chart.Titles.Add(title);
             //设置缩放
             chart.ZoomingEnabled = true;
 
-            //初始化一个新的Axis
-            Axis xaxis = new Axis();
-            //设置Axis的属性
-            //图表的X轴坐标按什么来分类，如时分秒
-            xaxis.IntervalType = IntervalTypes.Months;
-            //图表的X轴坐标间隔如2,3,20等，单位为xAxis.IntervalType设置的时分秒。
-            xaxis.Interval = 1;
-            //设置X轴的时间显示格式为7-10 11：20           
-            xaxis.ValueFormatString = "MM月";
-            //给图标添加Axis            
-            chart.AxesX.Add(xaxis);
+            Axis xAxis = new Axis
+            {
+                AxisMinimum = 0,
+                Title = XAxisTitle,
+                IntervalType = IntervalTypes.Auto,
+                Interval = yListCollect[0].Count / 32
+            };
+            chart.AxesX.Add(xAxis);
 
-            Axis yAxis = new Axis();
-            //设置图标中Y轴的最小值永远为0           
-            yAxis.AxisMinimum = 0;
-            //设置图表中Y轴的后缀          
-            yAxis.Suffix = "斤";
+            Axis yAxis = new Axis
+            {
+                AxisMinimum = 0,
+                Title = YAxisTitle
+            };
             chart.AxesY.Add(yAxis);
 
-
-            // 创建一个新的数据线。               
-            DataSeries dataSeries = new DataSeries();
-            // 设置数据线的格式。               
-            dataSeries.LegendText = "樱桃";
-
-            dataSeries.RenderAs = RenderAs.Spline;//折线图
-
-            dataSeries.XValueType = ChartValueTypes.DateTime;
-            // 设置数据点              
+            // 创建一个新的数据线
+            DataSeries dataSeries;
             DataPoint dataPoint;
-            for (int i = 0; i < lsTime.Count; i++)
+            for (int i = 0; i < lineNum; i++)
             {
-                // 创建一个数据点的实例。                   
-                dataPoint = new DataPoint();
-                // 设置X轴点                    
-                dataPoint.XValue = lsTime[i];
-                //设置Y轴点                   
-                dataPoint.YValue = double.Parse(cherry[i]);
-                dataPoint.MarkerSize = 8;
-                //dataPoint.Tag = tableName.Split('(')[0];
-                //设置数据点颜色                  
-                // dataPoint.Color = new SolidColorBrush(Colors.LightGray);                   
-                dataPoint.MouseLeftButtonDown += new MouseButtonEventHandler(dataPoint_MouseLeftButtonDown);
-                //添加数据点                   
-                dataSeries.DataPoints.Add(dataPoint);
+                dataSeries = new DataSeries
+                {
+                    // 设置数据线的格式为折线图
+                    RenderAs = RenderAs.Spline,
+                    XValueType = ChartValueTypes.Auto
+                };
+                for (int j = 0; j < xList.Count; j++)
+                {   
+                    dataPoint = new DataPoint
+                    {
+                        // 设置X轴点                    
+                        XValue = xList[j],
+                        MarkerSize = 8
+                    };
+                    if (IsVoltage)
+                    {                        
+                        dataPoint.YValue = double.Parse(yListCollect[i][j]) / 1000;
+                    }
+                    else
+                    {
+                        dataPoint.YValue = double.Parse(yListCollect[i][j]) / 1000 / FACTOR_VOL_TO_INTEG;
+                    }
+                    dataPoint.MouseLeftButtonDown += new MouseButtonEventHandler(dataPoint_MouseLeftButtonDown);
+                    //添加数据点                   
+                    dataSeries.DataPoints.Add(dataPoint);
+                }
+                // 添加数据线到数据序列。                
+                chart.Series.Add(dataSeries);
             }
-
-            // 添加数据线到数据序列。                
-            chart.Series.Add(dataSeries);
-
-
-            // 创建一个新的数据线。               
-            DataSeries dataSeriesPineapple = new DataSeries();
-            // 设置数据线的格式。         
-
-            dataSeriesPineapple.LegendText = "菠萝";
-
-            dataSeriesPineapple.RenderAs = RenderAs.Spline;//折线图
-
-            dataSeriesPineapple.XValueType = ChartValueTypes.DateTime;
-            // 设置数据点              
-
-            DataPoint dataPoint2;
-            for (int i = 0; i < lsTime.Count; i++)
-            {
-                // 创建一个数据点的实例。                   
-                dataPoint2 = new DataPoint();
-                // 设置X轴点                    
-                dataPoint2.XValue = lsTime[i];
-                //设置Y轴点                   
-                dataPoint2.YValue = double.Parse(pineapple[i]);
-                dataPoint2.MarkerSize = 8;
-                //dataPoint2.Tag = tableName.Split('(')[0];
-                //设置数据点颜色                  
-                // dataPoint.Color = new SolidColorBrush(Colors.LightGray);                   
-                dataPoint2.MouseLeftButtonDown += new MouseButtonEventHandler(dataPoint_MouseLeftButtonDown);
-                //添加数据点                   
-                dataSeriesPineapple.DataPoints.Add(dataPoint2);
-            }
-            // 添加数据线到数据序列。                
-            chart.Series.Add(dataSeriesPineapple);
-
             //将生产的图表增加到Grid，然后通过Grid添加到上层Grid.           
             Grid gr = new Grid();
             gr.Children.Add(chart);

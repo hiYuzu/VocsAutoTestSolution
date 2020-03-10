@@ -9,7 +9,7 @@
         /// <param name="hexByte">待校验数据</param>
         public static string CRC16(string hexByte)
         {
-            byte[] data = Tools.HexToByte(hexByte);
+            byte[] data = ByteStrUtil.HexToByte(hexByte);
             int len = data.Length;
             byte[] result = new byte[] { 0, 0 };
             if (len > 0)
@@ -29,7 +29,7 @@
 
                 result = new byte[] { lo, hi };
             }
-            return Tools.ByteToHex(result);
+            return ByteStrUtil.ByteToHex(result);
         }
         #endregion
     }

@@ -266,6 +266,8 @@ namespace VocsAutoTest.Pages
         private void Button_gas_input_Click(object sender, RoutedEventArgs e)
         {
             List<string> list = new List<string>();
+            list.Add(Convert.ToString(_obervableCollection.Count+1));
+            list.Add("True");
             if (textbox_gas1_input.IsEnabled)
             {
                 string gas1 = textbox_gas1_input.Text;
@@ -491,16 +493,25 @@ namespace VocsAutoTest.Pages
 
         private void Button_densityCalculate_Click(object sender, RoutedEventArgs e)
         {
-            List<String[]> list = new List<string[]>();
+            List<string[]> list = new List<string[]>();
             Random rd = new Random();
+            int indexCount = _gasCount - 2;
             if (_obervableCollection != null && _obervableCollection.Count>0) {
                 foreach (string[] arrays in _obervableCollection) {
                     if (arrays != null && arrays.Length>0) {
-                        for (int i = _gasCount; i < _gasCount * 2; i++)
+                        string[] arraysNew = new string[indexCount * 2 + 2];
+                        for (int i = 0; i < (indexCount * 2 + 2); i++)
                         {
-                            arrays[i] = rd.Next(100).ToString();
+                            if (i < _gasCount)
+                            {
+                                arraysNew[i] = arrays[i];
+                            }
+                            else {
+                                arraysNew[i] = rd.Next(100).ToString();
+                            }
+                            
                         }
-                        list.Add(arrays);
+                        list.Add(arraysNew);
                     }
                 }
             }
@@ -631,6 +642,7 @@ namespace VocsAutoTest.Pages
 
                 ArrayList itemList = new ArrayList();
 
+                _obervableCollection.Clear();
                 while ((line = textReader.ReadLine()) != null)
                 {
                     line = line.Trim();
@@ -640,14 +652,14 @@ namespace VocsAutoTest.Pages
                     if ((lineData != null) && (lineData.Length > 2))
                     {
                         List<string> list = new List<string>(lineData);
-                        int[] flowData = new int[(lineData.Length - 1) / 2];
-                        for (int i = 0; i < flowData.Length; i++)
-                        {
-                            flowData[i] = System.Int32.Parse(lineData[2 + i]);
-                        }
-                        float[] thicknessData = new float[(lineData.Length - 3) / 2];
-                        for (int i = 0; i < thicknessData.Length; i++)
-                            thicknessData[i] = System.Single.Parse(lineData[thicknessData.Length + 3 + i]);
+                        //int[] flowData = new int[(lineData.Length - 1) / 2];
+                        //for (int i = 0; i < flowData.Length; i++)
+                        //{
+                        //    flowData[i] = System.Int32.Parse(lineData[2 + i]);
+                        //}
+                        //float[] thicknessData = new float[(lineData.Length - 3) / 2];
+                        //for (int i = 0; i < thicknessData.Length; i++)
+                        //    thicknessData[i] = System.Single.Parse(lineData[thicknessData.Length + 3 + i]);
                         //itemList.Add(new ItemNode(lineData[0], lineData[1].Equals("True"),
                         //    new DataNode(flowData, thicknessData, null)));
                         _obervableCollection.Add(list.ToArray());
@@ -796,5 +808,41 @@ namespace VocsAutoTest.Pages
             }
         }
 
+        private void DataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (this.dataGrid.CurrentCell.Item != null)
+            {
+
+                string[] str_array = (string[])dataGrid.CurrentCell.Item;
+                for (int i = 0; i < _obervableCollection.Count; i++)
+                {
+                    for (int j = 0; j < _obervableCollection[i].Length; j++)
+                    {
+                        if (_obervableCollection[i][j].Equals(str_array[0]))
+                        {
+                            if (_obervableCollection[i][j + 1].Equals("True"))
+                            {
+                                _obervableCollection[i][j + 1] = "False";
+                            }
+                            else
+                            {
+                                _obervableCollection[i][j + 1] = "True";
+                            }
+                        }
+                    }
+                }
+
+            }
+            List<string[]> list = new List<string[]>();
+            foreach (string[] arrays in _obervableCollection)
+            {
+                list.Add(arrays);
+            }
+            _obervableCollection.Clear();
+            foreach (string[] arrays in list)
+            {
+                _obervableCollection.Add(arrays);
+            }
+        }
     }
 }

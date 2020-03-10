@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Threading;
 
 namespace VocsAutoTestCOMM
 {
@@ -49,7 +50,7 @@ namespace VocsAutoTestCOMM
                 Command command = FPI.Decoder(buffers);
                 if (command != null)
                 {
-                    //DataReceived?.Invoke(command);
+                    DataForward.Instance.DataForwardMethod(command);
                 }
             }
         }
@@ -129,7 +130,8 @@ namespace VocsAutoTestCOMM
         /// <summary>
         /// 串口接收委托
         /// </summary>
-        public Action<Command> DataReceived { get; set; }
+        public Action<Command> DataReceieved { get; set; }
+        //public event Action<Command> DataReceievedEvent;
         #endregion
 
         #region
@@ -143,11 +145,24 @@ namespace VocsAutoTestCOMM
             if (command != null && Open())
             {
                 byte[] data = FPI.Encoder(command, isForward);
-                Console.WriteLine("发送命令: " + Tools.ByteToKHex(data));
+                Console.WriteLine("发送命令: " + ByteStrUtil.ByteToKHex(data));
                 serialPort.Write(data, 0, data.Length);
                 return true;
             }
             return false;
+        }
+
+        public bool SendAll(List<Command> commands, bool isForward)
+        {
+            foreach(Command command in commands)
+            {
+                if(!Send(command, isForward))
+                {
+                    return false;
+                }
+                Thread.Sleep(DefaultArgument.INTERVAL_TIME);
+            }
+            return true;
         }
         #endregion
 

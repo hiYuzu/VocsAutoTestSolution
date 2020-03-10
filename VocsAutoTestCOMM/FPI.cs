@@ -29,7 +29,7 @@ namespace VocsAutoTestCOMM
             data = Repeat(data);
             encoderData.Append(data);
             encoderData.Append(end);
-            return Tools.HexToByte(encoderData.ToString());
+            return ByteStrUtil.HexToByte(encoderData.ToString());
         }
         #endregion
 
@@ -40,7 +40,7 @@ namespace VocsAutoTestCOMM
         /// <param name="data">帧数据</param>
         public static Command Decoder(byte[] data)
         {
-            string msg = Tools.ByteToKHex(data);
+            string msg = ByteStrUtil.ByteToKHex(data);            
             Console.WriteLine("接收命令: " + msg);
 
             if (data != null && data.Length > 13)

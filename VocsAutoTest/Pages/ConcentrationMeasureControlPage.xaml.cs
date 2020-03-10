@@ -19,6 +19,7 @@ using System.Windows.Shapes;
 using VocsAutoTest.Tools;
 using VocsAutoTestBLL.Impl;
 using VocsAutoTestBLL.Interface;
+using VocsAutoTestBLL.Model;
 
 namespace VocsAutoTest.Pages
 {
@@ -30,7 +31,7 @@ namespace VocsAutoTest.Pages
         private ISpecMeasure iSpecMeasure = SpecMeasureImpl.GetInstance();
         private ConcentrationMeasurePage concentrationPage;
         //声明时间控件
-        private System.Threading.Timer timer;
+        private Timer timer;
         private delegate void UpdateTimer();
         private bool timerFlag = true;
         //气体浓度数据保存列表
@@ -40,6 +41,9 @@ namespace VocsAutoTest.Pages
         private ArrayList listGas4Conc = new ArrayList();
         private ArrayList listTemp = new ArrayList();
         private ArrayList listPress = new ArrayList();
+        DataCompute concDataCompute = new DataCompute();
+        DataCompute pressDataCompute = new DataCompute();
+        DataCompute tempDataCompute = new DataCompute();
         //private ArrayList listHumidity = new ArrayList();//界面要求去掉湿度
         private ArrayList listTime = new ArrayList();
         private float[] curConc = null;
@@ -91,6 +95,8 @@ namespace VocsAutoTest.Pages
             int period = int.Parse(this.textSaveInterval.Text);
             timer.Change(0, period * 60 * 1000);
             iSpecMeasure.QuerySpecMeasureCompleted += new QuerySpecMeasureDelegate(GetSpecMeasureData);
+            SpecMeasureModel specMeasureModel = new SpecMeasureModel();
+            iSpecMeasure.PostSpecMeasureRequest(specMeasureModel);
         }
 
         /// <summary>
@@ -266,7 +272,7 @@ namespace VocsAutoTest.Pages
 
         private void UpadateUI(float[] conData, float[] pressData, float[] tempData)
         {
-            if (conData != null)// && !ConcCompute.GetInstance().compute
+            if (conData != null)
             {
                 curConc = conData;
                 for (int i = 0; i < 4; i++)
@@ -275,7 +281,12 @@ namespace VocsAutoTest.Pages
                     switch (i)
                     {
                         case 0:
-                            text_con_gas1.Text = Convert.ToString(conData[i]);
+                            concDataCompute.AddData(conData[i]);
+                            text_con_gas1_cur.Text = Convert.ToString(conData[i]);
+                            text_con_gas1_avg.Text = Convert.ToString(concDataCompute.GetAvgValue());
+                            text_con_gas1_max.Text = Convert.ToString(concDataCompute.GetMaxValue());
+                            text_con_gas1_cor.Text = Convert.ToString(concDataCompute.GetCorValue());
+                            text_con_gas1_min.Text = Convert.ToString(concDataCompute.GetMinValue());
                             if (checkAutoSave.IsChecked == true)
                             {
                                 this.listTime.Add(DateTime.Now);
@@ -283,21 +294,36 @@ namespace VocsAutoTest.Pages
                             }
                             break;
                         case 1:
-                            text_con_gas2.Text = Convert.ToString(conData[i]);
+                            concDataCompute.AddData(conData[i]);
+                            text_con_gas2_cur.Text = Convert.ToString(conData[i]);
+                            text_con_gas2_avg.Text = Convert.ToString(concDataCompute.GetAvgValue());
+                            text_con_gas2_max.Text = Convert.ToString(concDataCompute.GetMaxValue());
+                            text_con_gas2_cor.Text = Convert.ToString(concDataCompute.GetCorValue());
+                            text_con_gas2_min.Text = Convert.ToString(concDataCompute.GetMinValue());
                             if (checkAutoSave.IsChecked == true)
                             {
                                 this.listGas2Conc.Add(conData[i]);
                             }
                             break;
                         case 2:
-                            text_con_gas3.Text = Convert.ToString(conData[i]);
+                            concDataCompute.AddData(conData[i]);
+                            text_con_gas3_cur.Text = Convert.ToString(conData[i]);
+                            text_con_gas3_avg.Text = Convert.ToString(concDataCompute.GetAvgValue());
+                            text_con_gas3_max.Text = Convert.ToString(concDataCompute.GetMaxValue());
+                            text_con_gas3_cor.Text = Convert.ToString(concDataCompute.GetCorValue());
+                            text_con_gas3_min.Text = Convert.ToString(concDataCompute.GetMinValue());
                             if (checkAutoSave.IsChecked == true)
                             {
                                 this.listGas3Conc.Add(conData[i]);
                             }
                             break;
                         case 3:
-                            text_con_gas4.Text = Convert.ToString(conData[i]);
+                            concDataCompute.AddData(conData[i]);
+                            text_con_gas4_cur.Text = Convert.ToString(conData[i]);
+                            text_con_gas4_avg.Text = Convert.ToString(concDataCompute.GetAvgValue());
+                            text_con_gas4_max.Text = Convert.ToString(concDataCompute.GetMaxValue());
+                            text_con_gas4_cor.Text = Convert.ToString(concDataCompute.GetCorValue());
+                            text_con_gas4_min.Text = Convert.ToString(concDataCompute.GetMinValue());
                             if (checkAutoSave.IsChecked == true)
                             {
                                 this.listGas4Conc.Add(conData[i]);
@@ -307,7 +333,6 @@ namespace VocsAutoTest.Pages
                             break;
                     }
                 }
-                //uC_ZedGraphConc.Refresh();
             }
             bool graphRefresh = false;
             if (tempData != null)
@@ -319,16 +344,32 @@ namespace VocsAutoTest.Pages
                     switch (i)
                     {
                         case 0:
-                            text_temp_gas1.Text = Convert.ToString(tempData[i]);
+                            tempDataCompute.AddData(tempData[i]);
+                            text_temp_gas1_cur.Text = Convert.ToString(tempData[i]);
+                            text_temp_gas1_avg.Text = Convert.ToString(tempDataCompute.GetAvgValue());
+                            text_temp_gas1_max.Text = Convert.ToString(tempDataCompute.GetMaxValue());
+                            text_temp_gas1_min.Text = Convert.ToString(tempDataCompute.GetMinValue());
                             break;
                         case 1:
-                            text_temp_gas2.Text = Convert.ToString(tempData[i]);
+                            tempDataCompute.AddData(tempData[i]);
+                            text_temp_gas2_cur.Text = Convert.ToString(tempData[i]);
+                            text_temp_gas2_avg.Text = Convert.ToString(tempDataCompute.GetAvgValue());
+                            text_temp_gas2_max.Text = Convert.ToString(tempDataCompute.GetMaxValue());
+                            text_temp_gas2_min.Text = Convert.ToString(tempDataCompute.GetMinValue());
                             break;
                         case 2:
-                            text_temp_gas3.Text = Convert.ToString(tempData[i]);
+                            tempDataCompute.AddData(tempData[i]);
+                            text_temp_gas3_cur.Text = Convert.ToString(tempData[i]);
+                            text_temp_gas3_avg.Text = Convert.ToString(tempDataCompute.GetAvgValue());
+                            text_temp_gas3_max.Text = Convert.ToString(tempDataCompute.GetMaxValue());
+                            text_temp_gas3_min.Text = Convert.ToString(tempDataCompute.GetMinValue());
                             break;
                         case 3:
-                            text_temp_gas4.Text = Convert.ToString(tempData[i]);
+                            tempDataCompute.AddData(tempData[i]);
+                            text_temp_gas4_cur.Text = Convert.ToString(tempData[i]);
+                            text_temp_gas4_avg.Text = Convert.ToString(tempDataCompute.GetAvgValue());
+                            text_temp_gas4_max.Text = Convert.ToString(tempDataCompute.GetMaxValue());
+                            text_temp_gas4_min.Text = Convert.ToString(tempDataCompute.GetMinValue());
                             break;
                         default:
                             break;
@@ -338,7 +379,6 @@ namespace VocsAutoTest.Pages
                 {
                     this.listTemp.Add(tempData[0]);
                 }
-                //uC_ZedGraphTemp.Refresh();
             }
 
             if (pressData != null)
@@ -350,16 +390,32 @@ namespace VocsAutoTest.Pages
                     switch (i)
                     {
                         case 0:
-                            text_press_gas1.Text = Convert.ToString(pressData[i]);
+                            pressDataCompute.AddData(tempData[i]);
+                            text_press_gas1_cur.Text = Convert.ToString(pressData[i]);
+                            text_press_gas1_avg.Text = Convert.ToString(pressDataCompute.GetAvgValue());
+                            text_press_gas1_max.Text = Convert.ToString(pressDataCompute.GetMaxValue());
+                            text_press_gas1_min.Text = Convert.ToString(pressDataCompute.GetMinValue());
                             break;
                         case 1:
-                            text_press_gas2.Text = Convert.ToString(pressData[i]);
+                            pressDataCompute.AddData(tempData[i]);
+                            text_press_gas2_cur.Text = Convert.ToString(pressData[i]);
+                            text_press_gas2_avg.Text = Convert.ToString(pressDataCompute.GetAvgValue());
+                            text_press_gas2_max.Text = Convert.ToString(pressDataCompute.GetMaxValue());
+                            text_press_gas2_min.Text = Convert.ToString(pressDataCompute.GetMinValue());
                             break;
                         case 2:
-                            text_press_gas3.Text = Convert.ToString(pressData[i]);
+                            pressDataCompute.AddData(tempData[i]);
+                            text_press_gas3_cur.Text = Convert.ToString(pressData[i]);
+                            text_press_gas3_avg.Text = Convert.ToString(pressDataCompute.GetAvgValue());
+                            text_press_gas3_max.Text = Convert.ToString(pressDataCompute.GetMaxValue());
+                            text_press_gas3_min.Text = Convert.ToString(pressDataCompute.GetMinValue());
                             break;
                         case 3:
-                            text_press_gas4.Text = Convert.ToString(pressData[i]);
+                            pressDataCompute.AddData(tempData[i]);
+                            text_press_gas4_cur.Text = Convert.ToString(pressData[i]);
+                            text_press_gas4_avg.Text = Convert.ToString(pressDataCompute.GetAvgValue());
+                            text_press_gas4_max.Text = Convert.ToString(pressDataCompute.GetMaxValue());
+                            text_press_gas4_min.Text = Convert.ToString(pressDataCompute.GetMinValue());
                             break;
                         default:
                             break;
@@ -369,7 +425,6 @@ namespace VocsAutoTest.Pages
                 {
                     this.listPress.Add(pressData[0]);
                 }
-                //uC_ZedGraphTemp.Refresh();
             }
             //if (graphRefresh)
             //{

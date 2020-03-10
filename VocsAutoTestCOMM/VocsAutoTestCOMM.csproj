@@ -44,10 +44,12 @@
     <Compile Include="BaseMsg.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="CRC.cs" />
+    <Compile Include="DataForward.cs" />
+    <Compile Include="DefaultArgument.cs" />
     <Compile Include="FPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SuperSerialPort.cs" />
-    <Compile Include="Tools.cs" />
+    <Compile Include="ByteStrUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

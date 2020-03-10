@@ -14,7 +14,7 @@
             <GradientStop Color="#FF7EBDD8" Offset="1"/>
         </LinearGradientBrush>
     </Window.Resources>
-    <Grid>
+    <Grid FocusManager.FocusedElement="{Binding ElementName=VocsCollectBtn}">
         <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5"  Margin="2,0,2,0" Name="bordertest">
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" Opacity="0.8"/>
@@ -77,22 +77,22 @@
                                 <ImageBrush ImageSource="Images/Menu/User.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
-                        <Button Content="光谱仪管理" Name="VocsMgmtBtn" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78">
+                        <Button Content="光谱仪管理" x:Name="VocsMgmtBtn" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Menu/connect.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
-                        <Button Content="光谱采集" Name="VocsCollectBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="VocsCollectBtn_Click">
+                        <Button Content="光谱采集" x:Name="VocsCollectBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="VocsCollectBtn_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Menu/disconnect.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
-                        <Button Content="浓度测量"  Name="ConcentrationMeasureBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="ConcentrationMeasureBtn_Click">
+                        <Button Content="浓度测量" x:Name="ConcentrationMeasureBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="ConcentrationMeasureBtn_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Menu/search.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
-                        <Button Content="算法生成"  Name="AlgoGeneraBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="AlgoGeneraBtn_Click">
+                        <Button Content="算法生成" Name="AlgoGeneraBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="AlgoGeneraBtn_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Menu/total.png" Stretch="Uniform"/>
                             </Button.Background>

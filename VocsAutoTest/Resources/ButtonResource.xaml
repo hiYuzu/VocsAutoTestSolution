@@ -10,7 +10,7 @@
 							<RowDefinition Height="61.163"/>
 							<RowDefinition Height="20.837"/>
 						</Grid.RowDefinitions>
-						<TextBlock Margin="0,0,0,5" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Center" d:LayoutOverrides="Width, Height" Grid.Row="1" HorizontalAlignment="Center" Foreground="White"/>
+                        <TextBlock x:Name="ButtonText" Margin="0,0,0,5" TextWrapping="Wrap" Text="{TemplateBinding Content}" VerticalAlignment="Center" d:LayoutOverrides="Width, Height" Grid.Row="1" HorizontalAlignment="Center" Foreground="White"/>
 						<Border x:Name="fg" BorderBrush="Black" BorderThickness="0" Grid.RowSpan="2" CornerRadius="3" Visibility="Hidden">
 							<Border.Background>
                                 <ImageBrush ImageSource="../Images/skin/ico/toolbar_hover.png" Stretch="Uniform"/>
@@ -24,17 +24,17 @@
 						<Rectangle Fill="{TemplateBinding Background}" Grid.RowSpan="1" Stroke="Black" Margin="2,6,2,2" StrokeThickness="0"/>
 					</Grid>
 					<ControlTemplate.Triggers>
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Visibility" TargetName="bg" Value="Visible"/>
-						</Trigger>
-						<Trigger Property="IsDefaulted" Value="True"/>
-						<MultiTrigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Visibility" TargetName="bg" Value="Visible"/>
+                            <!--<Setter TargetName="ButtonText" Property="Foreground" Value="Yellow"/>-->
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="False"/>
+                        <MultiTrigger>
 							<MultiTrigger.Conditions>
 								<Condition Property="IsMouseOver" Value="True"/>
 								<Condition Property="IsFocused" Value="False"/>
 							</MultiTrigger.Conditions>
-							<Setter
-						Property="Visibility" TargetName="fg" Value="Visible"/>
+							<Setter Property="Visibility" TargetName="fg" Value="Visible"/>
 						</MultiTrigger>
 						<Trigger Property="IsPressed" Value="True"/>
 						<Trigger Property="IsEnabled" Value="False"/>
@@ -69,7 +69,7 @@
                         <!--<Trigger Property="IsFocused" Value="True">
                             <Setter Property="Visibility" TargetName="bg" Value="Visible"/>
                         </Trigger>-->
-                        <Trigger Property="IsDefaulted" Value="True"/>
+                        <Trigger Property="IsDefaulted" Value="False"/>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True"/>
