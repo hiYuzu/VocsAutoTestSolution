@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Visifire.Charts;
 using VocsAutoTestBLL.Impl;
 using VocsAutoTestBLL.Interface;
+using VocsAutoTestCOMM;
 
 namespace VocsAutoTest.Pages
 {
@@ -16,18 +17,22 @@ namespace VocsAutoTest.Pages
     /// </summary>
     public partial class VocsMgmtPage : Page
     {
+        private int pixelNumber = 0;
+        private float[] waveLength = null; //像素对应的波长
         private const string HEAD_SPEC = "SPEC";
         private string name;
         private List<int> xList;
         private List<List<string>> yListCollect;
         private int lineNum = 0;
+        private Chart chart;
         private Title title = null;
+        public bool IsPixel { get; set; }
         public bool IsVoltage { get; set; }
         public string XAxisTitle { get; set; }
         public string YAxisTitle { get; set; }
         public bool TitleEnabled { get; set; }
         //电压积分转换系数
-        private const double FACTOR_VOL_TO_INTEG = 2.5 / 65536.0;
+        private double FACTOR_VOL_TO_INTEG = 2.5 / 65536.0;
 
         public VocsMgmtPage()
         {
@@ -37,10 +42,56 @@ namespace VocsAutoTest.Pages
         }
         private void InitParam()
         {
+            IsPixel = true;
             IsVoltage = true;
             XAxisTitle = "像素";
             YAxisTitle = "电压值(V)";
         }
+        /// <summary>
+        /// 设置波长
+        /// </summary>
+        /// <param name="index">传感器类型</param>
+        /// <param name="pixels">象素数</param>
+        /// <param name="wavepara">第一参数</param>
+        public void SetWave(int index, int pixels, float wavepara)
+        {
+            pixelNumber = pixels;
+            if (pixelNumber == 2048)
+            {
+                FACTOR_VOL_TO_INTEG = 2.5 / 65536.0;
+            }
+            else
+            {
+                FACTOR_VOL_TO_INTEG = 4.096 / 65536.0;
+            }
+            waveLength = new float[pixels];
+            for (int i = 0; i < pixels; i++)
+            {
+                switch (index)
+                {
+                    case 0://2048
+                        waveLength[i] = (float)(wavepara + 0.1792 * i - 2.72E-05 * i * i + 2.25E-09 * i * i * i);
+                        break;
+                    case 1://1024
+                        waveLength[i] = (float)(wavepara + 0.28 * i - 2.25E-5 * i * i - 2E-9 * i * i * i);
+
+                        break;
+                    case 2://长512
+                        waveLength[i] = (float)(wavepara + 0.56 * i - 9E-5 * i * i + 1.6E-8 * i * i * i);
+
+                        break;
+                    case 3://短512
+                        waveLength[i] = (float)(wavepara + 0.28 * i - 2.25E-5 * i * i - 2E-9 * i * i * i);
+                        break;
+                    case 4://256
+                        break;
+                }
+            }
+        }
+        /// <summary>
+        /// 导入历史数据
+        /// </summary>
+        /// <param name="fileName"></param>
         public void ImportHistoricalData(string fileName)
         {
             FileInfo file = new FileInfo(fileName);
@@ -62,57 +113,13 @@ namespace VocsAutoTest.Pages
             }
             ParseVocsCollectData(vocsCollectData);
         }
-        public void IsShow(int isShow)
-        {
-            if(title != null)
-            {
-                switch (isShow)
-                {
-                    case 0:
-                        title.Enabled = false;
-                        break;
-                    case 1:
-                        title.Enabled = true;
-                        break;
-                    case 2:
-                        Console.WriteLine("隐藏Tag");
-                        break;
-                    case 3:
-                        Console.WriteLine("显示Tag");
-                        break;
-                    default:
-                        break;
-                }
-            }    
-        }
-        private void ParseVocsCollectData(List<string[]> vocsCollectData)
-        {
-            List<int> xList = new List<int>();
-            List<List<string>> yListCollect = new List<List<string>>();
-            if(vocsCollectData.Count > 0)
-            {
-                int lineNum = vocsCollectData[0].Length;
-                //y轴集合
-                for(int i = 0; i < lineNum; i++)
-                {
-                    yListCollect.Add(new List<string>());
-                }
-                //x轴，从1递增;y轴
-                for (int i = 1; i < vocsCollectData.Count; i++)
-                {
-                    xList.Add(i);
-                    for (int j = 0; j < lineNum; j++)
-                    {
-                        yListCollect[j].Add(vocsCollectData[i][j]);
-                    }
-                }
-                name = "光谱曲线";
-                this.xList = xList;
-                this.yListCollect = yListCollect;
-                this.lineNum = lineNum;
-                CreateChartSpline();
-            }           
-        }
+        /// <summary>
+        /// 将字符串解析为字符数组
+        /// 按'\t'解析：
+        /// "a    b    c" => {"a","b","c"}
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         private string[] ParseLine(string line)
         {
             if (line == null)
@@ -141,34 +148,61 @@ namespace VocsAutoTest.Pages
             }
             return returnArray;
         }
-
-        #region 折线图
+        /// <summary>
+        /// 解析光谱数据
+        /// </summary>
+        /// <param name="vocsCollectData"></param>
+        private void ParseVocsCollectData(List<string[]> vocsCollectData)
+        {
+            List<int> xList = new List<int>();
+            List<List<string>> yListCollect = new List<List<string>>();
+            if(vocsCollectData.Count > 0)
+            {
+                int lineNum = vocsCollectData[0].Length;
+                //y轴集合
+                for(int i = 0; i < lineNum; i++)
+                {
+                    yListCollect.Add(new List<string>());
+                }
+                //x轴，从1递增;y轴
+                for (int i = 1; i < vocsCollectData.Count; i++)
+                {
+                    xList.Add(i);
+                    for (int j = 0; j < lineNum; j++)
+                    {
+                        yListCollect[j].Add(vocsCollectData[i][j]);
+                    }
+                }
+                name = "光谱曲线";
+                this.xList = xList;
+                this.yListCollect = yListCollect;
+                this.lineNum = lineNum;
+                CreateChartSpline();
+            }           
+        }
+        /// <summary>
+        /// 绘制折线图
+        /// </summary>
         public void CreateChartSpline()
         {
+            SpectrumChart.Children.Clear();
             if (lineNum == 0)
             {
                 return;
             }
-            //创建一个图标
-            Chart chart = new Chart
+            chart = new Chart
             {
                 Margin = new Thickness(5, 5, 5, 5),
                 ToolBarEnabled = false,
-                //禁用滚动
                 ScrollingEnabled = false,
-                //3D效果显示
                 View3D = true
             };
-
-            //创建一个标题的对象
             title = new Title
             {
                 Text = name,
                 Padding = new Thickness(0, 10, 5, 0)
             };
-            //向图标添加标题
             chart.Titles.Add(title);
-            //设置缩放
             chart.ZoomingEnabled = true;
 
             Axis xAxis = new Axis
@@ -179,61 +213,135 @@ namespace VocsAutoTest.Pages
                 Interval = yListCollect[0].Count / 32
             };
             chart.AxesX.Add(xAxis);
-
             Axis yAxis = new Axis
             {
                 AxisMinimum = 0,
-                Title = YAxisTitle
+                Title = YAxisTitle,
+                AxisType = AxisTypes.Primary
             };
             chart.AxesY.Add(yAxis);
-
-            // 创建一个新的数据线
-            DataSeries dataSeries;
-            DataPoint dataPoint;
             for (int i = 0; i < lineNum; i++)
-            {
-                dataSeries = new DataSeries
-                {
-                    // 设置数据线的格式为折线图
-                    RenderAs = RenderAs.Spline,
-                    XValueType = ChartValueTypes.Auto
-                };
-                for (int j = 0; j < xList.Count; j++)
-                {   
-                    dataPoint = new DataPoint
-                    {
-                        // 设置X轴点                    
-                        XValue = xList[j],
-                        MarkerSize = 8
-                    };
-                    if (IsVoltage)
-                    {                        
-                        dataPoint.YValue = double.Parse(yListCollect[i][j]) / 1000;
-                    }
-                    else
-                    {
-                        dataPoint.YValue = double.Parse(yListCollect[i][j]) / 1000 / FACTOR_VOL_TO_INTEG;
-                    }
-                    dataPoint.MouseLeftButtonDown += new MouseButtonEventHandler(dataPoint_MouseLeftButtonDown);
-                    //添加数据点                   
-                    dataSeries.DataPoints.Add(dataPoint);
-                }
-                // 添加数据线到数据序列。                
-                chart.Series.Add(dataSeries);
+            {                
+                chart.Series.Add(SetDataSeries(i));
             }
-            //将生产的图表增加到Grid，然后通过Grid添加到上层Grid.           
             Grid gr = new Grid();
             gr.Children.Add(chart);
             SpectrumChart.Children.Add(gr);
         }
-        #endregion
-
-        #region 点击事件
-        //点击事件
-        void dataPoint_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// 设置并返回数据线
+        /// </summary>
+        /// <param name="i">lineNum</param>
+        /// <returns>数据线</returns>
+        private DataSeries SetDataSeries(int i)
         {
-
+            DataSeries dataSeries = new DataSeries
+            {
+                RenderAs = RenderAs.Spline,
+                LegendText = "数据" + i,
+                XValueType = ChartValueTypes.Auto
+            };
+            //像素-电压
+            if (IsPixel && IsVoltage)
+            {
+                for (int j = 0; j < xList.Count; j++)
+                {
+                    DataPoint dataPoint = new DataPoint
+                    {
+                        MarkerSize = 3
+                    };
+                    dataPoint.XValue = xList[j];
+                    dataPoint.YValue = double.Parse(yListCollect[i][j]) / 1000;
+                    dataSeries.DataPoints.Add(dataPoint);
+                }
+            }
+            //像素-积分
+            else if (IsPixel && !IsVoltage)
+            {
+                for (int j = 0; j < xList.Count; j++)
+                {
+                    DataPoint dataPoint = new DataPoint
+                    {
+                        MarkerSize = 3
+                    };
+                    dataPoint.XValue = xList[j];
+                    dataPoint.YValue = double.Parse(yListCollect[i][j]) / 1000 / FACTOR_VOL_TO_INTEG;
+                    dataSeries.DataPoints.Add(dataPoint);
+                }
+            }
+            //波长-电压
+            else if (!IsPixel && IsVoltage)
+            {
+                for (int j = 0; j < xList.Count; j++)
+                {
+                    DataPoint dataPoint = new DataPoint
+                    {
+                        MarkerSize = 3
+                    };
+                    dataPoint.XValue = GetWaveByPixel(xList[j]);
+                    dataPoint.YValue = double.Parse(yListCollect[i][j]) / 1000;
+                    dataSeries.DataPoints.Add(dataPoint);
+                }
+            }
+            //波长-积分
+            else if (!IsPixel && !IsVoltage)
+            {
+                for (int j = 0; j < xList.Count; j++)
+                {
+                    DataPoint dataPoint = new DataPoint
+                    {
+                        MarkerSize = 3
+                    };
+                    dataPoint.XValue = GetWaveByPixel(xList[j]);
+                    dataPoint.YValue = double.Parse(yListCollect[i][j]) / 1000 / FACTOR_VOL_TO_INTEG;
+                    dataSeries.DataPoints.Add(dataPoint);
+                }
+            }
+            return dataSeries;
         }
-        #endregion
+        /// <summary>
+        /// 是否显示图像标题/标签
+        /// </summary>
+        /// <param name="isShow"></param>
+        public void IsShow(int isShow)
+        {
+            if (title != null)
+            {
+                switch (isShow)
+                {
+                    case 0:
+                        title.Enabled = false;
+                        break;
+                    case 1:
+                        title.Enabled = true;
+                        break;
+                    case 2:
+                        Console.WriteLine("隐藏Tag");
+                        break;
+                    case 3:
+                        Console.WriteLine("显示Tag");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        /// <summary>
+        /// 得到像素点对应的波长
+        /// </summary>
+        /// <param name="pixel">像素</param>
+        /// <returns></returns>
+        public float GetWaveByPixel(int pixel)
+        {
+            if (waveLength == null)
+            {
+                MessageBox.Show("x轴数据无法转换为波长！");
+            }
+            if (pixel >= waveLength.Length)
+            {
+                return float.NaN;
+            }
+            return waveLength[pixel];
+        }
     }
 }

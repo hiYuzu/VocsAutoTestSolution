@@ -3,3 +3,6 @@ E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\bin\Debug\VocsAut
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\obj\Debug\VocsAutoTestCOMM.csprojAssemblyReference.cache
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\obj\Debug\VocsAutoTestCOMM.dll
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\obj\Debug\VocsAutoTestCOMM.pdb
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\bin\Debug\log4net.dll
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\bin\Debug\log4net.xml
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\obj\Debug\VocsAutoTestCOMM.csproj.CopyComplete

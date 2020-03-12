@@ -120,7 +120,7 @@
                             <TextBlock Text="主要参数设置" FontSize="16" FontWeight="Black" Height="18" Margin="20,0,0,0"/>
                             <Rectangle Height="10" Margin="70 15 0 0"  Stretch="Fill" Width="10"  VerticalAlignment="Top" Fill="Green"/>
                             <Label  VerticalContentAlignment="Top" HorizontalContentAlignment="Center" FontStyle="Normal"  Height="23" Width="90" Margin="0,8" Content="读数间隔(s)"/>
-                            <TextBox x:Name="ReadInterval" Width="80" Margin="0,8,0,7" Text="1" Style="{DynamicResource textStyle}"/>
+                            <TextBox x:Name="ReadInterval" Width="80" Margin="0,8,0,7" Style="{DynamicResource textStyle}"/>
                             <CheckBox x:Name="MTsCheckBox" Content="连续测量次数" Margin="20 13 5 0" VerticalAlignment="Top" Checked="MTsCheckBox_Checked" Unchecked="MTsCheckBox_Unchecked"/>
                             <TextBox x:Name="MTsTextBox" Width="80" Margin="0,8,0,7" IsEnabled="False" Style="{DynamicResource textStyle}"/>
                             <Button x:Name="SingleMeasure" Content="单次测量" Click="SingleMeasure_Click" Height="23" Width="60" Margin="50,8,50,7" Style="{StaticResource btnOther}"/>

@@ -6,3 +6,5 @@ E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\obj\Debug\VocsAuto
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\obj\Debug\VocsAutoTestBLL.csproj.CopyComplete
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\obj\Debug\VocsAutoTestBLL.dll
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\obj\Debug\VocsAutoTestBLL.pdb
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\bin\Debug\log4net.dll
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestBLL\bin\Debug\log4net.xml

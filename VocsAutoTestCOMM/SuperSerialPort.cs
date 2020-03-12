@@ -41,7 +41,7 @@ namespace VocsAutoTestCOMM
         #endregion
         private void Serialport_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            System.Threading.Thread.Sleep(200);
+            Thread.Sleep(40);
             int length = serialPort.BytesToRead;
             if (length > 0)
             {
@@ -50,7 +50,7 @@ namespace VocsAutoTestCOMM
                 Command command = FPI.Decoder(buffers);
                 if (command != null)
                 {
-                    DataForward.Instance.DataForwardMethod(command);
+                    CacheData.AddDataToQueue(command);
                 }
             }
         }
@@ -131,7 +131,6 @@ namespace VocsAutoTestCOMM
         /// 串口接收委托
         /// </summary>
         public Action<Command> DataReceieved { get; set; }
-        //public event Action<Command> DataReceievedEvent;
         #endregion
 
         #region
