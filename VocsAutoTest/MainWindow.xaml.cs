@@ -18,6 +18,8 @@ namespace VocsAutoTest
     /// </summary>
     public partial class MainWindow : Window
     {
+        //测量结果数据
+        private float[] specData = null;
         //页面*6
         private VocsMgmtPage VocsPage;
         private VocsMgmtControlPage VocsControlPage;
@@ -32,6 +34,8 @@ namespace VocsAutoTest
         private DispatcherTimer showTimer;
         //当前页面标识 1：光谱采集 2：浓度测量 3：算法生成
         private ushort pageFlag;
+        //光谱采集数据包
+        private ushort dataPackage;
         public MainWindow()
         {
             InitializeComponent();
@@ -217,6 +221,8 @@ namespace VocsAutoTest
             {
                 Content = VocsControlPage
             };
+            this.tempTextBox.Visibility = Visibility.Hidden;
+            this.pressTextBox.Visibility = Visibility.Hidden;
         }
         /// <summary>
         /// 浓度测量
@@ -235,6 +241,7 @@ namespace VocsAutoTest
             {
                 ConcentrationPage = new ConcentrationMeasurePage();
                 ConcentrationControlPage = new ConcentrationMeasureControlPage(ConcentrationPage);
+                ConcentrationControlPage.Start_Measure();
             }
             ChartPage.Content = new Frame()
             {
@@ -244,6 +251,8 @@ namespace VocsAutoTest
             {
                 Content = ConcentrationControlPage
             };
+            this.tempTextBox.Visibility = Visibility.Visible;
+            this.pressTextBox.Visibility = Visibility.Visible;
         }
         /// <summary>
         /// 算法生成
@@ -274,6 +283,8 @@ namespace VocsAutoTest
             {
                 Content = AlgoControlPage
             };
+            this.tempTextBox.Visibility = Visibility.Hidden;
+            this.pressTextBox.Visibility = Visibility.Hidden;
         }
         /// <summary>
         /// 隐藏日志信息栏
@@ -339,22 +350,55 @@ namespace VocsAutoTest
                 string cmn = "24";
                 string expandCmn = "55";
                 string data = "00 " + dataType + " 01";
-                SingleVocsMeasure(1,cmn, expandCmn, data);
+                SingleDataMeasure(1,cmn, expandCmn, data);
             } else if (pageFlag == 3) {
+                //算法生成
                 //dataType += dataType;
                 //string cmn = "24";
                 //string expandCmn = "55";
                 //string data = "00 " + dataType + " 01";
-                //SingleVocsMeasure(1, cmn, expandCmn, data);
+                //SingleDataMeasure(1, cmn, expandCmn, data);
             }
             else if (pageFlag == 2)
             {
+                //浓度测量
+                byte[] tempValues;
+                string temp = tempTextBox.Text.Trim();
+                if (string.IsNullOrEmpty(temp))
+                {
+                    MessageBox.Show("请输入温度值！");
+                    tempTextBox.Focus();
+                    return;
+                }
+                else
+                {
+                    tempValues = BitConverter.GetBytes(float.Parse(temp));
+                }
+                byte[] pressValues;
+                string press = pressTextBox.Text.Trim();
+                if (string.IsNullOrEmpty(press))
+                {
+                    MessageBox.Show("请输入压力值！");
+                    pressTextBox.Focus();
+                    return;
+                }
+                else
+                {
+                    pressValues = BitConverter.GetBytes(float.Parse(press));
+                }
                 //浓度测量
                 dataType += dataType;
                 string cmn = "29";
                 string expandCmn = "55";
                 string data = "00";
-                SingleVocsMeasure(2, cmn, expandCmn, data);
+                for (int i =0;i<4;i++) {
+                    data += " "+ Convert.ToString(tempValues[i],16); 
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    data += " " + Convert.ToString(pressValues[i], 16);
+                }
+                SingleDataMeasure(2, cmn, expandCmn, data);
             }
             else
             {
@@ -388,24 +432,59 @@ namespace VocsAutoTest
                             string cmn = "24";
                             string expandCmn = "55";
                             string data = "00 " + dataType + " 01";
-                            SingleVocsMeasure(1, cmn, expandCmn, data);
+                            SingleDataMeasure(1, cmn, expandCmn, data);
                         }
                         else if (pageFlag == 3)
                         {
+                            //算法生成
                             //dataType += dataType;
                             //string cmn = "24";
                             //string expandCmn = "55";
                             //string data = "00 " + dataType + " 01";
-                            //SingleVocsMeasure(1, cmn, expandCmn, data);
+                            //SingleDataMeasure(1, cmn, expandCmn, data);
                         }
                         else if (pageFlag == 2)
                         {
+                            //浓度测量
+                            //浓度测量
+                            byte[] tempValues;
+                            string temp = tempTextBox.Text.Trim();
+                            if (string.IsNullOrEmpty(temp))
+                            {
+                                MessageBox.Show("请输入温度值！");
+                                tempTextBox.Focus();
+                                return;
+                            }
+                            else
+                            {
+                                tempValues = BitConverter.GetBytes(float.Parse(temp));
+                            }
+                            byte[] pressValues;
+                            string press = pressTextBox.Text.Trim();
+                            if (string.IsNullOrEmpty(press))
+                            {
+                                MessageBox.Show("请输入压力值！");
+                                pressTextBox.Focus();
+                                return;
+                            }
+                            else
+                            {
+                                pressValues = BitConverter.GetBytes(float.Parse(press));
+                            }
                             //浓度测量
                             dataType += dataType;
                             string cmn = "29";
                             string expandCmn = "55";
                             string data = "00";
-                            SingleVocsMeasure(2, cmn, expandCmn, data);
+                            for (int i = 0; i < 4; i++)
+                            {
+                                data += " " + Convert.ToString(tempValues[i], 16);
+                            }
+                            for (int i = 0; i < 4; i++)
+                            {
+                                data += " " + Convert.ToString(pressValues[i], 16);
+                            }
+                            SingleDataMeasure(2, cmn, expandCmn, data);
                         }
                         Thread.Sleep(readInterval * 1000);
                     }));
@@ -422,10 +501,10 @@ namespace VocsAutoTest
             
         }
         /// <summary>
-        /// 
+        /// 发送数据采集命令
         /// </summary>
         /// <param name="dataType"></param>
-        private void SingleVocsMeasure(uint measureTimes,string cmn,string expandCmn,string data)
+        private void SingleDataMeasure(uint measureTimes,string cmn,string expandCmn,string data)
         {
             while (measureTimes > 0)
             {
@@ -439,12 +518,20 @@ namespace VocsAutoTest
                 measureTimes -= 1;
             }
         }
+        /// <summary>
+        /// 得到光谱采集数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="command"></param>
         private void SetVocsData(object sender, Command command)
         {
             byte[] data = ByteStrUtil.HexToByte(command.Data);
-            Console.WriteLine(command.Data);
+            dataPackage = Convert.ToUInt16(data[3]);
+            if (dataPackage < Convert.ToUInt16(data[4])) {
+                //TODO..
+            }
+            Console.WriteLine(data[3].ToString());
+            Console.WriteLine(data[4].ToString());
         }
-
-        
     }
 }

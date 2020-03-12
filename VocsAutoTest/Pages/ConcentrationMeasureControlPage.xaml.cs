@@ -17,9 +17,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VocsAutoTest.Tools;
+using VocsAutoTestBLL;
 using VocsAutoTestBLL.Impl;
 using VocsAutoTestBLL.Interface;
 using VocsAutoTestBLL.Model;
+using VocsAutoTestCOMM;
 
 namespace VocsAutoTest.Pages
 {
@@ -94,9 +96,7 @@ namespace VocsAutoTest.Pages
             timer = new Timer(new TimerCallback(TimerDelegate));
             int period = int.Parse(this.textSaveInterval.Text);
             timer.Change(0, period * 60 * 1000);
-            iSpecMeasure.QuerySpecMeasureCompleted += new QuerySpecMeasureDelegate(GetSpecMeasureData);
-            SpecMeasureModel specMeasureModel = new SpecMeasureModel();
-            iSpecMeasure.PostSpecMeasureRequest(specMeasureModel);
+            DataForward.Instance.ReadSpecMeasure += new DataForwardDelegate(GetSpecMeasureData);
         }
 
         /// <summary>
@@ -104,20 +104,33 @@ namespace VocsAutoTest.Pages
         /// </summary>
         public void Stop_Measure() {
             timer.Dispose();
-            iSpecMeasure.QuerySpecMeasureCompleted -= new QuerySpecMeasureDelegate(GetSpecMeasureData);
+            DataForward.Instance.ReadSpecMeasure -= new DataForwardDelegate(GetSpecMeasureData);
         }
 
-        private void GetSpecMeasureData(object sender, QuerySpecMeasureEventArgs e) {
-            if (e.argSpecMeasureState.Result)
+        private void GetSpecMeasureData(object sender, Command command) {
+            if (command != null)
             {
-                if (e.argSpecMeasureState.ResultsT.Count > 0)
+                if (command.Data.Length > 0)
                 {
-                    float[] conData = new float[4] { 1,2,3,4};
-                    float[] pressData = new float[4] { 1, 2, 3, 4 };
-                    float[] tempData = new float[4] { 1, 2, 3, 4 };
+                    byte[] data = ByteStrUtil.HexToByte(command.Data);
+                    float[] conData = null;
+                    float[] pressData = null;
+                    float[] tempData = null;
+                    if (conData.Length>=6)
+                    {
+                        Array.Copy(data, 2, conData, 0, 4);
+                    }
+                    if (conData.Length >= 10)
+                    {
+                        Array.Copy(data, 6, pressData, 0, 4);
+                    }
+                    if (conData.Length >= 14)
+                    {
+                        Array.Copy(data, 8, tempData, 0, 4);
+                    }
                     UpadateUI(conData, pressData, tempData);
                 }
-                else { 
+                else {
                 }
             }
             else { 

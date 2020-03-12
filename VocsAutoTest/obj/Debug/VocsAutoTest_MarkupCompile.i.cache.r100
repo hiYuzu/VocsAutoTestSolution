@@ -4,25 +4,17 @@
 winexe
 C#
 .cs
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\
+F:\TFS\VocsAutoTestSolution\VocsAutoTest\obj\Debug\
 VocsAutoTest
 none
 false
 DEBUG;TRACE
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\App.xaml
+F:\TFS\VocsAutoTestSolution\VocsAutoTest\App.xaml
 14-1196087030
 
-<<<<<<< .mine
-24-503483671
-19486647181
-||||||| .r97
-23781961978
-18-1248656004
-=======
 24-1494635347
 19-1892422622
->>>>>>> .r100
 AlgorithmSettingWindow.xaml;ChartTest.xaml;MainWindow.xaml;Pages\AlgoGeneraControlPage.xaml;Pages\ConcentrationMeasureControlPage.xaml;Pages\ConcentrationMeasurePage.xaml;Pages\LeftControlPage.xaml;Pages\VocsMgmtControlPage.xaml;Pages\VocsMgmtPage.xaml;PortSettingWindow.xaml;Resources\ButtonResource.xaml;Resources\ComboxStyle.xaml;Resources\TextBoxStyle.xaml;StartWindow.xaml;
 
-False
+True
 

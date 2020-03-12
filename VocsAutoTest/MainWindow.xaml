@@ -123,6 +123,48 @@
                             <TextBox x:Name="ReadInterval" Width="80" Margin="0,8,0,7" Style="{DynamicResource textStyle}"/>
                             <CheckBox x:Name="MTsCheckBox" Content="连续测量次数" Margin="20 13 5 0" VerticalAlignment="Top" Checked="MTsCheckBox_Checked" Unchecked="MTsCheckBox_Unchecked"/>
                             <TextBox x:Name="MTsTextBox" Width="80" Margin="0,8,0,7" IsEnabled="False" Style="{DynamicResource textStyle}"/>
+                            <TextBox x:Name="tempTextBox" Width="80" Margin="20,8,0,7" IsEnabled="True" Visibility="Hidden">
+                                <TextBox.Resources>
+                                    <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                                        <VisualBrush.Visual>
+                                            <TextBlock FontStyle="Italic" Background="White" Text="请输入温度值"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </TextBox.Resources>
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource HintText}"/>
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="">
+                                                <Setter Property="Background" Value="{StaticResource HintText}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <TextBox x:Name="pressTextBox" Width="80" Margin="0,8,0,7" IsEnabled="True" Visibility="Hidden">
+                                <TextBox.Resources>
+                                    <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                                        <VisualBrush.Visual>
+                                            <TextBlock FontStyle="Italic" Background="White" Text="请输入压力值"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </TextBox.Resources>
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource HintText}"/>
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="">
+                                                <Setter Property="Background" Value="{StaticResource HintText}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
                             <Button x:Name="SingleMeasure" Content="单次测量" Click="SingleMeasure_Click" Height="23" Width="60" Margin="50,8,50,7" Style="{StaticResource btnOther}"/>
                             <Button x:Name="MultiMeasure" Content="连续测量" Click="MultiMeasure_Click" Height="23" Width="60" Margin="0,8,0,7" Style="{StaticResource btnOther}"/>
                         </StackPanel>

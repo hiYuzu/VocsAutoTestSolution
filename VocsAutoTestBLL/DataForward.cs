@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using VocsAutoTestBLL.Interface;
 using VocsAutoTestCOMM;
 using VocsAutoTestCOMM.LogUtil;
 
@@ -135,8 +136,10 @@ namespace VocsAutoTestBLL
         public event DataForwardDelegate ReadVocsParam;
         //读取光谱数据命令
         public event DataForwardDelegate ReadVocsData;
+        //读取浓度测量数据
+        public event DataForwardDelegate ReadSpecMeasure;
         #endregion
-        
+
         /// <summary>
         /// 转发分配实现
         /// </summary>
@@ -160,6 +163,9 @@ namespace VocsAutoTestBLL
                         break;
                     case "24":
                         ReadVocsData(this, command);
+                        break;
+                    case "29":
+                        ReadSpecMeasure(this, command);
                         break;
                     default:
                         break;

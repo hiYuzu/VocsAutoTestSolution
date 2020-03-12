@@ -46,7 +46,7 @@ namespace VocsAutoTestBLL.Impl
             }
         }
 
-        public void OnQuerySpecMeasureCompleted(BaseMsg baseMsg)
+        public void OnQuerySpecMeasureCompleted(Command command)
         {
             if (QuerySpecMeasureCompleted != null)
             {

@@ -59,8 +59,8 @@ namespace VocsAutoTestBLL.Interface
         /// <summary>
         /// 浓度测量事件应答
         /// </summary>
-        /// <param name="baseMsg">基本回复类</param>
-        void OnQuerySpecMeasureCompleted(BaseMsg baseMsg);
+        /// <param name="command">基本回复类</param>
+        void OnQuerySpecMeasureCompleted(Command command);
 
     }
 }
