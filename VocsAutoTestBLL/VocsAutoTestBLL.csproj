@@ -42,12 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataForward.cs" />
+    <Compile Include="Impl\MeasureMgrImpl.cs" />
     <Compile Include="Impl\PassPortImpl.cs" />
     <Compile Include="Impl\SpecMeasureImpl.cs" />
+    <Compile Include="Impl\SpecOperatorImpl.cs" />
+    <Compile Include="Interface\IMeasureMgr.cs" />
     <Compile Include="Interface\IPassPort.cs" />
     <Compile Include="Interface\ISpecMeasure.cs" />
+    <Compile Include="Interface\ISpecOperator.cs" />
     <Compile Include="Model\BoolWithString.cs" />
     <Compile Include="Model\PortModel.cs" />
+    <Compile Include="Model\SpecDataModel.cs" />
     <Compile Include="Model\SpecMeasureModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

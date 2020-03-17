@@ -121,6 +121,7 @@ namespace VocsAutoTestBLL
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.GetType().ToString() + ":" + ex.Message);
                     Log4NetUtil.Error(ex.GetType().ToString() + ":" + ex.Message);
                 }
             }
@@ -129,15 +130,14 @@ namespace VocsAutoTestBLL
         #region Action/事件
         //写命令返回结果Action
         public Action<bool> WriteResult { get; set; }
-
         //读取公共参数
         public event DataForwardDelegate ReadCommParam;
         //读取光谱仪光路x参数
         public event DataForwardDelegate ReadVocsParam;
         //读取光谱数据命令
-        public event DataForwardDelegate ReadVocsData;
+        public event DataForwardDelegate ReadSpecData;
         //读取浓度测量数据
-        public event DataForwardDelegate ReadSpecMeasure;
+        public event DataForwardDelegate ReadConcMeasure;
         #endregion
 
         /// <summary>
@@ -162,10 +162,10 @@ namespace VocsAutoTestBLL
                     case "23":
                         break;
                     case "24":
-                        ReadVocsData(this, command);
+                        ReadSpecData(this, command);
                         break;
                     case "29":
-                        ReadSpecMeasure(this, command);
+                        ReadConcMeasure(this, command);
                         break;
                     default:
                         break;

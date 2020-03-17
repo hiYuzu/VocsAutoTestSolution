@@ -129,7 +129,7 @@
                 <CheckBox x:Name="checkbox_error" Content="误差" Margin="5" IsChecked="True" Checked="Checkbox_error_CheckChange" Unchecked="Checkbox_error_CheckChange"></CheckBox>
             </WrapPanel>
             <Button x:Name="button_densityCalculate" Content="浓度计算" Grid.Column="3" Grid.Row="0" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_densityCalculate_Click"></Button>
-            <Button Content="生成参量" Grid.Column="4" Grid.Row="0" Height="25" Width="80" Style="{StaticResource btnOther}"></Button>
+            <Button x:Name="button_generateParameter" Content="生成参量" Grid.Column="4" Grid.Row="0" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_generateParameter_Click"></Button>
             <DataGrid x:Name="dataGrid" HeadersVisibility="Column" ItemsSource="{Binding}" DisplayMemberPath="Data" CanUserAddRows =" False" AutoGenerateColumns="False" Grid.ColumnSpan="6" Grid.Row="1" MouseDoubleClick="DataGrid_MouseDoubleClick">
             </DataGrid>
             <Label x:Name="label_gas1_input" Content="气体1" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"></Label>

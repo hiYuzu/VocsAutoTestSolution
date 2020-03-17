@@ -11,7 +11,7 @@ namespace VocsAutoTestCOMM
 
         private static volatile SuperSerialPort instance;
         private static readonly object obj = new object();
-
+        private List<byte> buffer = new List<byte>(4096);
         private SuperSerialPort()
         {
             serialPort.DataReceived += Serialport_DataReceived;
@@ -41,16 +41,34 @@ namespace VocsAutoTestCOMM
         #endregion
         private void Serialport_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            Thread.Sleep(40);
-            int length = serialPort.BytesToRead;
-            if (length > 0)
+            byte[] readBuffer;
+            int n = serialPort.BytesToRead;
+            byte[] buf = new byte[n];
+            serialPort.Read(buf, 0, n);
+            buffer.AddRange(buf);
+            Console.WriteLine(ByteStrUtil.ByteToKHex(buffer.ToArray()));
+            while (buffer.Count >= 14)
             {
-                byte[] buffers = new byte[length];
-                serialPort.Read(buffers, 0, length);
-                Command command = FPI.Decoder(buffers);
-                if (command != null)
+                if (buffer[0] == 0x7D && buffer[1] == 0x7B)
                 {
-                    CacheData.AddDataToQueue(command);
+                    int endIndex = FPI.EndIndex(buffer.ToArray());
+                    if (endIndex == 0)
+                    {
+                        break;
+                    }
+                    readBuffer = new byte[endIndex + 2];
+                    buffer.CopyTo(0, readBuffer, 0, endIndex + 2);
+                    buffer.RemoveRange(0, endIndex + 2);
+
+                    if (FPI.IsLength(readBuffer) && FPI.JY(readBuffer))
+                    {
+                        Command command = FPI.Decoder(readBuffer);
+                        CacheData.AddDataToQueue(command);
+                    }
+                }
+                else
+                {
+                    buffer.Clear();
                 }
             }
         }
@@ -87,6 +105,9 @@ namespace VocsAutoTestCOMM
 
             switch (stopBits)
             {
+                case 0:
+                    serialPort.StopBits = StopBits.None;
+                    break;
                 case 1:
                     serialPort.StopBits = StopBits.One;
                     break;
@@ -130,7 +151,7 @@ namespace VocsAutoTestCOMM
         /// <summary>
         /// 串口接收委托
         /// </summary>
-        public Action<Command> DataReceieved { get; set; }
+        public Action<Command> DataReceived { get; set; }
         #endregion
 
         #region
@@ -150,12 +171,11 @@ namespace VocsAutoTestCOMM
             }
             return false;
         }
-
         public bool SendAll(List<Command> commands, bool isForward)
         {
-            foreach(Command command in commands)
+            foreach (Command command in commands)
             {
-                if(!Send(command, isForward))
+                if (!Send(command, isForward))
                 {
                     return false;
                 }

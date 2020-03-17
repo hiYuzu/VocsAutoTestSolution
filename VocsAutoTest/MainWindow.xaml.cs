@@ -18,42 +18,63 @@ namespace VocsAutoTest
     /// </summary>
     public partial class MainWindow : Window
     {
-        //测量结果数据
-        private float[] specData = null;
-        //页面*6
-        private VocsMgmtPage VocsPage;
-        private VocsMgmtControlPage VocsControlPage;
-        private ConcentrationMeasurePage ConcentrationPage;
-        private ConcentrationMeasureControlPage ConcentrationControlPage;
-        private AlgoGeneraControlPage AlgoControlPage;
-        private LeftControlPage LeftPage;
+        //页面*7
+        private AlgoGeneraPage algoPage;
+        private AlgoGeneraControlPage algoControlPage;
+        private SpecMeasurePage specPage;
+        private SpecMeasureControlPage specControlPage;
+        private ConcentrationMeasurePage concentrationPage;
+        private ConcentrationMeasureControlPage concentrationControlPage;
+        private LeftControlPage leftPage;
         //日志栏折叠
         private bool isLogBoxOpen = true;
         //日志栏高度
-        private double oldBottomHeight = 0;
+        private double bottomHeight;
         private DispatcherTimer showTimer;
         //当前页面标识 1：光谱采集 2：浓度测量 3：算法生成
-        private ushort pageFlag;
-        //光谱采集数据包
-        private ushort dataPackage;
+        private ushort pageFlag = 1;
+        //连续测量
+        private MeasureMgrImpl measureMgr;
         public MainWindow()
         {
             InitializeComponent();
             DataForward.Instance.StartService();
             InitBottomInfo();
             InitLeftPage();
+            measureMgr = MeasureMgrImpl.Instance;
             VocsCollectBtn_Click(null, null);
             DataForward.Instance.WriteResult += WriteRes;
-            DataForward.Instance.ReadVocsData += new DataForwardDelegate(SetVocsData);
             PassPortImpl.GetInstance().PassValueEvent += new PassPortDelegate(ReceievedValues);
+            ExceptionUtil.Instance.ExceptionEvent += new ExceptionDelegate(ShowExceptionMsg);
         }
+        /// <summary>
+        /// 设置通用订阅
+        /// </summary>
+        /// <param name="res"></param>
         private void WriteRes(bool res)
         {
             if (res)
-                MessageBox.Show("设置成功");
+                Log4NetUtil.Debug("设置成功", this);
             else
-                MessageBox.Show("设置失败");
+                Log4NetUtil.Warn("设置失败", this);
         }
+        /// <summary>
+        /// 异常订阅
+        /// </summary>
+        /// <param name="msg"></param>
+        private void ShowExceptionMsg(string msg)
+        {
+            Dispatcher.BeginInvoke(new Action(() => 
+            {
+                Log4NetUtil.Warn(msg, this);
+            }));
+            
+        }
+        /// <summary>
+        /// 读取间隔订阅
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="command"></param>
         public void SetReadInterval(object sender, Command command)
         {
             byte[] data = ByteStrUtil.HexToByte(command.Data);
@@ -61,7 +82,7 @@ namespace VocsAutoTest
             {
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    ReadInterval.Text = BitConverter.ToUInt16(data, 2).ToString();
+                    ReadInterval.Text = BitConverter.ToUInt16(DataConvertUtil.ByteReverse(data), 2).ToString();
                 }));  
             }
         }
@@ -70,10 +91,10 @@ namespace VocsAutoTest
         /// </summary>
         private void InitLeftPage()
         {
-            LeftPage = new LeftControlPage(this);
+            leftPage = new LeftControlPage(this);
             LeftControlPage.Content = new Frame()
             {
-                Content = LeftPage
+                Content = leftPage
             };
         }
         /// <summary>
@@ -90,12 +111,10 @@ namespace VocsAutoTest
             showTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             showTimer.Start();
         }
-
         private void ShowTimer_Tick(object sender, EventArgs e)
         {
             this.currentTime.Content = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
         }
-
         /// <summary>
         /// 拖动窗体
         /// </summary>
@@ -108,7 +127,6 @@ namespace VocsAutoTest
                 this.DragMove();
             }
         }
-
         /// <summary>
         /// 串口设置
         /// </summary>
@@ -123,7 +141,6 @@ namespace VocsAutoTest
             };
             portSettingWindow.Show();
         }
-
         /// <summary>
         /// 串口接收
         /// </summary>
@@ -131,8 +148,17 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void ReceievedValues(object sender, PassPortEventArgs e)
         {
-            Log4NetUtil.Info("修改串口信息为：串口号:" + e.portModel.Port + "，波特率:" + e.portModel.Baud + "，校检:" + e.portModel.Parity + "，数据位:" + e.portModel.Data + "，停止位:" + e.portModel.Stop, this);
+            
+            SuperSerialPort.Instance.Close();
             SuperSerialPort.Instance.SetPortInfo(e.portModel.Port, Convert.ToInt32(e.portModel.Baud), e.portModel.Parity, Convert.ToInt32(e.portModel.Data), Convert.ToInt32(e.portModel.Stop));
+            if (SuperSerialPort.Instance.Open())
+            {
+                Log4NetUtil.Debug("修改串口信息为：串口号:" + e.portModel.Port + "，波特率:" + e.portModel.Baud + "，校检:" + e.portModel.Parity + "，数据位:" + e.portModel.Data + "，停止位:" + e.portModel.Stop, this);
+            }
+            else
+            {
+                Log4NetUtil.Warn("修改串口信息失败！", this);
+            }
         }
         /// <summary>
         /// 关于系统
@@ -183,7 +209,7 @@ namespace VocsAutoTest
             this.WindowState = WindowState.Minimized;
         }
         /// <summary>
-        /// 连续测量
+        /// 连续测量次数可用控制
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -202,24 +228,24 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void VocsCollectBtn_Click(object sender, RoutedEventArgs e)
         {
-            if ("停止测量".Equals(MultiMeasure.Content.ToString()))
+            if (measureMgr.StartMeasure)
             {
                 MessageBox.Show("请停止测量再切换页面!");
                 return;
             }
             pageFlag = 1;
-            if (VocsPage == null && VocsControlPage == null)
+            if (specPage == null && specControlPage == null)
             {
-                VocsPage = new VocsMgmtPage();
-                VocsControlPage = new VocsMgmtControlPage(VocsPage);
+                specPage = new SpecMeasurePage();
+                specControlPage = new SpecMeasureControlPage(specPage);
             }
             ChartPage.Content = new Frame()
             {
-                Content = VocsPage
+                Content = specPage
             };
             ControlPage.Content = new Frame()
             {
-                Content = VocsControlPage
+                Content = specControlPage
             };
             this.tempTextBox.Visibility = Visibility.Hidden;
             this.pressTextBox.Visibility = Visibility.Hidden;
@@ -231,25 +257,25 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void ConcentrationMeasureBtn_Click(object sender, RoutedEventArgs e)
         {
-            if ("停止测量".Equals(MultiMeasure.Content.ToString()))
+            if (measureMgr.StartMeasure)
             {
                 MessageBox.Show("请停止测量再切换页面!");
                 return;
             }
             pageFlag = 2;
-            if (ConcentrationPage == null && ConcentrationControlPage == null)
+            if (concentrationPage == null && concentrationControlPage == null)
             {
-                ConcentrationPage = new ConcentrationMeasurePage();
-                ConcentrationControlPage = new ConcentrationMeasureControlPage(ConcentrationPage);
-                ConcentrationControlPage.Start_Measure();
+                concentrationPage = new ConcentrationMeasurePage();
+                concentrationControlPage = new ConcentrationMeasureControlPage(concentrationPage);
+                concentrationControlPage.Start_Measure();
             }
             ChartPage.Content = new Frame()
             {
-                Content = ConcentrationPage
+                Content = concentrationPage
             };
             ControlPage.Content = new Frame()
             {
-                Content = ConcentrationControlPage
+                Content = concentrationControlPage
             };
             this.tempTextBox.Visibility = Visibility.Visible;
             this.pressTextBox.Visibility = Visibility.Visible;
@@ -261,27 +287,27 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void AlgoGeneraBtn_Click(object sender, RoutedEventArgs e)
         {
-            if ("停止测量".Equals(MultiMeasure.Content.ToString()))
+            if (measureMgr.StartMeasure)
             {
                 MessageBox.Show("请停止测量再切换页面!");
                 return;
             }
             pageFlag = 3;
-            if (VocsPage == null)
+            if (algoPage == null)
             {
-                VocsPage = new VocsMgmtPage();
+                algoPage = new AlgoGeneraPage();
             }
-            if(AlgoControlPage == null)
+            if(algoControlPage == null)
             {
-                AlgoControlPage = new AlgoGeneraControlPage();
+                algoControlPage = new AlgoGeneraControlPage(algoPage);
             }
             ChartPage.Content = new Frame()
             {
-                Content = VocsPage
+                Content = algoPage
             };
             ControlPage.Content = new Frame()
             {
-                Content = AlgoControlPage
+                Content = algoControlPage
             };
             this.tempTextBox.Visibility = Visibility.Hidden;
             this.pressTextBox.Visibility = Visibility.Hidden;
@@ -295,10 +321,10 @@ namespace VocsAutoTest
         {
             if (isLogBoxOpen)
             {
-                oldBottomHeight = grid.RowDefinitions[4].Height.Value;
+                bottomHeight = grid.RowDefinitions[4].Height.Value;
                 grid.RowDefinitions[4].Height = new GridLength(0);
                 isLogBoxOpen = false;
-                Image img = (Image)HideLogBoxBtn.Template.FindName("LogBoxImg", HideLogBoxBtn);//查找btn中模板图片对象
+                Image img = (Image)HideLogBoxBtn.Template.FindName("LogBoxImg", HideLogBoxBtn);
                 Thickness thickness = new Thickness
                 {
                     Bottom = 0,
@@ -310,7 +336,7 @@ namespace VocsAutoTest
             }
             else
             {
-                grid.RowDefinitions[4].Height = new GridLength(218);
+                grid.RowDefinitions[4].Height = new GridLength(bottomHeight);
                 isLogBoxOpen = true;
                 Image img = (Image)HideLogBoxBtn.Template.FindName("LogBoxImg", HideLogBoxBtn);
                 Thickness thickness = new Thickness
@@ -343,66 +369,15 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void SingleMeasure_Click(object sender, RoutedEventArgs e)
         {
-            string dataType = LeftPage.DataType.SelectedIndex.ToString();
-            if (pageFlag == 1)
+            try
             {
-                dataType += dataType;
-                string cmn = "24";
-                string expandCmn = "55";
-                string data = "00 " + dataType + " 01";
-                SingleDataMeasure(1,cmn, expandCmn, data);
-            } else if (pageFlag == 3) {
-                //算法生成
-                //dataType += dataType;
-                //string cmn = "24";
-                //string expandCmn = "55";
-                //string data = "00 " + dataType + " 01";
-                //SingleDataMeasure(1, cmn, expandCmn, data);
+                MTsCheckBox.IsChecked = false;
+                measureMgr.measureTimes = 1;
+                BeginMeasure();
             }
-            else if (pageFlag == 2)
+            catch
             {
-                //浓度测量
-                byte[] tempValues;
-                string temp = tempTextBox.Text.Trim();
-                if (string.IsNullOrEmpty(temp))
-                {
-                    MessageBox.Show("请输入温度值！");
-                    tempTextBox.Focus();
-                    return;
-                }
-                else
-                {
-                    tempValues = BitConverter.GetBytes(float.Parse(temp));
-                }
-                byte[] pressValues;
-                string press = pressTextBox.Text.Trim();
-                if (string.IsNullOrEmpty(press))
-                {
-                    MessageBox.Show("请输入压力值！");
-                    pressTextBox.Focus();
-                    return;
-                }
-                else
-                {
-                    pressValues = BitConverter.GetBytes(float.Parse(press));
-                }
-                //浓度测量
-                dataType += dataType;
-                string cmn = "29";
-                string expandCmn = "55";
-                string data = "00";
-                for (int i =0;i<4;i++) {
-                    data += " "+ Convert.ToString(tempValues[i],16); 
-                }
-                for (int i = 0; i < 4; i++)
-                {
-                    data += " " + Convert.ToString(pressValues[i], 16);
-                }
-                SingleDataMeasure(2, cmn, expandCmn, data);
-            }
-            else
-            {
-                MessageBox.Show("操作页面不明确！");
+                MessageBox.Show("参数错误！");
             }
         }
         /// <summary>
@@ -414,124 +389,62 @@ namespace VocsAutoTest
         {
             try
             {
-                if ("连续测量".Equals(MultiMeasure.Content.ToString()))
+                if (measureMgr.StartMeasure)
                 {
-                    string dataType = LeftPage.DataType.SelectedIndex.ToString();
-                    uint measureTimes = 1;
-                    ushort readInterval = Convert.ToUInt16(ReadInterval.Text);
-                    if (MTsTextBox.IsEnabled)
-                    {
-                        measureTimes = Convert.ToUInt32(MTsTextBox.Text);
-                    }
-                    MultiMeasure.Content = "停止测量";
-                    new Thread(new ThreadStart(() =>
-                    {
-                        if (pageFlag == 1)
-                        {
-                            dataType += dataType;
-                            string cmn = "24";
-                            string expandCmn = "55";
-                            string data = "00 " + dataType + " 01";
-                            SingleDataMeasure(1, cmn, expandCmn, data);
-                        }
-                        else if (pageFlag == 3)
-                        {
-                            //算法生成
-                            //dataType += dataType;
-                            //string cmn = "24";
-                            //string expandCmn = "55";
-                            //string data = "00 " + dataType + " 01";
-                            //SingleDataMeasure(1, cmn, expandCmn, data);
-                        }
-                        else if (pageFlag == 2)
-                        {
-                            //浓度测量
-                            //浓度测量
-                            byte[] tempValues;
-                            string temp = tempTextBox.Text.Trim();
-                            if (string.IsNullOrEmpty(temp))
-                            {
-                                MessageBox.Show("请输入温度值！");
-                                tempTextBox.Focus();
-                                return;
-                            }
-                            else
-                            {
-                                tempValues = BitConverter.GetBytes(float.Parse(temp));
-                            }
-                            byte[] pressValues;
-                            string press = pressTextBox.Text.Trim();
-                            if (string.IsNullOrEmpty(press))
-                            {
-                                MessageBox.Show("请输入压力值！");
-                                pressTextBox.Focus();
-                                return;
-                            }
-                            else
-                            {
-                                pressValues = BitConverter.GetBytes(float.Parse(press));
-                            }
-                            //浓度测量
-                            dataType += dataType;
-                            string cmn = "29";
-                            string expandCmn = "55";
-                            string data = "00";
-                            for (int i = 0; i < 4; i++)
-                            {
-                                data += " " + Convert.ToString(tempValues[i], 16);
-                            }
-                            for (int i = 0; i < 4; i++)
-                            {
-                                data += " " + Convert.ToString(pressValues[i], 16);
-                            }
-                            SingleDataMeasure(2, cmn, expandCmn, data);
-                        }
-                        Thread.Sleep(readInterval * 1000);
-                    }));
+                    measureMgr.StartMeasure = false;
+                    SingleMeasure.IsEnabled = true;
+                    MultiMeasure.Content = "连续测量";
                 }
                 else
                 {
-                    MultiMeasure.Content = "连续测量";
+                    measureMgr.StartMeasure = true;
+                    SingleMeasure.IsEnabled = false;
+                    MultiMeasure.Content = "停止测量";
+                    measureMgr.pageFlag = pageFlag;
+                    BeginMeasure();
                 }
             }
             catch
             {
-                MessageBox.Show("连续测量参数错误！");
+                measureMgr.StartMeasure = false;
+                SingleMeasure.IsEnabled = true;
+                MessageBox.Show("参数错误！");
+                MultiMeasure.Content = "连续测量";
             }
-            
         }
-        /// <summary>
-        /// 发送数据采集命令
-        /// </summary>
-        /// <param name="dataType"></param>
-        private void SingleDataMeasure(uint measureTimes,string cmn,string expandCmn,string data)
+        private void BeginMeasure()
         {
-            while (measureTimes > 0)
+            measureMgr.endAction += EndMeasure;
+            measureMgr.pageFlag = pageFlag;
+            if (MTsTextBox.IsEnabled)
             {
-                Command command = new Command
-                {
-                    Cmn = cmn,//"24"
-                    ExpandCmn = expandCmn,//"55"
-                    Data = data//"00 " + dataType + " 01"
-                };
-                SuperSerialPort.Instance.Send(command, true);
-                measureTimes -= 1;
+                measureMgr.measureTimes = Convert.ToInt32(MTsTextBox.Text);
             }
+            measureMgr.timeInterval = int.Parse(ReadInterval.Text);
+            switch (pageFlag)
+            {
+                case 1:
+                    measureMgr.specType = leftPage.DataType.SelectedIndex.ToString();
+                    break;
+                case 2:
+                    measureMgr.tempValues = BitConverter.GetBytes(float.Parse(tempTextBox.Text));
+                    measureMgr.pressValues = BitConverter.GetBytes(float.Parse(pressTextBox.Text));
+                    break;
+                case 3:
+                    break;
+            }
+            measureMgr.StartMultiMeasure();
         }
-        /// <summary>
-        /// 得到光谱采集数据
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="command"></param>
-        private void SetVocsData(object sender, Command command)
+        private void EndMeasure(bool beEnd)
         {
-            byte[] data = ByteStrUtil.HexToByte(command.Data);
-            dataPackage = Convert.ToUInt16(data[3]);
-            if (dataPackage < Convert.ToUInt16(data[4])) {
-                //TODO..
+            if (beEnd)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    SingleMeasure.IsEnabled = true;
+                    MultiMeasure.Content = "连续测量";
+                }));
             }
-            Console.WriteLine(data[3].ToString());
-            Console.WriteLine(data[4].ToString());
         }
     }
 }

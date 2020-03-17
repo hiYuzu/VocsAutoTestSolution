@@ -1,0 +1,1 @@
+2020-03-17 10:46:27,342[1] WARN  [VocsAutoTest.Log4Net.Log4NetUtil] : 读取本次光谱超时（时间间隔超时），请重新读取新的光谱数据

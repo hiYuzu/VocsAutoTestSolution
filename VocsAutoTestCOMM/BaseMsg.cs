@@ -8,5 +8,6 @@ namespace VocsAutoTestCOMM
 {
     public class BaseMsg
     {
+        
     }
 }

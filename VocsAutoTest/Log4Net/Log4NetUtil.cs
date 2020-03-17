@@ -28,7 +28,7 @@ namespace VocsAutoTest.Log4Net
         {
             run = new Run()
             {
-                Text = DateTime.Now.ToString("[yyyy-MM-dd HH:mm:ss]  [") + level + "]：" + log,
+                Text = DateTime.Now.ToString("[yyyy-MM-dd HH:mm:ss]  [") + level + "] " + log,
                 Foreground = new SolidColorBrush(color)
             };
             paragraph = new Paragraph();

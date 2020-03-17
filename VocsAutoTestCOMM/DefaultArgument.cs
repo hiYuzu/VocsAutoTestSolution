@@ -8,6 +8,6 @@ namespace VocsAutoTestCOMM
 {
     public class DefaultArgument
     {
-        public const int INTERVAL_TIME = 100;
+        public const int INTERVAL_TIME = 300;
     }
 }

@@ -1,0 +1,2 @@
+2020-03-13 14:10:04,225[DataThread] DEBUG [VocsAutoTest.Log4Net.Log4NetUtil] : 读取本次光谱超时（时间间隔超时），请重新读取新的光谱数据
+2020-03-13 14:10:07,102[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.InvalidOperationException:调用线程无法访问此对象，因为另一个线程拥有该对象。

@@ -29,7 +29,7 @@ namespace VocsAutoTest.Pages
 
         public void initPage() {
             MeasureChart.Children.Clear();
-            CreateChartSpline("2013年樱桃、菠萝销量", LsTime, cherry, pineapple);
+            CreateChartSpline("浓度测量", LsTime, cherry, pineapple);
         }
 
         private List<DateTime> LsTime = new List<DateTime>()

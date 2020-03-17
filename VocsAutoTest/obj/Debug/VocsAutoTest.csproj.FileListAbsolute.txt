@@ -17,8 +17,6 @@ E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\AlgoG
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\ConcentrationMeasureControlPage.g.cs
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\ConcentrationMeasurePage.g.cs
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\LeftControlPage.g.cs
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\VocsMgmtControlPage.g.cs
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\VocsMgmtPage.g.cs
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\PortSettingWindow.g.cs
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\StartWindow.g.cs
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\App.g.cs
@@ -32,8 +30,6 @@ E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\AlgoG
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\ConcentrationMeasureControlPage.baml
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\ConcentrationMeasurePage.baml
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\LeftControlPage.baml
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\VocsMgmtControlPage.baml
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\VocsMgmtPage.baml
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\PortSettingWindow.baml
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Resources\TextBoxStyle.baml
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\StartWindow.baml
@@ -43,3 +39,9 @@ E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\VocsAutoTes
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\VocsAutoTest.csproj.CopyComplete
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\VocsAutoTest.exe
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\VocsAutoTest.pdb
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\SpecMeasurePage.g.cs
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\SpecMeasureControlPage.g.cs
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\AlgoGeneraPage.g.cs
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\SpecMeasurePage.baml
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\SpecMeasureControlPage.baml
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\AlgoGeneraPage.baml

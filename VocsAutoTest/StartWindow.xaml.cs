@@ -25,7 +25,7 @@ namespace VocsAutoTest
                 SuperSerialPort.Instance.Close();
                 SuperSerialPort.Instance.SetPortInfo(portCombo.Text, Convert.ToInt32(baudCombo.Text), parityCombo.Text, Convert.ToInt32(dataCombo.Text), Convert.ToInt32(stopCombo.Text));
                 SuperSerialPort.Instance.Open();
-                MainWindow main = new MainWindow();               
+                MainWindow main = new MainWindow();
                 Log4NetUtil.Info("当前串口信息：串口号:" + portCombo.Text + "，波特率:" + baudCombo.Text + "，校检:" + parityCombo.Text + "，数据位:" + dataCombo.Text + "，停止位:" + stopCombo.Text, main);                
                 main.Show();
                 this.Close();

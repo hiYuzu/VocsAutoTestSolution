@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using VocsAutoTest.Algorithm;
 using VocsAutoTest.Tools;
 
 namespace VocsAutoTest.Pages
@@ -17,6 +18,7 @@ namespace VocsAutoTest.Pages
     public partial class AlgoGeneraControlPage : Page
     {
         private ObservableCollection<string[]> _obervableCollection = new ObservableCollection<string[]>();
+        private AlgoGeneraPage algoPage;
         private int _gasCount = 0;
         //选择文件默认地址
         private string importRoad = null;
@@ -24,11 +26,28 @@ namespace VocsAutoTest.Pages
         private const string HEAD_FLOW = "FLOW";
         private const string HEAD_SPEC = "SPEC";
         private const int GAS_NUMBER = 4;//最多选择气体种类
+        private Dictionary<string,float[]> riDataMap;//光谱数据
+        private int pixelNumber = 512;//TODO 512需要确认来源
 
         public AlgoGeneraControlPage()
         {
             InitializeComponent();
             InitPage(0);
+        }
+
+        public AlgoGeneraControlPage(AlgoGeneraPage algoPage)
+        {
+            InitializeComponent();
+            InitPage(0);
+            if (algoPage != null)
+            {
+                this.algoPage = algoPage;
+            }
+            else
+            {
+                MessageBox.Show("无法加载图形显示功能，请重启软件尝试！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private void InitPage(int optInt)
@@ -652,79 +671,10 @@ namespace VocsAutoTest.Pages
                     if ((lineData != null) && (lineData.Length > 2))
                     {
                         List<string> list = new List<string>(lineData);
-                        //int[] flowData = new int[(lineData.Length - 1) / 2];
-                        //for (int i = 0; i < flowData.Length; i++)
-                        //{
-                        //    flowData[i] = System.Int32.Parse(lineData[2 + i]);
-                        //}
-                        //float[] thicknessData = new float[(lineData.Length - 3) / 2];
-                        //for (int i = 0; i < thicknessData.Length; i++)
-                        //    thicknessData[i] = System.Single.Parse(lineData[thicknessData.Length + 3 + i]);
-                        //itemList.Add(new ItemNode(lineData[0], lineData[1].Equals("True"),
-                        //    new DataNode(flowData, thicknessData, null)));
                         _obervableCollection.Add(list.ToArray());
                     }
                 }
-
-                //光谱数据
-                //读取编号行
-                textReader.ReadLine();
-                while ((line = textReader.ReadLine()) != null)
-                {
-                    line = line.Trim();
-                    string[] lineData = this.parseLine(line);
-
-                    if (lineData.Length == itemList.Count)
-                    {
-                        for (int i = 0; i < itemList.Count; i++)
-                        {
-                            //((ItemNode)itemList[i]).AddSpecData(lineData[i]);
-                        }
-                    }
-
-                }
-
-                for (int i = 0; i < itemList.Count; i++)
-                {
-
-                    //((ItemNode)itemList[i]).SetSpecData();
-                }
-
-                //if (itemList.Count > 0 && ((ItemNode)itemList[0]).dataNode.riData.Length > doasData.PixelSize)
-                //{
-                //    //开始设定
-                //    this.btnStartSet_Click(null, null);
-                //    FpiMessageBox.ShowError(CustomResource.ImpFileNotIsSpecData);
-                //    return;
-                //}
-                //增加光谱数据
-                //for (int i = 0; i < itemList.Count; i++)
-                //{
-                //    ItemNode itemNode = (ItemNode)itemList[i];
-                //    this.AddOneMeasure(itemNode.dataNode.flowData, itemNode.dataNode.riData,
-                //        itemNode.dataNode.thicknessData, false, itemNode.itemNumber, itemNode.itemChecked, this.GetColor(i));
-                //}
-                //画第i条曲线
-                //for (int i = 1; i <= itemList.Count; i++)
-                //{
-                //    for (int j = 0; j < itemList.Count; j++)
-                //    {
-                //        ItemNode itemNode = (ItemNode)itemList[j];
-                //        if (itemNode.itemNumber.Equals(i.ToString()))
-                //        {
-                //            ZedGraph.LineItem lineItem = this.specShowControl.AddMeasCurve(itemNode.itemNumber, itemNode.dataNode.riData, true, LineType.History, this.GetColor(i));
-                //            lineItem.IsVisible = itemNode.itemChecked;
-                //            break;
-                //        }
-                //    }
-                //}
-                //this.SetTopIndex(((ItemNode)itemList[0]).dataNode.riData);
-
-                //this.btnGenParam.Enabled = true;
-                //this.btnConc.Enabled = this.btnGenParam.Enabled;
-                //this.cbxShowConc.Checked = true;
-                //this.cbxShowError.Checked = true;
-                //this.cbxShowFlux.Checked = true;
+                algoPage.ImportHistoricalData(fileName);
 
             }
             catch (Exception e)
@@ -844,5 +794,102 @@ namespace VocsAutoTest.Pages
                 _obervableCollection.Add(arrays);
             }
         }
+
+        private void Button_generateParameter_Click(object sender, RoutedEventArgs e)
+        {
+            dataGrid.IsEnabled = false;
+            double[,] V;
+            //浓度矩阵,每行对应1次测量，每列对应1种气体
+            float[,] thicknessData;
+            //光谱矩阵,每行对应1次测量，每列对应1个象素
+            float[,] riData;
+
+            try
+            {
+                GetThicknessAndRiData(out thicknessData,out riData);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("错误信息",ex.ToString(),MessageBoxButton.OK,MessageBoxImage.Error);
+                return;
+            }
+
+            //压力
+            string press = text_press.Text.Trim();
+            //温度
+            string temp = text_temp.Text.Trim();
+            try
+            {
+                AlgorithmPro.GetInstance().Process(out V, thicknessData, riData,float.Parse(press),float.Parse(temp));
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+
+            dataGrid.IsEnabled = true;
+        }
+
+        //获得浓度和光谱矩阵数据
+        private void GetThicknessAndRiData(out float[,] thicknessData, out float[,] riData)
+        {
+            //foreach (string[] arrays in _obervableCollection)
+            //{
+            //    if (arrays != null && arrays.Length > 0)
+            //    {
+            //        string[] arraysNew = new string[indexCount * 2 + 2];
+            //        for (int i = 0; i < (indexCount * 2 + 2); i++)
+            //        {
+            //            if (i < _gasCount)
+            //            {
+            //                arraysNew[i] = arrays[i];
+            //            }
+            //            else
+            //            {
+            //                arraysNew[i] = rd.Next(100).ToString();
+            //            }
+
+            //        }
+            //        list.Add(arraysNew);
+            //    }
+            //}
+            int measureCount = 0;
+            foreach (string[] arrays in _obervableCollection)
+            {
+                if (arrays[1].Equals("true", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    measureCount++;
+                }
+            }
+            thicknessData = new float[measureCount, _gasCount - 2];
+
+            riData = new float[measureCount, pixelNumber];
+
+            int index = 0;
+            //循环每次测量数据
+            foreach (string[] arrays in _obervableCollection)
+            {
+                if (arrays[1].Equals("true", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    for (int j = 0; j < _gasCount-2; j++)
+                    {
+                        float oneMeasureThicknessData = float.Parse(arrays[(_gasCount - 2 - 1) + j]);
+                        thicknessData[index, j] = oneMeasureThicknessData;
+                    }
+                    foreach (string key in riDataMap.Keys) {
+                        if (key.Equals(arrays[0])) {
+                            for (int j = 0; j < this.pixelNumber; j++)
+                            {
+                                riData[index, j] = riDataMap[key][j];
+                            }
+                        }
+                    }
+
+                    index++;
+                }
+            }
+        }
+
+
     }
 }

@@ -96,7 +96,7 @@ namespace VocsAutoTest.Pages
             timer = new Timer(new TimerCallback(TimerDelegate));
             int period = int.Parse(this.textSaveInterval.Text);
             timer.Change(0, period * 60 * 1000);
-            DataForward.Instance.ReadSpecMeasure += new DataForwardDelegate(GetSpecMeasureData);
+            DataForward.Instance.ReadConcMeasure += new DataForwardDelegate(GetSpecMeasureData);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace VocsAutoTest.Pages
         /// </summary>
         public void Stop_Measure() {
             timer.Dispose();
-            DataForward.Instance.ReadSpecMeasure -= new DataForwardDelegate(GetSpecMeasureData);
+            DataForward.Instance.ReadConcMeasure -= new DataForwardDelegate(GetSpecMeasureData);
         }
 
         private void GetSpecMeasureData(object sender, Command command) {

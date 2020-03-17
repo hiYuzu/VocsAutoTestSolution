@@ -40,45 +40,55 @@ namespace VocsAutoTestCOMM
         /// <param name="data">帧数据</param>
         public static Command Decoder(byte[] data)
         {
-            string msg = ByteStrUtil.ByteToKHex(data);            
-            Console.WriteLine("接收命令: " + msg);
-
-            if (data != null && data.Length > 13)
+            string msg = ByteStrUtil.ByteToKHex(data);
+            Console.WriteLine("解码数据: " + msg);
+            msg = msg.Replace("7D 82", "7D");
+            msg = msg.Replace(" ", "");
+            msg = msg.Substring(4, msg.Length - 12);
+            byte var1 = (byte)Convert.ToByte(msg.Substring(0, 2), 16);
+            byte var2 = (byte)Convert.ToByte(msg.Substring((var1 + 1) * 2, 2), 16);
+            int startIndex = (var1 + var2 + 2) * 2;
+            msg = msg.Substring(startIndex);
+            Command command = new Command
             {
-                if (msg.StartsWith(head) && msg.EndsWith(end))
-                {
-                    msg = msg.Replace("7D 82", "7D");
-                    msg = msg.Replace(" ", "");
-                    msg = msg.Substring(4, msg.Length - 12);
-                    byte var1 = (byte)Convert.ToByte(msg.Substring(0, 2), 16);
-                    byte var2 = (byte)Convert.ToByte(msg.Substring((var1 + 1) * 2, 2), 16);
-                    int startIndex = (var1 + var2 + 2) * 2;
-                    msg = msg.Substring(startIndex);
-                    Command command;
-                    if (msg.Length > 8)
-                    {
-                        command = new Command
-                        {
-                            Cmn = msg.Substring(0, 2),
-                            ExpandCmn = msg.Substring(2, 2),
-                            Data = msg.Substring(8)
-                        };
-                    }
-                    else
-                    {
-                        command = new Command
-                        {
-                            Cmn = msg.Substring(0, 2),
-                            ExpandCmn = msg.Substring(2, 2)
-                        };
-                    }
-                    return command;
-                }
-            }
-            return null;
-
+                Cmn = msg.Substring(0, 2),
+                ExpandCmn = msg.Substring(2, 2),
+                Data = msg.Substring(8)
+            };
+            return command;
         }
         #endregion
+        public static Boolean IsLength(byte[] buffer)
+        {
+            string msg = ByteStrUtil.ByteToKHex(buffer);
+            msg = msg.Replace("7D 82", "7D");
+            byte[] data = ByteStrUtil.HexToByte(msg);
+            int var1 = data[2];
+            int index = var1 + 3;
+            int var2 = data[index];
+            index = var1 + var2 + 6;
+            int var3 = (int)(((data[index] & 0xFF) << 8) | (data[index + 1] & 0xFF));
+            int length = var1 + var2 + var3 + 12;
+            return length == data.Length;
+        }
+        public static int EndIndex(byte[] buffer)
+        {
+            string msg = ByteStrUtil.ByteToHex(buffer);
+            return msg.IndexOf("7D7D") / 2;
+        }
+        public static Boolean JY(byte[] buffer)
+        {
+            string msg = ByteStrUtil.ByteToKHex(buffer);
+            msg = msg.Replace("7D 82", "7D");
+            msg = msg.Replace(" ", "");
+            string crc = Crc(msg.Substring(4, msg.Length - 12));
+            string crcData = msg.Substring(msg.Length - 8, 4);
+            if (crcData.Equals(crc))
+            {
+                return true;
+            }
+            return false;
+        }
         private static string Crc(string data)
         {
             string crcData = CRC.CRC16(data);

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using VocsAutoTest.Tools;
 using VocsAutoTestBLL;
 using VocsAutoTestCOMM;
 
@@ -90,7 +87,7 @@ namespace VocsAutoTest.Pages
             Array.Copy(ByteStrUtil.HexToByte(command.Data), 1, data, 0, 4);
             Dispatcher.Invoke(new Action(() =>
             {
-                ControlVol.Text = BitConverter.ToSingle(DataConvert.GetInstance().ByteReverse(data), 0).ToString("f1");
+                ControlVol.Text = BitConverter.ToSingle(DataConvertUtil.ByteReverse(data), 0).ToString("f1");
             }));
         }
         /// <summary>
@@ -121,7 +118,7 @@ namespace VocsAutoTest.Pages
                     {
                         byte[] time = new byte[2];
                         Array.Copy(data, 2, time, 0, 2);
-                        IntegrationTime.Text = BitConverter.ToUInt16(DataConvert.GetInstance().ByteReverse(time), 0).ToString();
+                        IntegrationTime.Text = BitConverter.ToUInt16(DataConvertUtil.ByteReverse(time), 0).ToString();
                     }));
                     break;
                 default:

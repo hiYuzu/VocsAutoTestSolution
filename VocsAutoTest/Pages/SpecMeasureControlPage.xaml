@@ -1,0 +1,87 @@
+﻿<Page x:Class="VocsAutoTest.Pages.SpecMeasureControlPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VocsAutoTest.Pages"
+      mc:Ignorable="d" 
+      d:DesignWidth="450"
+      Title="SpecMeasureControlPage" Background="White">
+
+    <Grid Margin="0" Height="auto">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="225"/>
+            <ColumnDefinition Width="225"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0">
+            <TextBlock HorizontalAlignment="Left" Margin="20,13,0,0" TextWrapping="Wrap" Text="传感器类型" VerticalAlignment="Top"/>
+            <ComboBox x:Name="sensorType" HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top" Width="120">
+                <ComboBoxItem Content="2048CCD"/>
+                <ComboBoxItem Content="1024"/>
+                <ComboBoxItem Content="长512"/>
+                <ComboBoxItem Content="短512" IsSelected="True"/>
+                <ComboBoxItem Content="256"/>
+            </ComboBox>
+            <CheckBox x:Name="ShowTitle" Content="是否显示标题" HorizontalAlignment="Left" Margin="20,38,0,0" VerticalAlignment="Top" IsChecked="True" Checked="ShowTitle_Checked" Unchecked="ShowTitle_Unchecked"/>
+            <TextBlock HorizontalAlignment="Left" Margin="20,76,0,0" TextWrapping="Wrap" Text="X轴" VerticalAlignment="Top"/>
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="26" Width="100" Margin="16,96,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="wavelength" Content="波长" GroupName="xAxis" HorizontalAlignment="Left" Margin="20,102,0,0" VerticalAlignment="Top" Unchecked="Wavelength_Unchecked"/>
+            <RadioButton x:Name="pixel" Content="像素" GroupName="xAxis" HorizontalAlignment="Left" Margin="68,102,0,0" VerticalAlignment="Top" IsChecked="True" Unchecked="Pixel_Unchecked"/>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="0">
+            <TextBlock HorizontalAlignment="Left" Margin="0,13,0,0" TextWrapping="Wrap" Text="第一参量" VerticalAlignment="Top"/>
+            <TextBox x:Name="firstParam" HorizontalAlignment="Left" Height="18" Margin="53,12,0,0" TextWrapping="Wrap" Text="185" VerticalAlignment="Top" Width="45" Style="{DynamicResource textStyle}"/>
+            <Button x:Name="SetWavelength" Content="设置波长" HorizontalAlignment="Left" Margin="124,8,0,0" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource btnOther}" Click="SetWavelength_Click"/>
+            <CheckBox x:Name="ShowTag" Content="是否显示标签" HorizontalAlignment="Left" Margin="0,42,0,0" VerticalAlignment="Top" IsChecked="True" Checked="ShowTag_Checked" Unchecked="ShowTag_Unchecked"/>
+            <Border BorderBrush="Gray" BorderThickness="0, 1, 0, 1" HorizontalAlignment="Left" Height="83" Margin="-225,68,0,0" VerticalAlignment="Top" Width="450"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,76,0,0" TextWrapping="Wrap" Text="Y轴" VerticalAlignment="Top"/>
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="26" Width="123" Margin="0,96,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="voltageValue" Content="电压值" GroupName="yAxis" HorizontalAlignment="Left" Margin="4,102,0,0" VerticalAlignment="Top" IsChecked="True" Unchecked="VoltageValue_Unchecked"/>
+            <RadioButton x:Name="integralValue" Content="积分值" GroupName="yAxis" HorizontalAlignment="Left" Margin="64,102,0,0" VerticalAlignment="Top" Unchecked="IntegralValue_Unchecked"/>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <CheckBox x:Name="showSpecific" Content="显示具体值" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="ShowSpecific_Checked" Unchecked="ShowSpecific_Unchecked"/>
+            <TextBlock x:Name="xAxisName" HorizontalAlignment="Left" Margin="10,30,0,0" TextWrapping="Wrap" Text="X(像素)" VerticalAlignment="Top"/>
+            <TextBox x:Name="xPixel" HorizontalAlignment="Left" Height="18" Margin="68,29,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" Style="{DynamicResource textStyle}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,55,0,0" TextWrapping="Wrap" Text="MES-Y" VerticalAlignment="Top"/>
+            <TextBox x:Name="MESY" HorizontalAlignment="Left" Height="18" Margin="68,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" Style="{DynamicResource textStyle}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="数据保存" VerticalAlignment="Top"/>
+            <RadioButton Content="当前测量单次保存" GroupName="SaveData" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Checked="SingleSave_Checked" Unchecked="SingleSave_Unchecked"/>
+            <RadioButton x:Name="ContinSave" Content="连续保存" GroupName="SaveData" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" IsChecked="True"/>
+            <RadioButton x:Name="noIntervalSave" Content="无间隔保存" GroupName="SaveData_Interval" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top" IsChecked="True"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,175,0,0" TextWrapping="Wrap" Text="保存个数" VerticalAlignment="Top"/>
+            <TextBox x:Name="saveNum" HorizontalAlignment="Left" Height="18" Margin="68,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45" Text="1000" Style="{DynamicResource textStyle}"/>
+
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <TextBlock HorizontalAlignment="Left" Margin="0,30,0,0" TextWrapping="Wrap" Text="选择导入曲线" VerticalAlignment="Top"/>
+            <ComboBox x:Name="importCurve" HorizontalAlignment="Left" Height="18" Margin="85,29,0,0" VerticalAlignment="Top" Width="90"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,55,0,0" TextWrapping="Wrap" Text="IMP-Y" VerticalAlignment="Top"/>
+            <TextBox x:Name="IMPY" HorizontalAlignment="Left" Height="18" Margin="85,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" Style="{DynamicResource textStyle}"/>
+            <Border BorderBrush="Gray" BorderThickness="0, 1, 0, 1" HorizontalAlignment="Left" Height="66" Margin="-225,84,0,0" VerticalAlignment="Top" Width="450"/>
+            <Button x:Name="save" Content="保存" HorizontalAlignment="Left" Margin="50,107,0,0" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource btnOther}" IsEnabled="False"/>
+            <RadioButton x:Name="intervalSave" Content="间隔保存" GroupName="SaveData_Interval" HorizontalAlignment="Left" Margin="0,156,0,0" VerticalAlignment="Top" Checked="IntervalSaveData_Checked" Unchecked="UnIntervalSaveData_Checked"/>
+            <TextBox x:Name="IntervalTime" HorizontalAlignment="Left" Height="18" Margin="85,154,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45" IsEnabled="False" Style="{DynamicResource textStyle}"/>
+            <TextBlock HorizontalAlignment="Left" Margin="135,154,0,0" TextWrapping="Wrap" Text="间隔(s)" VerticalAlignment="Top"/>
+            <Button x:Name="startSave" Content="开始保存" HorizontalAlignment="Left" Margin="50,175,0,0" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource btnOther}" Click="StartSave_Click"/>
+        </Grid>
+        <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2">
+            <Border BorderBrush="Gray" BorderThickness="0, 1, 0, 1" HorizontalAlignment="Left" Height="38" Margin="0,0,0,0" VerticalAlignment="Top" Width="450" />
+            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="光谱文件目录" VerticalAlignment="Top"/>
+            <TextBox x:Name="FolderPath" HorizontalAlignment="Left" Height="18" Margin="90,9,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="auto" MinWidth="90" MaxWidth="300" MouseDoubleClick="SetFolderBtn_Click" IsReadOnly="True" Style="{DynamicResource textStyle}"/>
+            <Button x:Name="SetFolderBtn" Content="..." HorizontalAlignment="Left" Margin="400,8,0,0" VerticalAlignment="Top" Width="40" Height="20" Style="{StaticResource btnOther}" Click="SetFolderBtn_Click"/>
+            <Button x:Name="ImportHistory" Content="导入历史数据" HorizontalAlignment="Left" Margin="50,60,0,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource btnOther}" Click="ImportHistory_Click"/>
+            <Button x:Name="ClearCurrentSeries" Content="清除当次测量" HorizontalAlignment="Left" Margin="186,60,0,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource btnOther}" Click="ClearCurrentSeries_Click"/>
+            <Button x:Name="SetSpecLimit" Content="设置光谱限值" HorizontalAlignment="Right" Margin="0,60,50,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource btnOther}" Click="SetSpecLimit_Click"/>
+            <Button x:Name="ClearHistoricalSeries" Content="清除历史曲线" HorizontalAlignment="Left" Margin="50,92,0,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource ResourceKey=btnOther}" Click="ClearHistoricalSeries_Click"/>
+            <Button x:Name="ClearAllSeries" Content="清除全部曲线" HorizontalAlignment="Left" Margin="186,92,0,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource btnOther}" Click="ClearAllSeries_Click"/>
+            <Button x:Name="ComputeTopPoint" Content="计算顶点" HorizontalAlignment="Right" Margin="0,92,50,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource btnOther}" Click="ComputeTopPoint_Click"/>
+        </Grid>
+
+    </Grid>
+</Page>

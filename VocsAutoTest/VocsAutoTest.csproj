@@ -41,6 +41,14 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="MWArray, Version=2.11.1.0, Culture=neutral, PublicKeyToken=e1d84a0da19db86f, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MWArray.dll</HintPath>
+    </Reference>
+    <Reference Include="p1, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\p1.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -70,6 +78,13 @@
     <Compile Include="AlgorithmSettingWindow.xaml.cs">
       <DependentUpon>AlgorithmSettingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Algorithm\Algorithm.cs" />
+    <Compile Include="Algorithm\Algorithm1.cs" />
+    <Compile Include="Algorithm\AlgorithmDataNode.cs" />
+    <Compile Include="Algorithm\AlgorithmPro.cs" />
+    <Compile Include="Algorithm\FileControl.cs" />
+    <Compile Include="Algorithm\GasNode.cs" />
+    <Compile Include="Algorithm\SpectrumFile.cs" />
     <Compile Include="Log4Net\Log4NetUtil.cs" />
     <Compile Include="Pages\AlgoGeneraControlPage.xaml.cs">
       <DependentUpon>AlgoGeneraControlPage.xaml</DependentUpon>
@@ -83,11 +98,14 @@
     <Compile Include="Pages\LeftControlPage.xaml.cs">
       <DependentUpon>LeftControlPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\VocsMgmtControlPage.xaml.cs">
-      <DependentUpon>VocsMgmtControlPage.xaml</DependentUpon>
+    <Compile Include="Pages\SpecMeasurePage.xaml.cs">
+      <DependentUpon>SpecMeasurePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\VocsMgmtPage.xaml.cs">
-      <DependentUpon>VocsMgmtPage.xaml</DependentUpon>
+    <Compile Include="Pages\SpecMeasureControlPage.xaml.cs">
+      <DependentUpon>SpecMeasureControlPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AlgoGeneraPage.xaml.cs">
+      <DependentUpon>AlgoGeneraPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
@@ -138,11 +156,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\VocsMgmtControlPage.xaml">
+    <Page Include="Pages\SpecMeasurePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\VocsMgmtPage.xaml">
+    <Page Include="Pages\SpecMeasureControlPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AlgoGeneraPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

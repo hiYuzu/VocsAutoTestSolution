@@ -1,0 +1,2 @@
+2020-03-16 15:33:41,802[1] INFO  [VocsAutoTest.Log4Net.Log4NetUtil] : 当前串口信息：串口号:COM3，波特率:57600，校检:无校检，数据位:8，停止位:1
+2020-03-16 15:33:45,168[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.InvalidOperationException:调用线程无法访问此对象，因为另一个线程拥有该对象。
