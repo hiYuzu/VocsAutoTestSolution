@@ -55,13 +55,14 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_con_gas1_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas1_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas1_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas1_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas1_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="标准差" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas1_cor" Grid.Row="1" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas1_cor" Grid.Row="2" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas1_min" Grid.Row="2" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas1_min" Grid.Row="1" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="温度(℃)" Grid.ColumnSpan="5" Grid.Row="3" Grid.RowSpan="2" Margin="0,5">
@@ -80,9 +81,9 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_temp_gas1_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_temp_gas1_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_temp_gas1_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_temp_gas1_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_temp_gas1_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_temp_gas1_min" Grid.Row="2" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>
@@ -103,9 +104,9 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_press_gas1_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_press_gas1_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_press_gas1_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_press_gas1_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_press_gas1_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_press_gas1_min" Grid.Row="2" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>
@@ -172,13 +173,13 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_con_gas2_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas2_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas2_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas2_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas2_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="标准差" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas2_cor" Grid.Row="1" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas2_min" Grid.Row="1" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas2_min" Grid.Row="2" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas2_cor" Grid.Row="2" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="温度(℃)" Grid.ColumnSpan="5" Grid.Row="3" Grid.RowSpan="2" Margin="0,5">
@@ -197,9 +198,9 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_temp_gas2_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_temp_gas2_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_temp_gas2_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_temp_gas2_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_temp_gas2_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_temp_gas2_min" Grid.Row="2" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>
@@ -220,9 +221,9 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_press_gas2_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_press_gas2_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_press_gas2_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_press_gas2_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_press_gas2_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_press_gas2_min" Grid.Row="2" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>
@@ -289,13 +290,13 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_con_gas3_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas3_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas3_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas3_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas3_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="标准差" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas3_cor" Grid.Row="1" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas3_min" Grid.Row="1" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas3_min" Grid.Row="2" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas3_cor" Grid.Row="2" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="温度(℃)" Grid.ColumnSpan="5" Grid.Row="3" Grid.RowSpan="2" Margin="0,5">
@@ -314,9 +315,9 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_temp_gas3_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_temp_gas3_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_temp_gas3_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_temp_gas3_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_temp_gas3_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_temp_gas3_min" Grid.Row="2" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>
@@ -337,9 +338,9 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_press_gas3_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_press_gas3_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_press_gas3_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_press_gas3_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_press_gas3_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_press_gas3_min" Grid.Row="2" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>
@@ -406,13 +407,13 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_con_gas4_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas4_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas4_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas4_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas4_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="标准差" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas4_cor" Grid.Row="1" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas4_min" Grid.Row="1" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_con_gas4_min" Grid.Row="2" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_con_gas4_cor" Grid.Row="2" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="温度(℃)" Grid.ColumnSpan="5" Grid.Row="3" Grid.RowSpan="2" Margin="0,5">
@@ -431,9 +432,9 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_temp_gas4_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_temp_gas4_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_temp_gas4_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_temp_gas4_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_temp_gas4_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_temp_gas4_min" Grid.Row="2" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>
@@ -454,9 +455,9 @@
                                 <Label Content="当前值" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_press_gas4_cur" Grid.Row="0" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="平均值" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_press_gas4_avg" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_press_gas4_max" Grid.Row="0" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最大值" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                                <TextBox x:Name="text_press_gas4_max" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                                <TextBox x:Name="text_press_gas4_avg" Grid.Row="1" Grid.Column="1" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                                 <Label Content="最小值" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                                 <TextBox x:Name="text_press_gas4_min" Grid.Row="2" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                             </Grid>

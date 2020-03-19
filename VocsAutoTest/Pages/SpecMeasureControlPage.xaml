@@ -51,11 +51,11 @@
             <TextBlock HorizontalAlignment="Left" Margin="10,55,0,0" TextWrapping="Wrap" Text="MES-Y" VerticalAlignment="Top"/>
             <TextBox x:Name="MESY" HorizontalAlignment="Left" Height="18" Margin="68,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" Style="{DynamicResource textStyle}"/>
             <TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="数据保存" VerticalAlignment="Top"/>
-            <RadioButton Content="当前测量单次保存" GroupName="SaveData" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Checked="SingleSave_Checked" Unchecked="SingleSave_Unchecked"/>
+            <RadioButton x:Name="SingleSave" Content="当前测量单次保存" GroupName="SaveData" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Checked="SingleSave_Checked" Unchecked="SingleSave_Unchecked"/>
             <RadioButton x:Name="ContinSave" Content="连续保存" GroupName="SaveData" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" IsChecked="True"/>
             <RadioButton x:Name="noIntervalSave" Content="无间隔保存" GroupName="SaveData_Interval" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top" IsChecked="True"/>
             <TextBlock HorizontalAlignment="Left" Margin="10,175,0,0" TextWrapping="Wrap" Text="保存个数" VerticalAlignment="Top"/>
-            <TextBox x:Name="saveNum" HorizontalAlignment="Left" Height="18" Margin="68,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45" Text="1000" Style="{DynamicResource textStyle}"/>
+            <TextBox x:Name="saveNum" HorizontalAlignment="Left" Height="18" Margin="68,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45" Text="10" Style="{DynamicResource textStyle}"/>
 
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1">
@@ -64,9 +64,9 @@
             <TextBlock HorizontalAlignment="Left" Margin="0,55,0,0" TextWrapping="Wrap" Text="IMP-Y" VerticalAlignment="Top"/>
             <TextBox x:Name="IMPY" HorizontalAlignment="Left" Height="18" Margin="85,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" Style="{DynamicResource textStyle}"/>
             <Border BorderBrush="Gray" BorderThickness="0, 1, 0, 1" HorizontalAlignment="Left" Height="66" Margin="-225,84,0,0" VerticalAlignment="Top" Width="450"/>
-            <Button x:Name="save" Content="保存" HorizontalAlignment="Left" Margin="50,107,0,0" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource btnOther}" IsEnabled="False"/>
+            <Button x:Name="singleSave" Content="保存" HorizontalAlignment="Left" Margin="50,107,0,0" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource btnOther}" IsEnabled="False" Click="SingleSave_Click"/>
             <RadioButton x:Name="intervalSave" Content="间隔保存" GroupName="SaveData_Interval" HorizontalAlignment="Left" Margin="0,156,0,0" VerticalAlignment="Top" Checked="IntervalSaveData_Checked" Unchecked="UnIntervalSaveData_Checked"/>
-            <TextBox x:Name="IntervalTime" HorizontalAlignment="Left" Height="18" Margin="85,154,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45" IsEnabled="False" Style="{DynamicResource textStyle}"/>
+            <TextBox x:Name="intervalTime" HorizontalAlignment="Left" Height="18" Margin="85,154,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45" IsEnabled="False" Style="{DynamicResource textStyle}"/>
             <TextBlock HorizontalAlignment="Left" Margin="135,154,0,0" TextWrapping="Wrap" Text="间隔(s)" VerticalAlignment="Top"/>
             <Button x:Name="startSave" Content="开始保存" HorizontalAlignment="Left" Margin="50,175,0,0" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource btnOther}" Click="StartSave_Click"/>
         </Grid>

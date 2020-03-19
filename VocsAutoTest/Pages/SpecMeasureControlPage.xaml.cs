@@ -2,7 +2,9 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using VocsAutoTest.Log4Net;
+using VocsAutoTest.Tools;
+using VocsAutoTestBLL.Impl;
+using VocsAutoTestCOMM;
 
 namespace VocsAutoTest.Pages
 {
@@ -13,6 +15,7 @@ namespace VocsAutoTest.Pages
     {
         private int pixelNumber = 512;
         private readonly SpecMeasurePage specPage;
+        private SpecDataSave specDataSave;
         public SpecMeasureControlPage(SpecMeasurePage page)
         {
             InitializeComponent();
@@ -20,6 +23,8 @@ namespace VocsAutoTest.Pages
             {
                 this.specPage = page;
             }
+            specDataSave = SpecDataSave.Instance;
+            FolderPath.Text = specDataSave.SpecDataSavePath;
             specPage.SetWave(3, pixelNumber, 185);
         }
         /// <summary>
@@ -29,11 +34,11 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void IntervalSaveData_Checked(object sender, RoutedEventArgs e)
         {
-            IntervalTime.IsEnabled = true;
+            intervalTime.IsEnabled = true;
         }
         private void UnIntervalSaveData_Checked(object sender, RoutedEventArgs e)
         {
-            IntervalTime.IsEnabled = false;
+            intervalTime.IsEnabled = false;
         }
         /// <summary>
         /// 设置光谱文件目录
@@ -46,23 +51,8 @@ namespace VocsAutoTest.Pages
             if(openFolderDialog.ShowDialog() == DialogResult.OK)
             {
                 FolderPath.Text = openFolderDialog.SelectedPath;
-                Log4NetUtil.Info("光谱文件目录已设置为：" + FolderPath.Text, Window.GetWindow(this) as MainWindow);
-            }
-        }
-        /// <summary>
-        /// 开始保存（连续保存）TODO..
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StartSave_Click(object sender, RoutedEventArgs e)
-        {
-            if ("开始保存".Equals(startSave.Content.ToString()))
-            {
-                startSave.Content = "停止保存";
-            }
-            else
-            {
-                startSave.Content = "开始保存";
+                specDataSave.SpecDataSavePath = openFolderDialog.SelectedPath;
+                ExceptionUtil.Instance.LogMethod("光谱文件目录已设置为：" + FolderPath.Text);
             }
         }
         /// <summary>
@@ -198,38 +188,18 @@ namespace VocsAutoTest.Pages
             }
         }
         /// <summary>
-        /// 当前测量单次保存UI变化
+        /// 当前测量保存UI变化
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SingleSave_Checked(object sender, RoutedEventArgs e)
         {
-            if ("停止保存".Equals(startSave.Content.ToString()))
-            {
-                if(MessageBoxResult.Yes == System.Windows.MessageBox.Show("当前正在连续保存，是否停止？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Question))
-                {
-                    StartSave_Click(null, null);
-                    save.IsEnabled = true;
-                    startSave.IsEnabled = false;
-                    intervalSave.IsEnabled = false;
-                    noIntervalSave.IsEnabled = false;
-                    IntervalTime.IsEnabled = false;
-                    saveNum.IsEnabled = false;
-                }
-                else
-                {
-                    ContinSave.IsChecked = true;
-                }
-            }
-            if ("开始保存".Equals(startSave.Content.ToString()))
-            {
-                save.IsEnabled = true;
-                startSave.IsEnabled = false;
-                intervalSave.IsEnabled = false;
-                noIntervalSave.IsEnabled = false;
-                IntervalTime.IsEnabled = false;
-                saveNum.IsEnabled = false;
-            }
+            singleSave.IsEnabled = true;
+            startSave.IsEnabled = false;
+            intervalSave.IsEnabled = false;
+            noIntervalSave.IsEnabled = false;
+            intervalTime.IsEnabled = false;
+            saveNum.IsEnabled = false;
         }
         /// <summary>
         /// 连续保存UI变化
@@ -238,11 +208,11 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void SingleSave_Unchecked(object sender, RoutedEventArgs e)
         {
-            save.IsEnabled = false;
+            singleSave.IsEnabled = false;
             startSave.IsEnabled = true;
             intervalSave.IsEnabled = true;
             noIntervalSave.IsEnabled = true;
-            IntervalTime.IsEnabled = true;
+            intervalTime.IsEnabled = true;
             saveNum.IsEnabled = true;
         }
         /// <summary>
@@ -311,6 +281,76 @@ namespace VocsAutoTest.Pages
         private void ComputeTopPoint_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        /// <summary>
+        /// 单次保存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SingleSave_Click(object sender, RoutedEventArgs e)
+        {
+            string[] data = specPage.CurrentData;
+            if (data == null)
+            {
+                System.Windows.MessageBox.Show("没有可以保存的数据");
+                return;
+            }
+            specDataSave.SaveCurrentData(data);
+        }
+        /// <summary>
+        /// 开始连续保存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StartSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (!specDataSave.StartSave && !MeasureMgrImpl.Instance.StartMeasure)
+            {
+                System.Windows.MessageBox.Show("请先开启连续测量");
+                return;
+            }
+            int saveCount;
+            int intervalTime = 0;
+            bool isIntervalSave = false;
+            try
+            {
+                saveCount = int.Parse(saveNum.Text);
+                if ((bool)intervalSave.IsChecked)
+                {
+                    isIntervalSave = true;
+                    intervalTime = int.Parse(this.intervalTime.Text) * 1000;
+                }
+            }
+            catch
+            {
+                System.Windows.MessageBox.Show("参数错误！");
+                return;
+            }
+            specDataSave.StartSave = !specDataSave.StartSave;
+            if (specDataSave.StartSave)
+            {
+                specDataSave.saveCount = saveCount;
+                specDataSave.isIntervalSave = isIntervalSave;
+                specDataSave.intervalTime = intervalTime;
+                startSave.Content = "停止保存";
+                SingleSave.IsEnabled = false;
+                ContinSave.IsEnabled = false;
+                intervalSave.IsEnabled = false;
+                noIntervalSave.IsEnabled = false;
+                this.intervalTime.IsEnabled = false;
+                saveNum.IsEnabled = false;
+            }
+            else
+            {
+                startSave.Content = "开始保存";
+                SingleSave.IsEnabled = true;
+                ContinSave.IsEnabled = true;
+                intervalSave.IsEnabled = true;
+                noIntervalSave.IsEnabled = true;
+                this.intervalTime.IsEnabled = true;
+                saveNum.IsEnabled = true;
+                specDataSave.StartSave = false;
+            } 
         }
     }
 }

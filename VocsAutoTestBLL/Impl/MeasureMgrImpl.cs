@@ -80,6 +80,8 @@ namespace VocsAutoTestBLL.Impl
                         break;
                     }
                     Measure();
+                    if(measureTimes == 1)
+                        break;
                     int waite = timeInterval * 1000;
                     while (waite > 0)
                     {
@@ -123,15 +125,7 @@ namespace VocsAutoTestBLL.Impl
             else if (pageFlag == 2)
             {
                 //浓度测量
-                string data = "00";
-                for (int i = 0; i < 4; i++)
-                {
-                    data += " " + Convert.ToString(tempValues[i], 16);
-                }
-                for (int i = 0; i < 4; i++)
-                {
-                    data += " " + Convert.ToString(pressValues[i], 16);
-                }
+                string data = "00" + ByteStrUtil.ByteToHexStr(tempValues) + ByteStrUtil.ByteToHexStr(pressValues);
                 SuperSerialPort.Instance.Send(new Command { Cmn = "29", ExpandCmn = "55", Data = data }, true);
             }
             else if (pageFlag == 3)

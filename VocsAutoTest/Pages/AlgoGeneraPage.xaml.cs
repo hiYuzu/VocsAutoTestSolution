@@ -17,13 +17,15 @@ namespace VocsAutoTest.Pages
     /// </summary>
     public partial class AlgoGeneraPage : Page
     {
-        private int pixelNumber = 0;
+        private int pixelNumber = 512;
         private float[] waveLength = null; //像素对应的波长
         private const string HEAD_SPEC = "SPEC";
+        private const string TITLE = "光谱曲线";
         private string name;
         private List<int> xList;
         private List<List<string>> yListCollect;
         private int lineNum = 0;
+        private Dictionary<string, DataSeries> dataSeriesMap = new Dictionary<string, DataSeries>();//光谱数据
         private Chart chart;
         private Title title = null;
         public bool IsPixel { get; set; }
@@ -46,6 +48,47 @@ namespace VocsAutoTest.Pages
             IsVoltage = true;
             XAxisTitle = "像素";
             YAxisTitle = "积分值";
+            InitChart();
+        }
+
+        /// <summary>
+        /// 初始化折线图
+        /// </summary>
+        private void InitChart()
+        {
+            SpectrumChart.Children.Clear();
+            chart = new Chart
+            {
+                Margin = new Thickness(5, 5, 5, 5),
+                ToolBarEnabled = false,
+                ScrollingEnabled = false,
+                View3D = true
+            };
+            title = new Title
+            {
+                Text = TITLE,
+                Padding = new Thickness(0, 10, 5, 0)
+            };
+            chart.Titles.Add(title);
+            chart.ZoomingEnabled = true;
+            Axis xAxis = new Axis
+            {
+                AxisMinimum = 0,
+                Title = XAxisTitle,
+                IntervalType = IntervalTypes.Auto,
+                Interval = pixelNumber / 32
+            };
+            chart.AxesX.Add(xAxis);
+            Axis yAxis = new Axis
+            {
+                AxisMinimum = 0,
+                Title = YAxisTitle,
+                AxisType = AxisTypes.Primary
+            };
+            chart.AxesY.Add(yAxis);
+            Grid gr = new Grid();
+            gr.Children.Add(chart);
+            SpectrumChart.Children.Add(gr);
         }
         /// <summary>
         /// 设置波长
@@ -53,41 +96,41 @@ namespace VocsAutoTest.Pages
         /// <param name="index">传感器类型</param>
         /// <param name="pixels">象素数</param>
         /// <param name="wavepara">第一参数</param>
-        public void SetWave(int index, int pixels, float wavepara)
-        {
-            pixelNumber = pixels;
-            if (pixelNumber == 2048)
-            {
-                FACTOR_VOL_TO_INTEG = 2.5 / 65536.0;
-            }
-            else
-            {
-                FACTOR_VOL_TO_INTEG = 4.096 / 65536.0;
-            }
-            waveLength = new float[pixels];
-            for (int i = 0; i < pixels; i++)
-            {
-                switch (index)
-                {
-                    case 0://2048
-                        waveLength[i] = (float)(wavepara + 0.1792 * i - 2.72E-05 * i * i + 2.25E-09 * i * i * i);
-                        break;
-                    case 1://1024
-                        waveLength[i] = (float)(wavepara + 0.28 * i - 2.25E-5 * i * i - 2E-9 * i * i * i);
+        //public void SetWave(int index, int pixels, float wavepara)
+        //{
+        //    pixelNumber = pixels;
+        //    if (pixelNumber == 2048)
+        //    {
+        //        FACTOR_VOL_TO_INTEG = 2.5 / 65536.0;
+        //    }
+        //    else
+        //    {
+        //        FACTOR_VOL_TO_INTEG = 4.096 / 65536.0;
+        //    }
+        //    waveLength = new float[pixels];
+        //    for (int i = 0; i < pixels; i++)
+        //    {
+        //        switch (index)
+        //        {
+        //            case 0://2048
+        //                waveLength[i] = (float)(wavepara + 0.1792 * i - 2.72E-05 * i * i + 2.25E-09 * i * i * i);
+        //                break;
+        //            case 1://1024
+        //                waveLength[i] = (float)(wavepara + 0.28 * i - 2.25E-5 * i * i - 2E-9 * i * i * i);
 
-                        break;
-                    case 2://长512
-                        waveLength[i] = (float)(wavepara + 0.56 * i - 9E-5 * i * i + 1.6E-8 * i * i * i);
+        //                break;
+        //            case 2://长512
+        //                waveLength[i] = (float)(wavepara + 0.56 * i - 9E-5 * i * i + 1.6E-8 * i * i * i);
 
-                        break;
-                    case 3://短512
-                        waveLength[i] = (float)(wavepara + 0.28 * i - 2.25E-5 * i * i - 2E-9 * i * i * i);
-                        break;
-                    case 4://256
-                        break;
-                }
-            }
-        }
+        //                break;
+        //            case 3://短512
+        //                waveLength[i] = (float)(wavepara + 0.28 * i - 2.25E-5 * i * i - 2E-9 * i * i * i);
+        //                break;
+        //            case 4://256
+        //                break;
+        //        }
+        //    }
+        //}
         /// <summary>
         /// 导入历史数据
         /// </summary>
@@ -186,6 +229,7 @@ namespace VocsAutoTest.Pages
         public void CreateChartSpline()
         {
             SpectrumChart.Children.Clear();
+            dataSeriesMap.Clear();
             if (lineNum == 0)
             {
                 return;
@@ -235,10 +279,11 @@ namespace VocsAutoTest.Pages
         /// <returns>数据线</returns>
         private DataSeries SetDataSeries(int i)
         {
+            string index = Convert.ToString(i + 1);
             DataSeries dataSeries = new DataSeries
             {
                 RenderAs = RenderAs.Spline,
-                LegendText = "数据" + i,
+                LegendText = index,
                 XValueType = ChartValueTypes.Auto
             };
             for (int j = 0; j < xList.Count; j++)
@@ -251,51 +296,77 @@ namespace VocsAutoTest.Pages
                 dataPoint.YValue = double.Parse(yListCollect[i][j]);
                 dataSeries.DataPoints.Add(dataPoint);
             }
+            dataSeriesMap.Add(index, dataSeries);
             return dataSeries;
+        }
+        /// <summary>
+        /// 显示数据线
+        /// </summary>
+        /// <param name="index">lineNum</param>
+        /// <returns>数据线</returns>
+        public void RecoveryDataSeries(string index)
+        {
+            if (dataSeriesMap.ContainsKey(index))
+            {
+                DataSeries dataSeries = dataSeriesMap[index];
+                chart.Series.Add(dataSeries);
+            }
         }
         /// <summary>
         /// 是否显示图像标题/标签
         /// </summary>
         /// <param name="isShow"></param>
-        public void IsShow(int isShow)
-        {
-            if (title != null)
-            {
-                switch (isShow)
-                {
-                    case 0:
-                        title.Enabled = false;
-                        break;
-                    case 1:
-                        title.Enabled = true;
-                        break;
-                    case 2:
-                        Console.WriteLine("隐藏Tag");
-                        break;
-                    case 3:
-                        Console.WriteLine("显示Tag");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+        //public void IsShow(int isShow)
+        //{
+        //    if (title != null)
+        //    {
+        //        switch (isShow)
+        //        {
+        //            case 0:
+        //                title.Enabled = false;
+        //                break;
+        //            case 1:
+        //                title.Enabled = true;
+        //                break;
+        //            case 2:
+        //                Console.WriteLine("隐藏Tag");
+        //                break;
+        //            case 3:
+        //                Console.WriteLine("显示Tag");
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //}
         /// <summary>
         /// 得到像素点对应的波长
         /// </summary>
         /// <param name="pixel">像素</param>
         /// <returns></returns>
-        public float GetWaveByPixel(int pixel)
+        //public float GetWaveByPixel(int pixel)
+        //{
+        //    if (waveLength == null)
+        //    {
+        //        MessageBox.Show("x轴数据无法转换为波长！");
+        //    }
+        //    if (pixel >= waveLength.Length)
+        //    {
+        //        return float.NaN;
+        //    }
+        //    return waveLength[pixel];
+        //}
+
+        /// <summary>
+        /// 清除全部曲线
+        /// </summary>
+        public void RemoveSeriesByIndex(string index)
         {
-            if (waveLength == null)
+            if (dataSeriesMap.ContainsKey(index))
             {
-                MessageBox.Show("x轴数据无法转换为波长！");
+                chart.Series.Remove(dataSeriesMap[index]);
             }
-            if (pixel >= waveLength.Length)
-            {
-                return float.NaN;
-            }
-            return waveLength[pixel];
         }
+
     }
 }

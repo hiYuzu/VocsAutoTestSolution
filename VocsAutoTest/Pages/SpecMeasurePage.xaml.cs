@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using Visifire.Charts;
+using VocsAutoTest.Tools;
 using VocsAutoTestBLL.Impl;
 using VocsAutoTestBLL.Interface;
 
@@ -22,8 +23,6 @@ namespace VocsAutoTest.Pages
         private const string TITLE = "光谱曲线";
         //x，y轴历史数据
         private List<List<string>> yListCollect;
-        //当前测量数据
-        private string[] currentData;
         private int lineNum = 0;
         //测量数据线
         private DataSeries currentDataSeries = null;
@@ -36,6 +35,7 @@ namespace VocsAutoTest.Pages
         public bool TitleEnabled { get; set; }
         //电压积分转换系数
         private double FACTOR_VOL_TO_INTEG = 4.096 / 65536.0;
+        public string[] CurrentData { get; private set; }
 
         public SpecMeasurePage()
         {
@@ -101,7 +101,11 @@ namespace VocsAutoTest.Pages
         /// <param name="specData"></param>
         public void ImportCurrentData(object sender, ushort[] specData)
         {
-            currentData = Array.ConvertAll<ushort, string>(specData, new Converter<ushort, string>(UshortToString));
+            CurrentData = Array.ConvertAll<ushort, string>(specData, new Converter<ushort, string>(UshortToString));
+            if (SpecDataSave.Instance.StartSave)
+            {
+                SpecDataSave.Instance.SaveSpecDataContin(CurrentData);
+            }
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 CreateCurrentChart();
@@ -122,7 +126,7 @@ namespace VocsAutoTest.Pages
             {
                 chart.Series.Remove(currentDataSeries);
             }
-            currentDataSeries = SetDataSeries(new List<string>(currentData), -1);
+            currentDataSeries = SetDataSeries(new List<string>(CurrentData), -1);
             chart.Series.Add(currentDataSeries);
         }
         /// <summary>

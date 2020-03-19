@@ -1,3 +1,0 @@
-2020-03-16 14:38:22,583[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.InvalidOperationException:调用线程无法访问此对象，因为另一个线程拥有该对象。
-2020-03-16 14:38:23,018[DataThread] DEBUG [VocsAutoTest.Log4Net.Log4NetUtil] : 数据没有准备好，请等待
-2020-03-16 14:38:23,040[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.InvalidOperationException:调用线程无法访问此对象，因为另一个线程拥有该对象。

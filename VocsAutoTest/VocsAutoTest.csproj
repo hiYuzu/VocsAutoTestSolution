@@ -85,7 +85,7 @@
     <Compile Include="Algorithm\FileControl.cs" />
     <Compile Include="Algorithm\GasNode.cs" />
     <Compile Include="Algorithm\SpectrumFile.cs" />
-    <Compile Include="Log4Net\Log4NetUtil.cs" />
+    <Compile Include="Tools\LogUtil.cs" />
     <Compile Include="Pages\AlgoGeneraControlPage.xaml.cs">
       <DependentUpon>AlgoGeneraControlPage.xaml</DependentUpon>
     </Compile>
@@ -116,6 +116,7 @@
     <Compile Include="Tools\DataConvert.cs" />
     <Compile Include="Tools\FileOperate.cs" />
     <Compile Include="Tools\ParamInfo.cs" />
+    <Compile Include="Tools\SpecDataSave.cs" />
     <Compile Include="ViewDelegate.cs" />
     <Page Include="AlgorithmSettingWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -210,7 +211,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Log4Net\log4net.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

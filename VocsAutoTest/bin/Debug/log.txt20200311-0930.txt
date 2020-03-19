@@ -1,6 +1,0 @@
-2020-03-11 09:30:01,104[1] INFO  [VocsAutoTest.Log4Net.Log4NetUtil] : 单次测量：扣暗电流光谱数据
-光谱仪平均次数:，氙灯控制电压:V，氙灯打灯次数:，积分时间:ms
-2020-03-11 09:30:05,425[1] INFO  [VocsAutoTest.Log4Net.Log4NetUtil] : 单次测量：暗电流光谱数据
-光谱仪平均次数:，氙灯控制电压:V，氙灯打灯次数:，积分时间:ms
-2020-03-11 09:30:09,088[1] INFO  [VocsAutoTest.Log4Net.Log4NetUtil] : 单次测量：有光光谱数据
-光谱仪平均次数:，氙灯控制电压:V，氙灯打灯次数:，积分时间:ms

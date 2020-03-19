@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using VocsAutoTest.Pages;
-using VocsAutoTest.Log4Net;
 using VocsAutoTestBLL.Interface;
 using VocsAutoTestBLL.Impl;
 using System.Windows.Threading;
@@ -43,32 +42,29 @@ namespace VocsAutoTest
             InitLeftPage();
             measureMgr = MeasureMgrImpl.Instance;
             VocsCollectBtn_Click(null, null);
-            DataForward.Instance.WriteResult += WriteRes;
             PassPortImpl.GetInstance().PassValueEvent += new PassPortDelegate(ReceievedValues);
             ExceptionUtil.Instance.ExceptionEvent += new ExceptionDelegate(ShowExceptionMsg);
+            ExceptionUtil.Instance.LogEvent += new ExceptionDelegate(ShowLogMsg);
         }
         /// <summary>
-        /// 设置通用订阅
-        /// </summary>
-        /// <param name="res"></param>
-        private void WriteRes(bool res)
-        {
-            if (res)
-                Log4NetUtil.Debug("设置成功", this);
-            else
-                Log4NetUtil.Warn("设置失败", this);
-        }
-        /// <summary>
-        /// 异常订阅
+        /// 异常日志保存不显示
         /// </summary>
         /// <param name="msg"></param>
-        private void ShowExceptionMsg(string msg)
+        private void ShowExceptionMsg(object sender, string msg)
         {
+            Console.WriteLine(sender.ToString() + ":" + msg);
             Dispatcher.BeginInvoke(new Action(() => 
             {
-                Log4NetUtil.Warn(msg, this);
+                Log4NetUtil.Error(msg);
             }));
             
+        }
+        private void ShowLogMsg(object sender, string msg)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                LogUtil.Debug(msg, this);
+            }));
         }
         /// <summary>
         /// 读取间隔订阅
@@ -153,11 +149,11 @@ namespace VocsAutoTest
             SuperSerialPort.Instance.SetPortInfo(e.portModel.Port, Convert.ToInt32(e.portModel.Baud), e.portModel.Parity, Convert.ToInt32(e.portModel.Data), Convert.ToInt32(e.portModel.Stop));
             if (SuperSerialPort.Instance.Open())
             {
-                Log4NetUtil.Debug("修改串口信息为：串口号:" + e.portModel.Port + "，波特率:" + e.portModel.Baud + "，校检:" + e.portModel.Parity + "，数据位:" + e.portModel.Data + "，停止位:" + e.portModel.Stop, this);
+                LogUtil.Debug("修改串口信息为：串口号:" + e.portModel.Port + "，波特率:" + e.portModel.Baud + "，校检:" + e.portModel.Parity + "，数据位:" + e.portModel.Data + "，停止位:" + e.portModel.Stop, this);
             }
             else
             {
-                Log4NetUtil.Warn("修改串口信息失败！", this);
+                LogUtil.Warn("修改串口信息失败！", this);
             }
         }
         /// <summary>
@@ -267,7 +263,6 @@ namespace VocsAutoTest
             {
                 concentrationPage = new ConcentrationMeasurePage();
                 concentrationControlPage = new ConcentrationMeasureControlPage(concentrationPage);
-                concentrationControlPage.Start_Measure();
             }
             ChartPage.Content = new Frame()
             {
@@ -277,6 +272,7 @@ namespace VocsAutoTest
             {
                 Content = concentrationControlPage
             };
+            concentrationControlPage.Start_Measure();
             this.tempTextBox.Visibility = Visibility.Visible;
             this.pressTextBox.Visibility = Visibility.Visible;
         }
@@ -373,7 +369,7 @@ namespace VocsAutoTest
             {
                 MTsCheckBox.IsChecked = false;
                 measureMgr.measureTimes = 1;
-                BeginMeasure();
+                BeginMeasure(true);
             }
             catch
             {
@@ -401,24 +397,29 @@ namespace VocsAutoTest
                     SingleMeasure.IsEnabled = false;
                     MultiMeasure.Content = "停止测量";
                     measureMgr.pageFlag = pageFlag;
-                    BeginMeasure();
+                    BeginMeasure(false);
                 }
             }
             catch
             {
+                MessageBox.Show("参数错误！");
                 measureMgr.StartMeasure = false;
                 SingleMeasure.IsEnabled = true;
-                MessageBox.Show("参数错误！");
                 MultiMeasure.Content = "连续测量";
             }
         }
-        private void BeginMeasure()
+        private void BeginMeasure(bool single)
         {
             measureMgr.endAction += EndMeasure;
             measureMgr.pageFlag = pageFlag;
+            measureMgr.measureTimes = 0;
             if (MTsTextBox.IsEnabled)
             {
                 measureMgr.measureTimes = Convert.ToInt32(MTsTextBox.Text);
+            }
+            else if (single)
+            {
+                measureMgr.measureTimes = 1;
             }
             measureMgr.timeInterval = int.Parse(ReadInterval.Text);
             switch (pageFlag)

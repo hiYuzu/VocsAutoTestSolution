@@ -1,1 +1,0 @@
-2020-03-16 14:23:22,240[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.InvalidOperationException:调用线程无法访问此对象，因为另一个线程拥有该对象。

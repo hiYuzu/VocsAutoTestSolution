@@ -1,6 +1,0 @@
-2020-03-17 11:07:42,780[1] WARN  [VocsAutoTest.Log4Net.Log4NetUtil] : 数据没有准备好，请等待
-2020-03-17 11:07:44,782[1] WARN  [VocsAutoTest.Log4Net.Log4NetUtil] : 数据没有准备好，请等待
-2020-03-17 11:07:45,781[1] WARN  [VocsAutoTest.Log4Net.Log4NetUtil] : 数据没有准备好，请等待
-2020-03-17 11:07:54,375[1] WARN  [VocsAutoTest.Log4Net.Log4NetUtil] : 数据没有准备好，请等待
-2020-03-17 11:07:55,374[1] WARN  [VocsAutoTest.Log4Net.Log4NetUtil] : 数据没有准备好，请等待
-2020-03-17 11:07:56,376[1] WARN  [VocsAutoTest.Log4Net.Log4NetUtil] : 数据没有准备好，请等待

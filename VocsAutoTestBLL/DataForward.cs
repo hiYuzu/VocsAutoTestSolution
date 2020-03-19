@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading;
-using VocsAutoTestBLL.Interface;
 using VocsAutoTestCOMM;
-using VocsAutoTestCOMM.LogUtil;
 
 
 namespace VocsAutoTestBLL
@@ -127,9 +125,7 @@ namespace VocsAutoTestBLL
             }
         }
 
-        #region Action/事件
-        //写命令返回结果Action
-        public Action<bool> WriteResult { get; set; }
+        #region 事件
         //读取公共参数
         public event DataForwardDelegate ReadCommParam;
         //读取光谱仪光路x参数
@@ -138,6 +134,8 @@ namespace VocsAutoTestBLL
         public event DataForwardDelegate ReadSpecData;
         //读取浓度测量数据
         public event DataForwardDelegate ReadConcMeasure;
+        //读取算法生成测量数据
+        public event DataForwardDelegate ReadAlgoGeneral;
         #endregion
 
         /// <summary>
@@ -163,6 +161,7 @@ namespace VocsAutoTestBLL
                         break;
                     case "24":
                         ReadSpecData(this, command);
+                        ReadAlgoGeneral(this,command);
                         break;
                     case "29":
                         ReadConcMeasure(this, command);
@@ -177,10 +176,10 @@ namespace VocsAutoTestBLL
                 switch (command.Data)
                 {
                     case "88":
-                        WriteResult?.Invoke(true);
+                        ExceptionUtil.Instance.LogMethod("设置成功");
                         break;
                     case "99":
-                        WriteResult?.Invoke(false);
+                        ExceptionUtil.Instance.LogMethod("设置失败");
                         break;
                     default:
                         break;

@@ -1,1 +1,0 @@
-2020-03-16 12:05:15,858[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.InvalidOperationException:调用线程必须为 STA，因为许多 UI 组件都需要。

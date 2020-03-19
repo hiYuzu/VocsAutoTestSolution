@@ -9,6 +9,9 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using VocsAutoTest.Algorithm;
 using VocsAutoTest.Tools;
+using VocsAutoTestBLL.Impl;
+using VocsAutoTestBLL.Interface;
+using VocsAutoTestBLL.Model;
 
 namespace VocsAutoTest.Pages
 {
@@ -17,7 +20,8 @@ namespace VocsAutoTest.Pages
     /// </summary>
     public partial class AlgoGeneraControlPage : Page
     {
-        private ObservableCollection<string[]> _obervableCollection = new ObservableCollection<string[]>();
+        private ObservableCollection<string[]> _obervableCollection = new ObservableCollection<string[]>();//测量数据
+        private Dictionary<int, float[]> riDataMap = new Dictionary<int, float[]>();//光谱数据
         private AlgoGeneraPage algoPage;
         private int _gasCount = 0;
         //选择文件默认地址
@@ -26,8 +30,15 @@ namespace VocsAutoTest.Pages
         private const string HEAD_FLOW = "FLOW";
         private const string HEAD_SPEC = "SPEC";
         private const int GAS_NUMBER = 4;//最多选择气体种类
-        private Dictionary<string,float[]> riDataMap;//光谱数据
-        private int pixelNumber = 512;//TODO 512需要确认来源
+        private int pixelNumber = 2048;//TODO 2048需要确认来源
+        private int pixelSize = 512;//TODO 512需要确认来源
+        //记录接收到的数据
+        private const int MAX_DIST_COUNT = 60;
+        private int distCount = 0;
+        private float[] distArray = new float[MAX_DIST_COUNT];
+        private ArrayList dataList = new ArrayList();
+        //缓存
+        private readonly SpecDataModel dataCache;
 
         public AlgoGeneraControlPage()
         {
@@ -47,6 +58,7 @@ namespace VocsAutoTest.Pages
             {
                 MessageBox.Show("无法加载图形显示功能，请重启软件尝试！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            AlgoGeneralImpl.Instance.AlgoDataEvent += new AlgoDataDelegate(ImportCurrentData);
 
         }
 
@@ -115,7 +127,8 @@ namespace VocsAutoTest.Pages
                     label_gas1_input.Content = combobox_gas1_name.Text;
                     textbox_gas1_input.IsEnabled = true;
                 }
-                else {
+                else
+                {
                     label_gas1_input.Content = "气体1";
                     textbox_gas1_input.IsEnabled = false;
                 }
@@ -154,7 +167,8 @@ namespace VocsAutoTest.Pages
             }
         }
 
-        private void InitCombox() {
+        private void InitCombox()
+        {
             List<ComboxSource> list = new List<ComboxSource>
             {
                 new ComboxSource { ID=0,Name=""},
@@ -178,33 +192,40 @@ namespace VocsAutoTest.Pages
             {
                 InitPage(2);
             }
-            else {
-                MessageBox.Show(errorMessage,"错误提示",MessageBoxButton.OK,MessageBoxImage.Error);
+            else
+            {
+                MessageBox.Show(errorMessage, "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private bool CheckFinish(out string errorMessage) {
+        private bool CheckFinish(out string errorMessage)
+        {
             errorMessage = string.Empty;
             bool flag = true;
             int gas1 = Convert.ToInt32(combobox_gas1_name.SelectedValue);
             int gas2 = Convert.ToInt32(combobox_gas2_name.SelectedValue);
             int gas3 = Convert.ToInt32(combobox_gas3_name.SelectedValue);
             int gas4 = Convert.ToInt32(combobox_gas4_name.SelectedValue);
-            if (gas1 != 0) {
-                if (gas1 == gas2 || gas1 == gas3 || gas1 == gas4) {
+            if (gas1 != 0)
+            {
+                if (gas1 == gas2 || gas1 == gas3 || gas1 == gas4)
+                {
                     errorMessage = "气体1与其他选项重复！";
                     flag = false;
                 }
             }
-            if (gas2 != 0) {
+            if (gas2 != 0)
+            {
                 if (gas2 == gas3 || gas2 == gas4)
                 {
                     errorMessage = "气体2与其他选项重复！";
                     flag = false;
                 }
-                else {
+                else
+                {
                     string gas2Text = textbox_gas2_ppm.Text;
-                    if (string.IsNullOrEmpty(gas2Text)) {
+                    if (string.IsNullOrEmpty(gas2Text))
+                    {
                         errorMessage = "气体2数值未填写！";
                         flag = false;
                     }
@@ -217,7 +238,8 @@ namespace VocsAutoTest.Pages
                     errorMessage = "气体3与其他选项重复！";
                     flag = false;
                 }
-                else {
+                else
+                {
                     string gas3Text = textbox_gas3_ppm.Text;
                     if (string.IsNullOrEmpty(gas3Text))
                     {
@@ -226,7 +248,8 @@ namespace VocsAutoTest.Pages
                     }
                 }
             }
-            if (gas4 != 0) {
+            if (gas4 != 0)
+            {
                 string gas4Text = textbox_gas4_ppm.Text;
                 if (string.IsNullOrEmpty(gas4Text))
                 {
@@ -254,7 +277,8 @@ namespace VocsAutoTest.Pages
             {
                 textbox_gas2_ppm.IsEnabled = false;
             }
-            else {
+            else
+            {
                 textbox_gas2_ppm.IsEnabled = true;
             }
         }
@@ -266,7 +290,8 @@ namespace VocsAutoTest.Pages
             {
                 textbox_gas3_ppm.IsEnabled = false;
             }
-            else {
+            else
+            {
                 textbox_gas3_ppm.IsEnabled = true;
             }
         }
@@ -277,93 +302,124 @@ namespace VocsAutoTest.Pages
             {
                 textbox_gas4_ppm.IsEnabled = false;
             }
-            else {
+            else
+            {
                 textbox_gas4_ppm.IsEnabled = true;
             }
         }
 
         private void Button_gas_input_Click(object sender, RoutedEventArgs e)
         {
-            List<string> list = new List<string>();
-            list.Add(Convert.ToString(_obervableCollection.Count+1));
-            list.Add("True");
-            if (textbox_gas1_input.IsEnabled)
+            float[] lineData = GetAverageData();
+            if (lineData == null)
             {
-                string gas1 = textbox_gas1_input.Text;
-                if (string.IsNullOrEmpty(gas1))
-                {
-                    MessageBox.Show("请填写气体流量信息！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
-                    textbox_gas1_input.Focus();
-                    return;
-                }
-                else
-                {
-                    list.Add(gas1);
-                }
-            }
-            if (textbox_gas2_input.IsEnabled)
-            {
-                string gas2 = textbox_gas2_input.Text;
-                if (string.IsNullOrEmpty(gas2))
-                {
-                    MessageBox.Show("请填写气体流量信息！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
-                    textbox_gas2_input.Focus();
-                    return;
-                }
-                else
-                {
-                    list.Add(gas2);
-                }
-            }
-            if (textbox_gas3_input.IsEnabled)
-            {
-                string gas3 = textbox_gas3_input.Text;
-                if (string.IsNullOrEmpty(gas3))
-                {
-                    MessageBox.Show("请填写气体流量信息！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
-                    textbox_gas3_input.Focus();
-                    return;
-                }
-                else
-                {
-                    list.Add(gas3);
-                }
-            }
-            if (textbox_gas4_input.IsEnabled)
-            {
-                string gas4 = textbox_gas4_input.Text;
-                if (string.IsNullOrEmpty(gas4))
-                {
-                    MessageBox.Show("请填写气体流量信息！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
-                    textbox_gas4_input.Focus();
-                    return;
-                }
-                else
-                {
-                    list.Add(gas4);
-                }
-            }
-            if (list != null && list.Count > 0)
-            {
-                int count = list.Count;
-                for (int i=0;i< count * 2;i++)
-                {
-                    list.Add(string.Empty);
-                }
-                _obervableCollection.Add(list.ToArray());
+                MessageBox.Show("没有光谱数据", "错误信息", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else {
-                MessageBox.Show("请填写气体流量信息！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                List<string> list = new List<string>();
+                int orderNumber = _obervableCollection.Count + 1;
+                list.Add(Convert.ToString(orderNumber));
+                list.Add("True");
+                if (textbox_gas1_input.IsEnabled)
+                {
+                    string gas1 = textbox_gas1_input.Text;
+                    if (string.IsNullOrEmpty(gas1))
+                    {
+                        MessageBox.Show("请填写气体流量信息！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                        textbox_gas1_input.Focus();
+                        return;
+                    }
+                    else
+                    {
+                        list.Add(gas1);
+                    }
+                }
+                if (textbox_gas2_input.IsEnabled)
+                {
+                    string gas2 = textbox_gas2_input.Text;
+                    if (string.IsNullOrEmpty(gas2))
+                    {
+                        MessageBox.Show("请填写气体流量信息！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                        textbox_gas2_input.Focus();
+                        return;
+                    }
+                    else
+                    {
+                        list.Add(gas2);
+                    }
+                }
+                if (textbox_gas3_input.IsEnabled)
+                {
+                    string gas3 = textbox_gas3_input.Text;
+                    if (string.IsNullOrEmpty(gas3))
+                    {
+                        MessageBox.Show("请填写气体流量信息！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                        textbox_gas3_input.Focus();
+                        return;
+                    }
+                    else
+                    {
+                        list.Add(gas3);
+                    }
+                }
+                if (textbox_gas4_input.IsEnabled)
+                {
+                    string gas4 = textbox_gas4_input.Text;
+                    if (string.IsNullOrEmpty(gas4))
+                    {
+                        MessageBox.Show("请填写气体流量信息！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                        textbox_gas4_input.Focus();
+                        return;
+                    }
+                    else
+                    {
+                        list.Add(gas4);
+                    }
+                }
+                if (list != null && list.Count > 0)
+                {
+                    int count = list.Count;
+                    for (int i = 0; i < count * 2; i++)
+                    {
+                        list.Add(string.Empty);
+                    }
+                    _obervableCollection.Add(list.ToArray());
+                    riDataMap.Add(orderNumber, lineData);
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        CreateCurrentChart();
+                    }));
+                }
+                else
+                {
+                    MessageBox.Show("请填写气体流量信息！", "错误提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
+        /// <summary>
+        /// 绘制当前数据线
+        /// </summary>
+        public void CreateCurrentChart()
+        {
+            //TODO 绘制图表数据
+            //chart.AxesX[0].Title = XAxisTitle;
+            //chart.AxesY[0].Title = YAxisTitle;
+            //if (currentDataSeries != null)
+            //{
+            //    chart.Series.Remove(currentDataSeries);
+            //}
+            //currentDataSeries = SetDataSeries(new List<string>(currentData), -1);
+            //chart.Series.Add(currentDataSeries);
+        }
 
-        private void AddComlumns() {
+        private void AddComlumns()
+        {
             dataGrid.Columns.Clear();
             dataGrid.IsEnabled = true;
             int i = 0;
             //序号
-            dataGrid.Columns.Add(new DataGridTextColumn() { Header = "序号", Binding = new Binding("[" + i.ToString() + "]")});
+            dataGrid.Columns.Add(new DataGridTextColumn() { Header = "序号", Binding = new Binding("[" + i.ToString() + "]") });
             i++;
             //勾选框
             dataGrid.Columns.Add(new DataGridCheckBoxColumn() { Header = "选择", Binding = new Binding("[" + i.ToString() + "]") });
@@ -371,7 +427,7 @@ namespace VocsAutoTest.Pages
             //流量
             if (textbox_gas1_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas1_input.Content+"流量", Binding = new Binding("["+i.ToString()+"]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas1_input.Content + "流量", Binding = new Binding("[" + i.ToString() + "]") });
                 i++;
             }
             if (textbox_gas2_input.IsEnabled)
@@ -432,21 +488,23 @@ namespace VocsAutoTest.Pages
                 dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas4_input.Content + "误差", Binding = new Binding("[" + i.ToString() + "]") });
             }
             //设置显示
-            if (checkbox_flow.IsChecked == false) {
-                for (int n=0;n< _gasCount; n++)
+            if (checkbox_flow.IsChecked == false)
+            {
+                for (int n = 0; n < _gasCount; n++)
                 {
                     dataGrid.Columns[n].Visibility = Visibility.Hidden;
                 }
             }
-            if (checkbox_density.IsChecked == false) {
-                for (int n = _gasCount; n < _gasCount*2; n++)
+            if (checkbox_density.IsChecked == false)
+            {
+                for (int n = _gasCount; n < _gasCount * 2; n++)
                 {
                     dataGrid.Columns[n].Visibility = Visibility.Hidden;
                 }
             }
             if (checkbox_error.IsChecked == false)
             {
-                for (int n = _gasCount*2; n < _gasCount * 3; n++)
+                for (int n = _gasCount * 2; n < _gasCount * 3; n++)
                 {
                     dataGrid.Columns[n].Visibility = Visibility.Hidden;
                 }
@@ -464,7 +522,8 @@ namespace VocsAutoTest.Pages
                     dataGrid.Columns[n].Visibility = Visibility.Visible;
                 }
             }
-            else {
+            else
+            {
                 for (int n = 2; n < _gasCount; n++)
                 {
                     dataGrid.Columns[n].Visibility = Visibility.Hidden;
@@ -496,7 +555,7 @@ namespace VocsAutoTest.Pages
             int beginIndex = _gasCount - 2;
             if (checkbox_error.IsChecked == true)
             {
-                for (int n = (beginIndex * 2+2); n < (beginIndex * 3+2); n++)
+                for (int n = (beginIndex * 2 + 2); n < (beginIndex * 3 + 2); n++)
                 {
                     dataGrid.Columns[n].Visibility = Visibility.Visible;
                 }
@@ -515,9 +574,12 @@ namespace VocsAutoTest.Pages
             List<string[]> list = new List<string[]>();
             Random rd = new Random();
             int indexCount = _gasCount - 2;
-            if (_obervableCollection != null && _obervableCollection.Count>0) {
-                foreach (string[] arrays in _obervableCollection) {
-                    if (arrays != null && arrays.Length>0) {
+            if (_obervableCollection != null && _obervableCollection.Count > 0)
+            {
+                foreach (string[] arrays in _obervableCollection)
+                {
+                    if (arrays != null && arrays.Length > 0)
+                    {
                         string[] arraysNew = new string[indexCount * 2 + 2];
                         for (int i = 0; i < (indexCount * 2 + 2); i++)
                         {
@@ -525,10 +587,11 @@ namespace VocsAutoTest.Pages
                             {
                                 arraysNew[i] = arrays[i];
                             }
-                            else {
+                            else
+                            {
                                 arraysNew[i] = rd.Next(100).ToString();
                             }
-                            
+
                         }
                         list.Add(arraysNew);
                     }
@@ -618,7 +681,6 @@ namespace VocsAutoTest.Pages
                             default:
                                 break;
                         }
-                        //this.uintLabels[gasIndex].Text = (GasNodeConfig.GetInstance().gasNodes[gas[0]] as GasNode).unit;
                     }
                     else
                     {
@@ -675,6 +737,14 @@ namespace VocsAutoTest.Pages
                     }
                 }
                 algoPage.ImportHistoricalData(fileName);
+                //设置部分未选中数据隐藏曲线数据
+                for (int i = 0; i < _obervableCollection.Count; i++)
+                {
+                    if (_obervableCollection[i][1].Equals("False"))
+                    {
+                        algoPage.RemoveSeriesByIndex(_obervableCollection[i][0]);
+                    }
+                }
 
             }
             catch (Exception e)
@@ -773,10 +843,12 @@ namespace VocsAutoTest.Pages
                             if (_obervableCollection[i][j + 1].Equals("True"))
                             {
                                 _obervableCollection[i][j + 1] = "False";
+                                algoPage.RemoveSeriesByIndex(_obervableCollection[i][j]);
                             }
                             else
                             {
                                 _obervableCollection[i][j + 1] = "True";
+                                algoPage.RecoveryDataSeries(_obervableCollection[i][j]);
                             }
                         }
                     }
@@ -806,11 +878,11 @@ namespace VocsAutoTest.Pages
 
             try
             {
-                GetThicknessAndRiData(out thicknessData,out riData);
+                GetThicknessAndRiData(out thicknessData, out riData);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("错误信息",ex.ToString(),MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show("错误信息", ex.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -820,7 +892,7 @@ namespace VocsAutoTest.Pages
             string temp = text_temp.Text.Trim();
             try
             {
-                AlgorithmPro.GetInstance().Process(out V, thicknessData, riData,float.Parse(press),float.Parse(temp));
+                AlgorithmPro.GetInstance().Process(out V, thicknessData, riData, float.Parse(press), float.Parse(temp));
             }
             catch (Exception ex)
             {
@@ -833,26 +905,6 @@ namespace VocsAutoTest.Pages
         //获得浓度和光谱矩阵数据
         private void GetThicknessAndRiData(out float[,] thicknessData, out float[,] riData)
         {
-            //foreach (string[] arrays in _obervableCollection)
-            //{
-            //    if (arrays != null && arrays.Length > 0)
-            //    {
-            //        string[] arraysNew = new string[indexCount * 2 + 2];
-            //        for (int i = 0; i < (indexCount * 2 + 2); i++)
-            //        {
-            //            if (i < _gasCount)
-            //            {
-            //                arraysNew[i] = arrays[i];
-            //            }
-            //            else
-            //            {
-            //                arraysNew[i] = rd.Next(100).ToString();
-            //            }
-
-            //        }
-            //        list.Add(arraysNew);
-            //    }
-            //}
             int measureCount = 0;
             foreach (string[] arrays in _obervableCollection)
             {
@@ -863,7 +915,7 @@ namespace VocsAutoTest.Pages
             }
             thicknessData = new float[measureCount, _gasCount - 2];
 
-            riData = new float[measureCount, pixelNumber];
+            riData = new float[measureCount, pixelSize];//pixelNumber
 
             int index = 0;
             //循环每次测量数据
@@ -871,14 +923,16 @@ namespace VocsAutoTest.Pages
             {
                 if (arrays[1].Equals("true", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    for (int j = 0; j < _gasCount-2; j++)
+                    for (int j = 0; j < _gasCount - 2; j++)
                     {
                         float oneMeasureThicknessData = float.Parse(arrays[(_gasCount - 2 - 1) + j]);
                         thicknessData[index, j] = oneMeasureThicknessData;
                     }
-                    foreach (string key in riDataMap.Keys) {
-                        if (key.Equals(arrays[0])) {
-                            for (int j = 0; j < this.pixelNumber; j++)
+                    foreach (int key in riDataMap.Keys)
+                    {
+                        if (key.Equals(arrays[0]))
+                        {
+                            for (int j = 0; j < this.pixelSize; j++)//pixelNumber
                             {
                                 riData[index, j] = riDataMap[key][j];
                             }
@@ -888,6 +942,102 @@ namespace VocsAutoTest.Pages
                     index++;
                 }
             }
+        }
+
+
+        /// <summary>
+        /// 得到一段光谱采集数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="command"></param>
+        public void ImportCurrentData(object sender, ushort[] specData)
+        {
+            float[] currentData = Array.ConvertAll<ushort, float>(specData, new Converter<ushort, float>(UshortToFloat));
+            ParseSpecData(currentData);
+        }
+        private float UshortToFloat(ushort us)
+        {
+            return float.Parse(us.ToString());
+        }
+        private void ParseSpecData(float[] data)
+        {
+            if (data != null && data.Length > 0)
+            {
+                int averageTime = GetAverageTime();
+                if (pixelSize != data.Length)
+                {
+                    return;
+                }
+                else {
+                    lock (dataList)
+                    {
+                        if (dataList.Count > 0)
+                        {
+                            float dist = GetDist(data, (float[])dataList[dataList.Count - 1]);
+                            if (distCount < MAX_DIST_COUNT)
+                            {
+                                distArray[distCount++] = dist;
+                            }
+                            else
+                            {
+                                int size = System.Runtime.InteropServices.Marshal.SizeOf(typeof(System.Single));
+                                Buffer.BlockCopy(distArray, size, distArray, 0,
+                                    (MAX_DIST_COUNT - 1) * size);
+                                distArray[MAX_DIST_COUNT - 1] = dist;
+                            }
+                        }
+
+                        dataList.Add(data);
+                        if (dataList.Count > averageTime)
+                        {
+                            dataList.RemoveAt(0);
+                        }
+                    }
+                }
+            }
+        }
+
+        private float GetDist(float[] data1, float[] data2)
+        {
+            float total = 0;
+            for (int i = 0; i < data1.Length; i++)
+            {
+                float temp = data1[i] - data2[i];
+                total += temp * temp;
+            }
+            return (float)Math.Sqrt(total);
+        }
+
+        public float[] GetAverageData()
+        {
+            float[] data = new float[pixelSize];
+            int averageTime = GetAverageTime();
+            lock (dataList)
+            {
+                if (dataList.Count < averageTime)
+                {
+                    return null;
+                }
+                for (int i = 0; i < pixelSize; i++)
+                {
+                    data[i] = 0;
+                    for (int j = 0; j < averageTime; j++)
+                    {
+                        data[i] += ((float[])dataList[j])[i];
+                    }
+                    data[i] /= averageTime;
+                }
+            }
+            return data;
+        }
+
+        private int GetAverageTime() {
+            int averageTime;
+            if (!int.TryParse(textbox_average_time.Text.Trim(), out averageTime))
+            {
+                averageTime = 5;
+            }
+            return averageTime;
         }
 
 

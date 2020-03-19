@@ -5,7 +5,7 @@ using log4net.Appender;
 using System.Diagnostics;
 using System.IO;
 
-namespace VocsAutoTestCOMM.LogUtil
+namespace VocsAutoTestCOMM
 {
     /// <summary>
     /// 日志管理类
@@ -48,7 +48,10 @@ namespace VocsAutoTestCOMM.LogUtil
         /// </summary>
         public static DDebug Debug
         {
-            get { return LogManager.GetLogger((new StackTrace()).GetFrame(1).GetMethod().DeclaringType).Debug; }
+            get 
+            {
+                return LogManager.GetLogger((new StackTrace()).GetFrame(1).GetMethod().DeclaringType).Debug;
+            }
         }
 
         /// <summary>

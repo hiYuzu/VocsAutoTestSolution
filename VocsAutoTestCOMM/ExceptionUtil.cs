@@ -7,7 +7,7 @@ namespace VocsAutoTestCOMM
     /// </summary>
     /// <param name="sender">发送者</param>
     /// <param name="msg">异常信息</param>
-    public delegate void ExceptionDelegate(string msg);
+    public delegate void ExceptionDelegate(object sender, string msg);
     /// <summary>
     /// 异常通知类
     /// </summary>
@@ -31,15 +31,25 @@ namespace VocsAutoTestCOMM
         }
 
         public event ExceptionDelegate ExceptionEvent;
+        public event ExceptionDelegate LogEvent;
 
         /// <summary>
-        /// 转发分配实现
+        /// 异常信息（不显示在主界面）
         /// </summary>
         /// <param name="command"></param>
         public void ExceptionMethod(string msg)
         {
             Console.WriteLine(msg);
-            ExceptionEvent(msg);
+            ExceptionEvent(this, msg);
+        }
+        /// <summary>
+        /// 日志信息（显示在主界面）
+        /// </summary>
+        /// <param name="msg"></param>
+        public void LogMethod(string msg)
+        {
+            Console.WriteLine(msg);
+            LogEvent(this, msg);
         }
     }
 }

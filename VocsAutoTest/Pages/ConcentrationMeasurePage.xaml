@@ -9,6 +9,6 @@
       Title="ConcentrationMeasurePage">
 
     <Grid Background="White" Opacity="0.9">
-        <Grid x:Name="MeasureChart"/>
+        <Grid x:Name="ConcChart"/>
     </Grid>
 </Page>
