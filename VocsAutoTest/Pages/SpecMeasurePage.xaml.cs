@@ -21,8 +21,6 @@ namespace VocsAutoTest.Pages
         //波长
         private float[] waveLength = null;
         private const string TITLE = "光谱曲线";
-        //x，y轴历史数据
-        private List<List<string>> yListCollect;
         private int lineNum = 0;
         //测量数据线
         private DataSeries currentDataSeries = null;
@@ -35,6 +33,7 @@ namespace VocsAutoTest.Pages
         public bool TitleEnabled { get; set; }
         //电压积分转换系数
         private double FACTOR_VOL_TO_INTEG = 4.096 / 65536.0;
+        public List<List<string>> YListCollect { get; } = new List<List<string>>();
         public string[] CurrentData { get; private set; }
 
         public SpecMeasurePage()
@@ -237,19 +236,17 @@ namespace VocsAutoTest.Pages
                 ClearHistoricalSeries();
                 int lineNum = vocsCollectData[0].Length;
                 //y轴，[数据线数量][每条线数据量]
-                List<List<string>> yListCollect = new List<List<string>>();
                 for(int i = 0; i < lineNum; i++)
                 {
-                    yListCollect.Add(new List<string>());
+                    YListCollect.Add(new List<string>());
                 }
                 for (int i = 0; i < vocsCollectData.Count; i++)
                 {
                     for (int j = 0; j < lineNum; j++)
                     {
-                        yListCollect[j].Add(vocsCollectData[i][j]);
+                        YListCollect[j].Add(vocsCollectData[i][j]);
                     }
                 }
-                this.yListCollect = yListCollect;
                 this.lineNum = lineNum;
                 CreateHistoricalChart();
             }
@@ -265,7 +262,7 @@ namespace VocsAutoTest.Pages
                 chart.AxesY[0].Title = YAxisTitle;
                 for (int i = 0; i < lineNum; i++)
                 {
-                    chart.Series.Add(SetDataSeries(yListCollect[i], i));
+                    chart.Series.Add(SetDataSeries(YListCollect[i], i));
                 }
             }
         }
@@ -394,20 +391,29 @@ namespace VocsAutoTest.Pages
         public void ClearCurrentSeries()
         {
             chart.Series.Remove(currentDataSeries);
+            currentDataSeries = null;
         }
         /// <summary>
         /// 清除历史数据线
         /// </summary>
         public void ClearHistoricalSeries()
         {
+            lineNum = 0;
+            YListCollect.Clear();
             chart.Series.Clear();
-            chart.Series.Add(currentDataSeries);
+            if(currentDataSeries != null)
+            {
+                chart.Series.Add(currentDataSeries);
+            }
         }
         /// <summary>
         /// 清除全部曲线
         /// </summary>
         public void ClearAllSeries()
         {
+            currentDataSeries = null;
+            lineNum = 0;
+            YListCollect.Clear();
             chart.Series.Clear();
         }
     }

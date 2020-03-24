@@ -41,7 +41,7 @@ namespace VocsAutoTestCOMM
         public static Command Decoder(byte[] data)
         {
             string msg = ByteStrUtil.ByteToKHex(data);
-            Console.WriteLine("解码数据: " + msg);
+            Console.WriteLine("接收数据: " + msg);
             msg = msg.Replace("7D 82", "7D");
             msg = msg.Replace(" ", "");
             msg = msg.Substring(4, msg.Length - 12);

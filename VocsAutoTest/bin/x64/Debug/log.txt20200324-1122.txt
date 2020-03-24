@@ -1,0 +1,12 @@
+2020-03-24 11:22:04,032[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:09,035[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:14,037[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:19,041[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:24,044[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:29,045[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:34,048[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:39,051[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:44,053[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:49,055[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:54,057[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 11:22:59,059[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔

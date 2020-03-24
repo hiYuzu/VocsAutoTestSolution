@@ -1,0 +1,4 @@
+2020-03-23 09:19:37,409[1] DEBUG [VocsAutoTest.LogUtil] : 生成参量数据异常，异常信息为：System.FormatException: 输入字符串的格式不正确。
+   在 System.Number.ParseSingle(String value, NumberStyles options, NumberFormatInfo numfmt)
+   在 System.Single.Parse(String s)
+   在 VocsAutoTest.Pages.AlgoGeneraControlPage.Button_generateParameter_Click(Object sender, RoutedEventArgs e) 位置 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\Pages\AlgoGeneraControlPage.xaml.cs:行号 889

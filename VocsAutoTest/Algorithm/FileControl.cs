@@ -103,7 +103,7 @@ namespace VocsAutoTest.Algorithm
             }
             catch (Exception ex)
             {
-                ExceptionUtil.Instance.ExceptionMethod("保存失败:" + ex.Message);
+                ExceptionUtil.ExceptionMethod("保存失败:" + ex.Message, false);
             }
         }
         public static void SaveRawFile(string name, ArrayList fblist, DateTime date)
@@ -162,7 +162,7 @@ namespace VocsAutoTest.Algorithm
             }
             catch (Exception ex)
             {
-                ExceptionUtil.Instance.ExceptionMethod("保存失败:" + ex.Message);
+                ExceptionUtil.ExceptionMethod("保存失败:" + ex.Message, false);
             }
         }
     }

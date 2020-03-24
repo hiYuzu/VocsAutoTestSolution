@@ -18,7 +18,6 @@ namespace VocsAutoTest.Pages
     public partial class ConcentrationMeasureControlPage : Page
     {
         private ConcentrationMeasurePage concentrationPage;
-        private ExceptionUtil exception;
         //声明时间控件
         private Timer timer;
         private delegate void UpdateTimer();
@@ -74,7 +73,6 @@ namespace VocsAutoTest.Pages
             {
                 Directory.CreateDirectory(savePath);
             }
-            exception = ExceptionUtil.Instance;
         }
 
         /// <summary>
@@ -110,11 +108,14 @@ namespace VocsAutoTest.Pages
                 {
                     byte[] conc = new byte[4];
                     Array.Copy(concData, 10 * i + 2, conc, 0, 4);
-                    concList.Add(BitConverter.ToSingle(DataConvertUtil.ByteReverse(conc),0));
+                    Array.Reverse(conc);
+                    concList.Add(BitConverter.ToSingle(conc,0));
                 }
+                Array.Reverse(pressData);
+                Array.Reverse(tempData);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    UpadateUI(concList, BitConverter.ToSingle(DataConvertUtil.ByteReverse(pressData), 0), BitConverter.ToSingle(DataConvertUtil.ByteReverse(tempData), 0));
+                    UpadateUI(concList, BitConverter.ToSingle(pressData, 0), BitConverter.ToSingle(tempData, 0));
                 }));
                 concentrationPage.UpdateChart(concList);
             }
@@ -190,7 +191,7 @@ namespace VocsAutoTest.Pages
                 }
             }
             catch (Exception ex) {
-                ExceptionUtil.Instance.ExceptionMethod("导入失败：" + ex.Message);
+                ExceptionUtil.ExceptionMethod("导入失败：" + ex.Message, false);
             }
 
         }
@@ -238,22 +239,22 @@ namespace VocsAutoTest.Pages
                 if (this.listGas1Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[0], this.listGas1Conc, this.listPress, this.listTemp, this.listTime);
-                    exception.LogMethod("文件已保存：" + savePath + GasName[0]);
+                    ExceptionUtil.LogMethod("文件已保存：" + savePath + GasName[0]);
                 }
                 if (this.listGas2Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[1], this.listGas2Conc, this.listPress, this.listTemp, this.listTime);
-                    exception.LogMethod("文件已保存：" + savePath + GasName[1]);
+                    ExceptionUtil.LogMethod("文件已保存：" + savePath + GasName[1]);
                 }
                 if (this.listGas3Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[2], this.listGas3Conc, this.listPress, this.listTemp, this.listTime);
-                    exception.LogMethod("文件已保存：" + savePath + GasName[2]);
+                    ExceptionUtil.LogMethod("文件已保存：" + savePath + GasName[2]);
                 }
                 if (this.listGas4Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[3], this.listGas4Conc, this.listPress, this.listTemp, this.listTime);
-                    exception.LogMethod("文件已保存：" + savePath + GasName[3]);
+                    ExceptionUtil.LogMethod("文件已保存：" + savePath + GasName[3]);
                 }
                 listPress.Clear();
                 listTemp.Clear();
@@ -261,7 +262,7 @@ namespace VocsAutoTest.Pages
             }
             catch (Exception ex)
             {
-                ExceptionUtil.Instance.ExceptionMethod("保存失败：" + ex.Message);
+                ExceptionUtil.ExceptionMethod("保存失败：" + ex.Message, false);
             }
         }
 

@@ -85,7 +85,7 @@
                         <Label Content="电压" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <Label Content="实验人员" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <TextBox x:Name="text_mach_id" Grid.Row="0" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox x:Name="txt_room_id" Grid.Row="1" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                        <TextBox x:Name="text_room_id" Grid.Row="1" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                         <TextBox x:Name="text_in_fine" Grid.Row="2" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                         <TextBox x:Name="text_temp" Grid.Row="3" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                         <TextBox x:Name="text_vol" Grid.Row="4" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
@@ -142,7 +142,7 @@
             <TextBox x:Name="textbox_gas4_input" Grid.Column="3" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
             <Button x:Name="button_gas_input" Content="新增" Grid.Column="4" Grid.Row="3" Height="25" Width="60" Style="{StaticResource btnOther}" Click="Button_gas_input_Click"></Button>
             <Label Content="平均次数" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
-            <TextBox x:Name="textbox_average_time" Grid.Column="1" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="60" Text="5" Style="{DynamicResource textStyle}"></TextBox>
+            <TextBox x:Name="textbox_average_time" Grid.Column="1" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="60" Text="5" Style="{DynamicResource textStyle}" TextChanged="Textbox_average_time_TextChanged"></TextBox>
         </Grid>
     </Grid>
 

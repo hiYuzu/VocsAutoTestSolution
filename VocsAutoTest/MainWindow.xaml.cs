@@ -17,7 +17,7 @@ namespace VocsAutoTest
     /// </summary>
     public partial class MainWindow : Window
     {
-        //页面*7
+        //页面*8
         private AlgoGeneraPage algoPage;
         private AlgoGeneraControlPage algoControlPage;
         private SpecMeasurePage specPage;
@@ -25,6 +25,7 @@ namespace VocsAutoTest
         private ConcentrationMeasurePage concentrationPage;
         private ConcentrationMeasureControlPage concentrationControlPage;
         private LeftControlPage leftPage;
+        private VocsMgmtPage vocsMgmtPage;
         //日志栏折叠
         private bool isLogBoxOpen = true;
         //日志栏高度
@@ -43,28 +44,48 @@ namespace VocsAutoTest
             measureMgr = MeasureMgrImpl.Instance;
             VocsCollectBtn_Click(null, null);
             PassPortImpl.GetInstance().PassValueEvent += new PassPortDelegate(ReceievedValues);
-            ExceptionUtil.Instance.ExceptionEvent += new ExceptionDelegate(ShowExceptionMsg);
-            ExceptionUtil.Instance.LogEvent += new ExceptionDelegate(ShowLogMsg);
+            ExceptionUtil.ExceptionEvent += new ExceptionDelegate(ShowExceptionMsg);
+            ExceptionUtil.LogEvent += new ExceptionDelegate(ShowLogMsg);
+            ExceptionUtil.ShowLoadingAction += ShowLoading;
         }
         /// <summary>
-        /// 异常日志保存不显示
+        /// 异常日志保存
         /// </summary>
         /// <param name="msg"></param>
-        private void ShowExceptionMsg(object sender, string msg)
+        private void ShowExceptionMsg(object sender, string msg, bool isShow)
         {
-            Console.WriteLine(sender.ToString() + ":" + msg);
-            Dispatcher.BeginInvoke(new Action(() => 
+            Console.WriteLine(msg);
+            if (isShow)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    LogUtil.Error(msg, this);
+                }));
+            }
+            else
             {
                 Log4NetUtil.Error(msg);
-            }));
-            
+            }
         }
-        private void ShowLogMsg(object sender, string msg)
+        /// <summary>
+        /// 显示日志
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="msg"></param>
+        /// <param name="isShow"></param>
+        private void ShowLogMsg(object sender, string msg, bool isShow)
         {
+            Console.WriteLine(msg);
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 LogUtil.Debug(msg, this);
             }));
+        }
+        private void ShowLoading(bool isShow)
+        {
+            _loading.Visibility = Visibility.Collapsed;
+            if (isShow)
+                _loading.Visibility = Visibility.Visible;
         }
         /// <summary>
         /// 读取间隔订阅
@@ -74,11 +95,14 @@ namespace VocsAutoTest
         public void SetReadInterval(object sender, Command command)
         {
             byte[] data = ByteStrUtil.HexToByte(command.Data);
+            byte[] timeInterval = new byte[2];
             if(data[1] == 09)
             {
+                Array.Copy(data, 2 , timeInterval, 0, 2);
+                Array.Reverse(timeInterval, 0, 2);
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    ReadInterval.Text = BitConverter.ToUInt16(DataConvertUtil.ByteReverse(data), 2).ToString();
+                    ReadInterval.Text = BitConverter.ToUInt16(timeInterval, 0).ToString();
                 }));  
             }
         }
@@ -87,7 +111,7 @@ namespace VocsAutoTest
         /// </summary>
         private void InitLeftPage()
         {
-            leftPage = new LeftControlPage(this);
+            leftPage = new LeftControlPage();
             LeftControlPage.Content = new Frame()
             {
                 Content = leftPage
@@ -218,6 +242,29 @@ namespace VocsAutoTest
             MTsTextBox.IsEnabled = false;
         }
         /// <summary>
+        /// 光谱仪管理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void VocsMgmtBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (measureMgr.StartMeasure)
+            {
+                MessageBox.Show("请停止测量!");
+                return;
+            }
+            if(vocsMgmtPage == null)
+            {
+                vocsMgmtPage = new VocsMgmtPage();
+            }
+            ControlPage.Content = new Frame()
+            {
+                Content = vocsMgmtPage
+            };
+            this.tempTextBox.Visibility = Visibility.Hidden;
+            this.pressTextBox.Visibility = Visibility.Hidden;
+        }
+        /// <summary>
         /// 光谱采集
         /// </summary>
         /// <param name="sender"></param>
@@ -243,6 +290,10 @@ namespace VocsAutoTest
             {
                 Content = specControlPage
             };
+            if(concentrationControlPage != null)
+            {
+                concentrationControlPage.Stop_Measure();
+            }
             this.tempTextBox.Visibility = Visibility.Hidden;
             this.pressTextBox.Visibility = Visibility.Hidden;
         }
@@ -305,6 +356,10 @@ namespace VocsAutoTest
             {
                 Content = algoControlPage
             };
+            if (concentrationControlPage != null)
+            {
+                concentrationControlPage.Stop_Measure();
+            }
             this.tempTextBox.Visibility = Visibility.Hidden;
             this.pressTextBox.Visibility = Visibility.Hidden;
         }
@@ -396,7 +451,6 @@ namespace VocsAutoTest
                     measureMgr.StartMeasure = true;
                     SingleMeasure.IsEnabled = false;
                     MultiMeasure.Content = "停止测量";
-                    measureMgr.pageFlag = pageFlag;
                     BeginMeasure(false);
                 }
             }
@@ -432,6 +486,7 @@ namespace VocsAutoTest
                     measureMgr.pressValues = BitConverter.GetBytes(float.Parse(pressTextBox.Text));
                     break;
                 case 3:
+                    measureMgr.specType = leftPage.DataType.SelectedIndex.ToString();
                     break;
             }
             measureMgr.StartMultiMeasure();

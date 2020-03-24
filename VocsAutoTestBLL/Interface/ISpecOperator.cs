@@ -7,6 +7,7 @@ namespace VocsAutoTestBLL.Interface
     public interface ISpecOperator
     {
         event SpecDataDelegate SpecDataEvent;
-        void SendSpecCmn(string dataType);
+        event SpecDataDelegate AlgoDataEvent;
+        void SendSpecCmn(string dataType, ushort pageFlag);
     }
 }

@@ -1,0 +1,3 @@
+2020-03-24 14:32:17,202[1] ERROR [VocsAutoTest.LogUtil] : 数据没有准备好，请等待
+2020-03-24 14:32:51,311[1] DEBUG [VocsAutoTest.LogUtil] : 文件已保存：E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\bin\x64\Debug\ConcFiles\Gas1
+2020-03-24 14:32:51,312[1] DEBUG [VocsAutoTest.LogUtil] : 文件已保存：E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\bin\x64\Debug\ConcFiles\Gas2

@@ -81,7 +81,16 @@ namespace VocsAutoTestBLL.Impl
                     }
                     Measure();
                     if(measureTimes == 1)
-                        break;
+                    {
+                        try
+                        {
+                            break;
+                        }
+                        catch(Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                    }
                     int waite = timeInterval * 1000;
                     while (waite > 0)
                     {
@@ -104,7 +113,7 @@ namespace VocsAutoTestBLL.Impl
                 {
                     errorCount++;
                     Thread.Sleep(200);
-                    ExceptionUtil.Instance.ExceptionMethod(ex.Message);
+                    ExceptionUtil.ExceptionMethod(ex.Message, false);
                     if (errorCount > maxError)
                     {
                         break;
@@ -120,7 +129,7 @@ namespace VocsAutoTestBLL.Impl
             if (pageFlag == 1)
             {
                 //光谱采集
-                SpecOperatorImpl.Instance.SendSpecCmn(specType);
+                SpecOperatorImpl.Instance.SendSpecCmn(specType, pageFlag);
             }
             else if (pageFlag == 2)
             {
@@ -131,6 +140,7 @@ namespace VocsAutoTestBLL.Impl
             else if (pageFlag == 3)
             {
                 //算法生成
+                SpecOperatorImpl.Instance.SendSpecCmn(specType, pageFlag);
             }
         }
     }

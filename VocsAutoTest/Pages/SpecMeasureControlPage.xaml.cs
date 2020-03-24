@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
+using VocsAutoTest.Algorithm;
 using VocsAutoTest.Tools;
 using VocsAutoTestBLL.Impl;
 using VocsAutoTestCOMM;
@@ -15,7 +18,8 @@ namespace VocsAutoTest.Pages
     {
         private int pixelNumber = 512;
         private readonly SpecMeasurePage specPage;
-        private SpecDataSave specDataSave;
+        private readonly SpecDataSave specDataSave;
+        private List<string> historyData = null;
         public SpecMeasureControlPage(SpecMeasurePage page)
         {
             InitializeComponent();
@@ -24,8 +28,8 @@ namespace VocsAutoTest.Pages
                 this.specPage = page;
             }
             specDataSave = SpecDataSave.Instance;
-            FolderPath.Text = specDataSave.SpecDataSavePath;
             specPage.SetWave(3, pixelNumber, 185);
+            FolderPath.Text = specDataSave.SpecDataSavePath;
         }
         /// <summary>
         /// 间隔保存UI控制
@@ -47,12 +51,12 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void SetFolderBtn_Click(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog openFolderDialog = new FolderBrowserDialog();
-            if(openFolderDialog.ShowDialog() == DialogResult.OK)
+            System.Windows.Forms.FolderBrowserDialog openFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            if (openFolderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 FolderPath.Text = openFolderDialog.SelectedPath;
                 specDataSave.SpecDataSavePath = openFolderDialog.SelectedPath;
-                ExceptionUtil.Instance.LogMethod("光谱文件目录已设置为：" + FolderPath.Text);
+                ExceptionUtil.LogMethod("光谱文件目录已设置为：" + FolderPath.Text);
             }
         }
         /// <summary>
@@ -64,7 +68,7 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void ShowTitle_Checked(object sender, RoutedEventArgs e)
         {
-            if(specPage != null)
+            if (specPage != null)
             {
                 specPage.IsShow(1);
             }
@@ -82,7 +86,7 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void ShowTag_Checked(object sender, RoutedEventArgs e)
         {
-            if(specPage != null)
+            if (specPage != null)
             {
                 specPage.IsShow(3);
             }
@@ -100,21 +104,17 @@ namespace VocsAutoTest.Pages
         {
             InitTitleAndTag();
             //像素，波长=>像素
-            xAxisName.Text = "X(像素)";
             specPage.IsPixel = true;
             specPage.XAxisTitle = "像素";
-            specPage.CreateCurrentChart();
-            specPage.CreateHistoricalChart();
+            ChangeAxis();
         }
         private void Pixel_Unchecked(object sender, RoutedEventArgs e)
         {
             InitTitleAndTag();
             //波长，像素=>波长
-            xAxisName.Text = "X(波长)";
             specPage.IsPixel = false;
             specPage.XAxisTitle = "波长";
-            specPage.CreateCurrentChart();
-            specPage.CreateHistoricalChart();
+            ChangeAxis();
         }
         /// <summary>
         /// Y轴单位
@@ -127,8 +127,7 @@ namespace VocsAutoTest.Pages
             //电压值，积分=>电压
             specPage.YAxisTitle = "电压值(V)";
             specPage.IsVoltage = true;
-            specPage.CreateCurrentChart();
-            specPage.CreateHistoricalChart();
+            ChangeAxis();
         }
         private void VoltageValue_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -136,8 +135,19 @@ namespace VocsAutoTest.Pages
             //积分值，电压=>积分
             specPage.YAxisTitle = "积分值";
             specPage.IsVoltage = false;
-            specPage.CreateCurrentChart();
-            specPage.CreateHistoricalChart();
+            ChangeAxis();
+        }
+        private void ChangeAxis()
+        {
+            try
+            {
+                specPage.CreateCurrentChart();
+                specPage.CreateHistoricalChart();
+            }
+            catch
+            {
+                MessageBox.Show("无图表数据");
+            }
         }
         /// <summary>
         /// 初始化标题与标签UI
@@ -154,21 +164,57 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void ImportHistory_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog op = new Microsoft.Win32.OpenFileDialog();
-            if(FolderPath.Text != null && !"".Equals(FolderPath.Text))
+            try
             {
-                op.InitialDirectory = FolderPath.Text;
+                ExceptionUtil.ShowLoadingAction(true);
+                OpenFileDialog op = new OpenFileDialog();
+                if (FolderPath.Text != null && !"".Equals(FolderPath.Text))
+                {
+                    op.InitialDirectory = FolderPath.Text;
+                }
+                else
+                {
+                    op.InitialDirectory = System.Windows.Forms.Application.StartupPath + "\\ParameterGen\\"; ;//默认的打开路径
+                }
+                op.RestoreDirectory = true;
+                op.Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* ";
+                if (op.ShowDialog() == true)
+                {
+                    specPage.ImportHistoricalData(op.FileName);
+                    ModifyImportCurveBox();
+                }
             }
-            else
+            catch
             {
-                op.InitialDirectory = System.Windows.Forms.Application.StartupPath + "\\ParameterGen\\"; ;//默认的打开路径
+                MessageBox.Show("导入历史数据失败");
             }
-            op.RestoreDirectory = true;
-            op.Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* ";
-            if (op.ShowDialog() == true)
+            finally
             {
-                specPage.ImportHistoricalData(op.FileName);
+                ExceptionUtil.ShowLoadingAction(false);
             }
+        }
+        /// <summary>
+        /// 修改“选择导入曲线”下拉框数据
+        /// </summary>
+        private void ModifyImportCurveBox()
+        {
+            for(int i = 0; i < specPage.YListCollect.Count; i++)
+            {
+                ComboBoxItem item = new ComboBoxItem
+                {
+                    Content = "历史数据_" + i + 1
+                };
+                importCurve.Items.Add(item);
+            }
+        }
+        /// <summary>
+        /// 所选历史数据发生变化
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImportCurve_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            historyData = specPage.YListCollect[importCurve.SelectedIndex];
         }
         /// <summary>
         /// 设置波长
@@ -225,11 +271,21 @@ namespace VocsAutoTest.Pages
             try
             {
                 xPixel.IsEnabled = false;
-                showSpecific.IsChecked = false;
+                int xValue = int.Parse(xPixel.Text);
+                MESY.Text = "";
+                IMPY.Text = "";
+                if (specPage.CurrentData != null && specPage.CurrentData.Length >= xValue)
+                {
+                    MESY.Text = (Convert.ToDouble(specPage.CurrentData[xValue - 1]) / 1000).ToString();
+                }
+                if(historyData != null && historyData.Count > 0)
+                {
+                    IMPY.Text = (Convert.ToDouble(historyData[xValue - 1]) / 1000).ToString();
+                }
             }
             catch
             {
-                System.Windows.MessageBox.Show("请输入有效数据！");
+                MessageBox.Show("参数错误！");
                 showSpecific.IsChecked = false;
             }
         }
@@ -244,6 +300,7 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void ClearAllSeries_Click(object sender, RoutedEventArgs e)
         {
+            historyData = null;
             specPage.ClearAllSeries();
         }
         /// <summary>
@@ -262,6 +319,7 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void ClearHistoricalSeries_Click(object sender, RoutedEventArgs e)
         {
+            historyData = null;
             specPage.ClearHistoricalSeries();
         }
         /// <summary>
@@ -280,7 +338,48 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void ComputeTopPoint_Click(object sender, RoutedEventArgs e)
         {
+            StringBuilder sb = new StringBuilder();
+            if(specPage.YListCollect.Count > 0)
+            {
+                foreach (List<string> data in specPage.YListCollect)
+                {
+                    string[] datas = data.ToArray();
+                    double[] doubledata = new double[datas.Length];
+                    for (int i = 0; i < datas.Length; i++)
+                    {
+                        doubledata[i] = Convert.ToDouble(data[i]);
+                    }
 
+                    sb.Append(CalPos(doubledata).ToString()).Append("\r\n");
+                }
+                MessageBox.Show(sb.ToString());
+            }
+        }
+        private float CalPos(double[] specData)
+        {
+            double[] newdata = OMAAlgorithm.SplineFunc(specData);
+            double[] movedata = OMAAlgorithm.AjustMove(newdata, -3);
+            double[] finaldata = new double[512];
+            for (int i = 0; i < finaldata.Length; i++)
+            {
+                finaldata[i] = movedata[i * 4];
+            }
+            int index = (int)((160 - 1) * 4);
+            int indexstart = index - 10 * 4;
+            if (indexstart < 0) indexstart = 0;
+            int indexend = index + 10 * 4;
+            if (indexend >= newdata.Length) indexend = newdata.Length - 1;
+            double maxvalue = double.MinValue;
+            int maxIndex = index;
+            for (int i = indexstart; i <= indexend; i++)
+            {
+                if (newdata[i] > maxvalue)
+                {
+                    maxIndex = i;
+                    maxvalue = newdata[i];
+                }
+            }
+            return maxIndex / 4.0f + 1;
         }
         /// <summary>
         /// 单次保存
@@ -292,7 +391,7 @@ namespace VocsAutoTest.Pages
             string[] data = specPage.CurrentData;
             if (data == null)
             {
-                System.Windows.MessageBox.Show("没有可以保存的数据");
+                MessageBox.Show("没有可以保存的数据");
                 return;
             }
             specDataSave.SaveCurrentData(data);
@@ -306,7 +405,7 @@ namespace VocsAutoTest.Pages
         {
             if (!specDataSave.StartSave && !MeasureMgrImpl.Instance.StartMeasure)
             {
-                System.Windows.MessageBox.Show("请先开启连续测量");
+                MessageBox.Show("请先开启连续测量");
                 return;
             }
             int saveCount;
@@ -323,7 +422,7 @@ namespace VocsAutoTest.Pages
             }
             catch
             {
-                System.Windows.MessageBox.Show("参数错误！");
+                MessageBox.Show("参数错误！");
                 return;
             }
             specDataSave.StartSave = !specDataSave.StartSave;

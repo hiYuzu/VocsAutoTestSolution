@@ -1,1 +1,12 @@
-2020-03-19 09:47:23,618[1] INFO  [VocsAutoTest.LogUtil] : 当前串口信息：串口号:COM1，波特率:57600，校检:无校检，数据位:8，停止位:1
+2020-03-24 09:32:19,810[1] INFO  [VocsAutoTest.LogUtil] : 当前串口信息：串口号:COM1，波特率:57600，校检:无校检，数据位:8，停止位:1
+2020-03-24 09:32:38,576[1] DEBUG [VocsAutoTest.LogUtil] : 生成参量数据异常，异常信息为：System.TypeInitializationException: “MathWorks.MATLAB.NET.Arrays.MWNumericArray”的类型初始值设定项引发异常。 ---> System.TypeInitializationException: “MathWorks.MATLAB.NET.Arrays.MWArray”的类型初始值设定项引发异常。 ---> System.BadImageFormatException: 试图加载格式不正确的程序。 (异常来自 HRESULT:0x8007000B)
+   在 MathWorks.MATLAB.NET.Arrays.MWArray.mclmcrInitialize2(Int32 primaryMode)
+   在 MathWorks.MATLAB.NET.Arrays.MWArray..cctor()
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 MathWorks.MATLAB.NET.Arrays.MWNumericArray.get__Inf()
+   在 MathWorks.MATLAB.NET.Arrays.MWNumericArray..cctor()
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 MathWorks.MATLAB.NET.Arrays.MWNumericArray.op_Implicit(Array realData)
+   在 VocsAutoTest.Algorithm.AlgorithmPro.GetConc(Single[,] data) 位置 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\Algorithm\AlgorithmPro.cs:行号 183
+   在 VocsAutoTest.Algorithm.AlgorithmPro.Process(Double[,]& V, Single[,] Conc, Single[,] Ri, Single P, Single T) 位置 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\Algorithm\AlgorithmPro.cs:行号 48
+   在 VocsAutoTest.Pages.AlgoGeneraControlPage.Button_generateParameter_Click(Object sender, RoutedEventArgs e) 位置 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\Pages\AlgoGeneraControlPage.xaml.cs:行号 924

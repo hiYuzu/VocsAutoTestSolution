@@ -1,6 +1,8 @@
 ﻿using MathWorks.MATLAB.NET.Arrays;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -10,6 +12,10 @@ namespace VocsAutoTest.Algorithm
     class AlgorithmPro
     {
         private Algorithm algorithm = null;
+        private const int GAS_NUMBER = 4;//最多选择气体种类
+        private const string HEAD_GAS = "GAS";
+        private const string HEAD_FLOW = "FLOW";
+        private const string HEAD_SPEC = "SPEC";
         //光谱像元数
         public int PixelSize = 512;
 
@@ -43,11 +49,13 @@ namespace VocsAutoTest.Algorithm
             MWArray riMWArray = GetRi(Ri);
             MWArray mwarray = algorithm.Calculate(concMWArray, riMWArray, P, T);
             V = Convert2Array2((MWNumericArray)mwarray);
+            Print(V);
         }
 
         //保存测量数据文件
-        public string SaveParameter(double[,] V, string machId, string instId, ArrayList selectedGases, string path)
+        public string SaveParameter(double[,] V, string machId, string instId, ArrayList selectedGases)
         {
+            string path = System.Windows.Forms.Application.StartupPath + "\\ParameterGen\\";
             if (!string.IsNullOrEmpty(machId) && !string.IsNullOrEmpty(instId))
                 path = path + machId + "@" + instId + "\\";
 
@@ -80,6 +88,76 @@ namespace VocsAutoTest.Algorithm
             }
             //FileControl.SaveMatrix(E, path + "拟合误差" + ".txt", 1, "F", head, null);
             return path;
+        }
+
+        private string specNo = string.Empty;
+        private double[] specArry = new double[512];
+        //保存光谱数据
+        public void SaveSpecData(string path, string[] gasName, string[] gasValue, ObservableCollection<string[]> _obervableCollection, Dictionary<int, float[]> riDataMap)
+        {
+            string fileName = path + "光谱.txt";
+            TextWriter textWriter = null;
+            try
+            {
+                if (File.Exists(fileName))
+                    File.Delete(fileName);
+                textWriter = File.CreateText(fileName);
+                string line;
+
+                //保存气体和标气浓度
+                textWriter.WriteLine(HEAD_GAS);
+                for (int i = 0; i < gasName.Length; i++)
+                {
+                    line = gasName[i] + "\t" + gasValue[i];
+                    textWriter.WriteLine(line);
+                }
+                textWriter.WriteLine();
+
+                //保存测量数据和浓度误差
+                textWriter.WriteLine(HEAD_FLOW);
+                for (int i = 0; i < _obervableCollection.Count; i++)
+                {
+                    line = "";
+                    for (int j = 0; j < _obervableCollection[i].Length; j++)
+                    {
+                        line = line + _obervableCollection[i][j] + "\t"; ;
+                    }
+                    textWriter.WriteLine(line);
+                }
+                textWriter.WriteLine();
+
+                //保存光谱数据
+                textWriter.WriteLine(HEAD_SPEC);
+                //第一行，写编号
+                line = "";
+                for (int i = 0; i < _obervableCollection.Count; i++)
+                {
+                    line = line + _obervableCollection[i][0] + "\t";
+                }
+                textWriter.WriteLine(line);
+
+                //写光谱数据,每列对应1次测量,每行对应1个象素
+                for (int i = 0; i < 512; i++)
+                {
+                    line = "";
+                    for (int j = 1; j <= riDataMap.Count; j++)
+                    {
+                        riDataMap.TryGetValue(j, out float[] values);
+                        line = line + values[i] + "\t";
+                    }
+                    textWriter.WriteLine(line);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+            finally
+            {
+                if (textWriter != null)
+                    textWriter.Close();
+            }
+
         }
 
         private string GetMatrixHead(ArrayList selectedGases)

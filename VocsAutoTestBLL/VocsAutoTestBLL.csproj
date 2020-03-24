@@ -42,11 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataForward.cs" />
-    <Compile Include="Impl\AlgoGeneralImpl.cs" />
     <Compile Include="Impl\MeasureMgrImpl.cs" />
     <Compile Include="Impl\PassPortImpl.cs" />
     <Compile Include="Impl\SpecOperatorImpl.cs" />
-    <Compile Include="Interface\IAlgoGeneral.cs" />
     <Compile Include="Interface\IMeasureMgr.cs" />
     <Compile Include="Interface\IPassPort.cs" />
     <Compile Include="Interface\ISpecOperator.cs" />

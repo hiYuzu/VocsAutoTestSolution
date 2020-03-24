@@ -1,0 +1,7 @@
+2020-03-20 09:46:10,198[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-20 09:46:43,636[1] DEBUG [VocsAutoTest.LogUtil] : 设置失败
+2020-03-20 09:46:43,638[1] DEBUG [VocsAutoTest.LogUtil] : 设置成功
+2020-03-20 09:46:43,639[1] DEBUG [VocsAutoTest.LogUtil] : 设置成功
+2020-03-20 09:46:43,640[1] DEBUG [VocsAutoTest.LogUtil] : 设置失败
+2020-03-20 09:46:43,641[1] DEBUG [VocsAutoTest.LogUtil] : 设置失败
+2020-03-20 09:46:50,247[1] ERROR [VocsAutoTest.LogUtil] : 数据没有准备好，请等待

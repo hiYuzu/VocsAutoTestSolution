@@ -1,0 +1,2 @@
+2020-03-19 11:06:35,679[1] ERROR [VocsAutoTest.MainWindow+<>c__DisplayClass13_0] : 线程正在运行或被终止；它无法重新启动。
+2020-03-19 11:06:37,727[1] ERROR [VocsAutoTest.MainWindow+<>c__DisplayClass13_0] : 线程正在运行或被终止；它无法重新启动。

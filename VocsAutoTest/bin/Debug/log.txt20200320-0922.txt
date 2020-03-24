@@ -1,0 +1,6 @@
+2020-03-20 09:22:01,535[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:22:24,795[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:22:43,826[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:22:48,829[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:22:53,833[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:22:58,835[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔

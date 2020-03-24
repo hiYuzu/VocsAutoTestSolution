@@ -91,6 +91,10 @@ namespace VocsAutoTestBLL
                 {
                     Log4NetUtil.Error("守护线程运行错误，信息为：" + ex.Message);
                 }
+                finally
+                {
+                    Thread.Sleep(50);
+                }
             }
         }
         /// <summary>
@@ -109,7 +113,6 @@ namespace VocsAutoTestBLL
                         {
                             DataForwardMethod(command);
                         }
-                        Thread.Sleep(100);
                     }
                 }
                 catch (ThreadAbortException)
@@ -119,8 +122,12 @@ namespace VocsAutoTestBLL
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.GetType().ToString() + ":" + ex.Message);
+                    Console.WriteLine(ex.Message);
                     Log4NetUtil.Error(ex.GetType().ToString() + ":" + ex.Message);
+                }
+                finally
+                {
+                    Thread.Sleep(50);
                 }
             }
         }
@@ -134,8 +141,6 @@ namespace VocsAutoTestBLL
         public event DataForwardDelegate ReadSpecData;
         //读取浓度测量数据
         public event DataForwardDelegate ReadConcMeasure;
-        //读取算法生成测量数据
-        public event DataForwardDelegate ReadAlgoGeneral;
         #endregion
 
         /// <summary>
@@ -161,7 +166,6 @@ namespace VocsAutoTestBLL
                         break;
                     case "24":
                         ReadSpecData(this, command);
-                        ReadAlgoGeneral(this,command);
                         break;
                     case "29":
                         ReadConcMeasure(this, command);
@@ -176,10 +180,10 @@ namespace VocsAutoTestBLL
                 switch (command.Data)
                 {
                     case "88":
-                        ExceptionUtil.Instance.LogMethod("设置成功");
+                        ExceptionUtil.LogMethod("设置成功");
                         break;
                     case "99":
-                        ExceptionUtil.Instance.LogMethod("设置失败");
+                        ExceptionUtil.LogMethod("设置失败");
                         break;
                     default:
                         break;

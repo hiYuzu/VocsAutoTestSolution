@@ -48,7 +48,6 @@
     <Compile Include="CacheData.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="CRC.cs" />
-    <Compile Include="DataConvertUtil.cs" />
     <Compile Include="ExceptionUtil.cs" />
     <Compile Include="DefaultArgument.cs" />
     <Compile Include="FPI.cs" />

@@ -1,0 +1,9 @@
+2020-03-24 13:46:00,137[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
+2020-03-24 13:46:00,190[1] ERROR [VocsAutoTest.LogUtil] : 数据没有准备好，请等待
+2020-03-24 13:46:05,138[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
+2020-03-24 13:46:10,178[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
+2020-03-24 13:46:15,107[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
+2020-03-24 13:46:20,145[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
+2020-03-24 13:46:45,064[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 13:46:50,070[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
+2020-03-24 13:46:55,073[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔

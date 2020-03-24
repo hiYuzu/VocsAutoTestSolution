@@ -1,0 +1,7 @@
+2020-03-20 09:11:26,579[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:11:32,586[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:11:38,588[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:11:44,591[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:11:44,643[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
+2020-03-20 09:11:50,640[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
+2020-03-20 09:11:56,653[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。

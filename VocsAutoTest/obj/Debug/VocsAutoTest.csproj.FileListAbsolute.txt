@@ -45,3 +45,9 @@ E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\AlgoG
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\SpecMeasurePage.baml
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\SpecMeasureControlPage.baml
 E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\AlgoGeneraPage.baml
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Resources\DataGridResource.baml
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\VocsMgmtPage.g.cs
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Pages\VocsMgmtPage.baml
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Loading.baml
+E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\obj\Debug\Loading.g.cs

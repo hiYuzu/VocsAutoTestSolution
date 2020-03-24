@@ -7,49 +7,32 @@ namespace VocsAutoTestCOMM
     /// </summary>
     /// <param name="sender">发送者</param>
     /// <param name="msg">异常信息</param>
-    public delegate void ExceptionDelegate(object sender, string msg);
+    public delegate void ExceptionDelegate(object sender, string msg, bool isShow);
     /// <summary>
     /// 异常通知类
     /// </summary>
     public class ExceptionUtil
-{
-        private static volatile ExceptionUtil instance;
-        private static readonly object _obj = new object();
-        public static ExceptionUtil Instance
-        {
-            get
-            {
-                if(instance == null)
-                {
-                    lock (_obj)
-                    {
-                        instance = new ExceptionUtil();
-                    }
-                }
-                return instance;
-            }
-        }
-
-        public event ExceptionDelegate ExceptionEvent;
-        public event ExceptionDelegate LogEvent;
+    {
+        public static event ExceptionDelegate ExceptionEvent;
+        public static event ExceptionDelegate LogEvent;
+        public static Action<bool> ShowLoadingAction;
 
         /// <summary>
-        /// 异常信息（不显示在主界面）
+        /// 异常信息
         /// </summary>
-        /// <param name="command"></param>
-        public void ExceptionMethod(string msg)
+        /// <param name="msg">信息</param>
+        /// <param name="isShow">是否显示在主界面</param>
+        public static void ExceptionMethod(string msg, bool isShow)
         {
-            Console.WriteLine(msg);
-            ExceptionEvent(this, msg);
+            ExceptionEvent(new ExceptionUtil(), msg, isShow);
         }
         /// <summary>
         /// 日志信息（显示在主界面）
         /// </summary>
-        /// <param name="msg"></param>
-        public void LogMethod(string msg)
+        /// <param name="msg">信息</param>
+        public static void LogMethod(string msg)
         {
-            Console.WriteLine(msg);
-            LogEvent(this, msg);
+            LogEvent(new ExceptionUtil(), msg, true);
         }
     }
 }

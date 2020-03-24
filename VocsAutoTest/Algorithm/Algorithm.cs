@@ -1,6 +1,7 @@
 ﻿using MathWorks.MATLAB.NET.Arrays;
 using System;
 using System.Reflection;
+using VocsAutoTest.Tools;
 
 namespace VocsAutoTest.Algorithm
 {
@@ -21,7 +22,7 @@ namespace VocsAutoTest.Algorithm
             try
             {
                 string assemblyFile = string.Empty;
-                assemblyFile = @"E:\p1.dll";
+                assemblyFile = ConstConfig.AppPath + @"\p1.dll";
                 Assembly assembly = Assembly.LoadFrom(assemblyFile);
                 Type[] types = assembly.GetTypes();
                 Type type = types[0];

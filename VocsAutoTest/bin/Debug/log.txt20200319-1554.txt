@@ -1,0 +1,5 @@
+2020-03-19 15:54:27,337[1] INFO  [VocsAutoTest.LogUtil] : 当前串口信息：串口号:COM3，波特率:57600，校检:无校检，数据位:8，停止位:1
+2020-03-19 15:54:31,829[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
+2020-03-19 15:54:31,907[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
+2020-03-19 15:54:31,981[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
+2020-03-19 15:54:32,062[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。

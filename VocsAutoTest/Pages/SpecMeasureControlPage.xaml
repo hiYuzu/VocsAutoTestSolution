@@ -49,7 +49,7 @@
             <TextBlock x:Name="xAxisName" HorizontalAlignment="Left" Margin="10,30,0,0" TextWrapping="Wrap" Text="X(像素)" VerticalAlignment="Top"/>
             <TextBox x:Name="xPixel" HorizontalAlignment="Left" Height="18" Margin="68,29,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" Style="{DynamicResource textStyle}"/>
             <TextBlock HorizontalAlignment="Left" Margin="10,55,0,0" TextWrapping="Wrap" Text="MES-Y" VerticalAlignment="Top"/>
-            <TextBox x:Name="MESY" HorizontalAlignment="Left" Height="18" Margin="68,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" Style="{DynamicResource textStyle}"/>
+            <TextBox x:Name="MESY" HorizontalAlignment="Left" Height="18" Margin="68,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" IsReadOnly="True" Style="{DynamicResource textStyle}"/>
             <TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="数据保存" VerticalAlignment="Top"/>
             <RadioButton x:Name="SingleSave" Content="当前测量单次保存" GroupName="SaveData" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Checked="SingleSave_Checked" Unchecked="SingleSave_Unchecked"/>
             <RadioButton x:Name="ContinSave" Content="连续保存" GroupName="SaveData" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" IsChecked="True"/>
@@ -60,9 +60,9 @@
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1">
             <TextBlock HorizontalAlignment="Left" Margin="0,30,0,0" TextWrapping="Wrap" Text="选择导入曲线" VerticalAlignment="Top"/>
-            <ComboBox x:Name="importCurve" HorizontalAlignment="Left" Height="18" Margin="85,29,0,0" VerticalAlignment="Top" Width="90"/>
+            <ComboBox x:Name="importCurve" HorizontalAlignment="Left" Height="18" Margin="85,29,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ImportCurve_SelectionChanged"/>
             <TextBlock HorizontalAlignment="Left" Margin="0,55,0,0" TextWrapping="Wrap" Text="IMP-Y" VerticalAlignment="Top"/>
-            <TextBox x:Name="IMPY" HorizontalAlignment="Left" Height="18" Margin="85,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" Style="{DynamicResource textStyle}"/>
+            <TextBox x:Name="IMPY" HorizontalAlignment="Left" Height="18" Margin="85,55,0,0" TextWrapping="Wrap" Text="" IsReadOnly="True" VerticalAlignment="Top" Width="90" Style="{DynamicResource textStyle}"/>
             <Border BorderBrush="Gray" BorderThickness="0, 1, 0, 1" HorizontalAlignment="Left" Height="66" Margin="-225,84,0,0" VerticalAlignment="Top" Width="450"/>
             <Button x:Name="singleSave" Content="保存" HorizontalAlignment="Left" Margin="50,107,0,0" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource btnOther}" IsEnabled="False" Click="SingleSave_Click"/>
             <RadioButton x:Name="intervalSave" Content="间隔保存" GroupName="SaveData_Interval" HorizontalAlignment="Left" Margin="0,156,0,0" VerticalAlignment="Top" Checked="IntervalSaveData_Checked" Unchecked="UnIntervalSaveData_Checked"/>

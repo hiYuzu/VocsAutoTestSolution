@@ -46,7 +46,7 @@ namespace VocsAutoTestCOMM
             byte[] buf = new byte[n];
             serialPort.Read(buf, 0, n);
             buffer.AddRange(buf);
-            Console.WriteLine(ByteStrUtil.ByteToKHex(buffer.ToArray()));
+            //Console.WriteLine(ByteStrUtil.ByteToKHex(buffer.ToArray()));
             while (buffer.Count >= 14)
             {
                 if (buffer[0] == 0x7D && buffer[1] == 0x7B)

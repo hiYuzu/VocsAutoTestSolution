@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Resources/ButtonResource.xaml"/>
                 <ResourceDictionary Source="Resources/ComboxStyle.xaml"/>
                 <ResourceDictionary Source="Resources/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="Resources/DataGridResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

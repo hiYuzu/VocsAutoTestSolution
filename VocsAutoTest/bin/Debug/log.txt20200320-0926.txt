@@ -1,0 +1,9 @@
+2020-03-20 09:26:03,964[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:26:09,004[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:26:14,012[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:26:24,881[1] INFO  [VocsAutoTest.LogUtil] : 当前串口信息：串口号:COM3，波特率:57600，校检:无校检，数据位:8，停止位:1
+2020-03-20 09:26:35,301[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:26:40,302[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:26:45,304[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:26:50,308[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔
+2020-03-20 09:26:55,309[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请尝试调整读数间隔

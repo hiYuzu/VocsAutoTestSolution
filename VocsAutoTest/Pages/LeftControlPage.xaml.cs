@@ -12,18 +12,12 @@ namespace VocsAutoTest.Pages
     /// </summary>
     public partial class LeftControlPage : Page
     {
-        MainWindow mainWindow = null;
         float voltage;
         byte avgTimes;
         byte lightTimes;
         ushort integtationTime;
-        ushort readInterval;
-        public LeftControlPage(MainWindow main)
+        public LeftControlPage()
         {
-            if(mainWindow == null)
-            {
-                this.mainWindow = main;
-            }
             InitializeComponent();
             ReadBtn_Click(null, null);
         }
@@ -61,18 +55,10 @@ namespace VocsAutoTest.Pages
                     Cmn = "21",
                     ExpandCmn = "55",
                     Data = "00 08"
-                },
-                //读数间隔
-                new Command
-                {
-                    Cmn = "21",
-                    ExpandCmn = "55",
-                    Data = "00 09"
                 }
             };
             DataForward.Instance.ReadCommParam += new DataForwardDelegate(SetCommParam);
             DataForward.Instance.ReadVocsParam += new DataForwardDelegate(SetVocsParam);
-            DataForward.Instance.ReadVocsParam += new DataForwardDelegate(mainWindow.SetReadInterval);
             SuperSerialPort.Instance.SendAll(commands, true);
         }
         /// <summary>
@@ -85,9 +71,10 @@ namespace VocsAutoTest.Pages
         {
             byte[] data = new byte[4];
             Array.Copy(ByteStrUtil.HexToByte(command.Data), 1, data, 0, 4);
+            Array.Reverse(data, 0, data.Length);
             Dispatcher.Invoke(new Action(() =>
             {
-                ControlVol.Text = BitConverter.ToSingle(DataConvertUtil.ByteReverse(data), 0).ToString("f1");
+                ControlVol.Text = BitConverter.ToSingle(data, 0).ToString("f1");
             }));
         }
         /// <summary>
@@ -118,7 +105,8 @@ namespace VocsAutoTest.Pages
                     {
                         byte[] time = new byte[2];
                         Array.Copy(data, 2, time, 0, 2);
-                        IntegrationTime.Text = BitConverter.ToUInt16(DataConvertUtil.ByteReverse(time), 0).ToString();
+                        Array.Reverse(time, 0, time.Length);
+                        IntegrationTime.Text = BitConverter.ToUInt16(time, 0).ToString();
                     }));
                     break;
                 default:
@@ -137,21 +125,27 @@ namespace VocsAutoTest.Pages
                 MessageBox.Show("请检查测量参数！");
                 return;
             }
+            byte[] voltage = BitConverter.GetBytes(this.voltage);
+            Array.Reverse(voltage);
+            byte[] zeroTimes = BitConverter.GetBytes((ushort)100);
+            Array.Reverse(zeroTimes);
+            byte[] integtationTime = BitConverter.GetBytes(this.integtationTime);
+            Array.Reverse(integtationTime);
             List<Command> commands = new List<Command>()
             {
-                //光谱仪公共参数
-                new Command
-                {
-                    Cmn = "20",
-                    ExpandCmn = "66",
-                    Data = "00" + ByteStrUtil.ByteToHexStr(BitConverter.GetBytes(voltage)) + " 00" + ByteStrUtil.ByteToHexStr(BitConverter.GetBytes((ushort)100))
-                },
                 //光谱仪平均次数
                 new Command
                 {
                     Cmn = "21",
                     ExpandCmn = "66",
                     Data = "00 03 " + avgTimes.ToString("x2")
+                },
+                //氙灯控制电压
+                new Command
+                {
+                    Cmn = "20",
+                    ExpandCmn = "66",
+                    Data = "00" + ByteStrUtil.ByteToHexStr(voltage) + " 00" + ByteStrUtil.ByteToHexStr(zeroTimes)
                 },
                 //打灯次数
                 new Command
@@ -165,14 +159,7 @@ namespace VocsAutoTest.Pages
                 {
                     Cmn = "21",
                     ExpandCmn = "66",
-                    Data = "00 08" + ByteStrUtil.ByteToHexStr(BitConverter.GetBytes(integtationTime))
-                },
-                //读数间隔
-                new Command
-                {
-                    Cmn = "21",
-                    ExpandCmn = "66",
-                    Data = "00 09" + ByteStrUtil.ByteToHexStr(BitConverter.GetBytes(readInterval))
+                    Data = "00 08" + ByteStrUtil.ByteToHexStr(integtationTime)
                 }
             };
             SuperSerialPort.Instance.SendAll(commands, true);
@@ -189,7 +176,6 @@ namespace VocsAutoTest.Pages
                 avgTimes = Convert.ToByte(AvgTimes.Text);
                 lightTimes = Convert.ToByte(LightTimes.Text);
                 integtationTime = Convert.ToUInt16(IntegrationTime.Text);
-                readInterval = Convert.ToUInt16(mainWindow.ReadInterval.Text);
                 return true;
             }
             catch
