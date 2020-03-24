@@ -1,2 +1,0 @@
-2020-03-24 13:39:39,709[1] ERROR [VocsAutoTest.LogUtil] : 数据没有准备好，请等待
-2020-03-24 13:39:49,706[1] ERROR [VocsAutoTest.LogUtil] : 数据没有准备好，请等待

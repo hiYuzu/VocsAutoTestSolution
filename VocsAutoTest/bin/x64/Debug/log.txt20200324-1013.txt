@@ -1,6 +1,0 @@
-2020-03-24 10:13:04,464[1] INFO  [VocsAutoTest.LogUtil] : 当前串口信息：串口号:COM3，波特率:57600，校检:无校检，数据位:8，停止位:1
-2020-03-24 10:13:36,840[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
-2020-03-24 10:13:41,849[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
-2020-03-24 10:13:46,851[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
-2020-03-24 10:13:51,853[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
-2020-03-24 10:13:56,855[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔

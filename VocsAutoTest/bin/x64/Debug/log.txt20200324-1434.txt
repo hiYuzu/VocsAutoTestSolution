@@ -1,2 +1,0 @@
-2020-03-24 14:34:15,836[1] DEBUG [VocsAutoTest.LogUtil] : 文件已保存：E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\bin\x64\Debug\ConcFiles\Gas1
-2020-03-24 14:34:15,857[1] DEBUG [VocsAutoTest.LogUtil] : 文件已保存：E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTest\bin\x64\Debug\ConcFiles\Gas2

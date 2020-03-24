@@ -1,2 +1,0 @@
-2020-03-19 16:09:27,135[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
-2020-03-19 16:09:39,369[1] ERROR [VocsAutoTest.LogUtil] : 读取本次光谱超时（时间间隔超时），请重新读取新的光谱数据

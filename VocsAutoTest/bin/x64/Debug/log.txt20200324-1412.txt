@@ -1,6 +1,0 @@
-2020-03-24 14:12:01,046[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
-2020-03-24 14:12:06,049[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
-2020-03-24 14:12:11,052[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
-2020-03-24 14:12:16,056[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
-2020-03-24 14:12:21,058[1] ERROR [VocsAutoTest.LogUtil] : 等待超时，请检查设备或尝试调整读数间隔
-2020-03-24 14:12:51,100[1] ERROR [VocsAutoTest.LogUtil] : 数据没有准备好，请等待

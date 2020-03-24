@@ -1,4 +1,0 @@
-2020-03-24 10:45:27,815[1] ERROR [VocsAutoTest.LogUtil] : 数据没有准备好，请等待
-2020-03-24 10:45:37,972[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
-2020-03-24 10:45:42,847[1] ERROR [VocsAutoTest.LogUtil] : 数据没有准备好，请等待
-2020-03-24 10:45:57,961[DataThread] ERROR [VocsAutoTestBLL.DataForward] : System.NullReferenceException:未将对象引用设置到对象的实例。
