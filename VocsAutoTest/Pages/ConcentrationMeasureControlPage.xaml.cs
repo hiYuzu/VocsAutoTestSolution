@@ -120,7 +120,7 @@ namespace VocsAutoTest.Pages
                 concentrationPage.UpdateChart(concList);
             }
             else 
-            { 
+            {
             
             }
         }

@@ -100,6 +100,7 @@ namespace VocsAutoTest.Algorithm
                     }
                 }
                 sw.Close();
+                ExceptionUtil.LogMethod("光谱文件已保存：" + name + @"\");
             }
             catch (Exception ex)
             {
@@ -159,6 +160,7 @@ namespace VocsAutoTest.Algorithm
                     }
                 }
                 swr.Close();
+                ExceptionUtil.LogMethod("光谱文件已保存：" + name + @"\");
             }
             catch (Exception ex)
             {

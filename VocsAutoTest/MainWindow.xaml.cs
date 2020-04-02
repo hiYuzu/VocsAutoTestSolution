@@ -24,7 +24,6 @@ namespace VocsAutoTest
         private SpecMeasureControlPage specControlPage;
         private ConcentrationMeasurePage concentrationPage;
         private ConcentrationMeasureControlPage concentrationControlPage;
-        private LeftControlPage leftPage;
         private VocsMgmtPage vocsMgmtPage;
         //日志栏折叠
         private bool isLogBoxOpen = true;
@@ -40,7 +39,6 @@ namespace VocsAutoTest
             InitializeComponent();
             DataForward.Instance.StartService();
             InitBottomInfo();
-            InitLeftPage();
             measureMgr = MeasureMgrImpl.Instance;
             VocsCollectBtn_Click(null, null);
             PassPortImpl.GetInstance().PassValueEvent += new PassPortDelegate(ReceievedValues);
@@ -105,17 +103,6 @@ namespace VocsAutoTest
                     ReadInterval.Text = BitConverter.ToUInt16(timeInterval, 0).ToString();
                 }));  
             }
-        }
-        /// <summary>
-        /// 初始化左侧控制页
-        /// </summary>
-        private void InitLeftPage()
-        {
-            leftPage = new LeftControlPage();
-            LeftControlPage.Content = new Frame()
-            {
-                Content = leftPage
-            };
         }
         /// <summary>
         /// 初始化底部信息
@@ -479,14 +466,14 @@ namespace VocsAutoTest
             switch (pageFlag)
             {
                 case 1:
-                    measureMgr.specType = leftPage.DataType.SelectedIndex.ToString();
+                    measureMgr.specType = DataType.SelectedIndex.ToString();
                     break;
                 case 2:
                     measureMgr.tempValues = BitConverter.GetBytes(float.Parse(tempTextBox.Text));
                     measureMgr.pressValues = BitConverter.GetBytes(float.Parse(pressTextBox.Text));
                     break;
                 case 3:
-                    measureMgr.specType = leftPage.DataType.SelectedIndex.ToString();
+                    measureMgr.specType = DataType.SelectedIndex.ToString();
                     break;
             }
             measureMgr.StartMultiMeasure();

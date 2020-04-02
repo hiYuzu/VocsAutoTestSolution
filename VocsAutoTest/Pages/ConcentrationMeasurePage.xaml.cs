@@ -105,6 +105,10 @@ namespace VocsAutoTest.Pages
                 CreatConcChart();
             }));
         }
+        private void InitSeries()
+        {
+            
+        }
         private void CreatConcChart()
         {
             for(int i = 0; i < concData.Count; i++)
@@ -138,7 +142,11 @@ namespace VocsAutoTest.Pages
         }
         public void ClearConcChart()
         {
-            chart.Series.Clear();
+            List<DataSeries> dataSeries = chart.Series.ToList<DataSeries>();
+            foreach(DataSeries series in dataSeries)
+            {
+                series.DataPoints.Clear();
+            }
         }
     }
 }

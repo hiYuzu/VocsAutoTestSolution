@@ -109,15 +109,21 @@
                         </Button>
                     </StackPanel>
                 </Grid>
-                <!--左栏-->
+                <!--左栏
                 <Grid Name="gridLeftColumn" Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Margin="0" Background="White" Opacity="1">
                     <ContentControl x:Name="LeftControlPage"/>
-                </Grid>
+                </Grid>-->
                 <!--中间上部-->
                 <Grid Name="gridCentertopColumn" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource MyBrush}" Margin="0, 0, 0, 1">
                     <Border Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Margin="5,0,0,0">
                         <StackPanel Orientation="Horizontal" Height="38" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <TextBlock Text="主要参数设置" FontSize="16" FontWeight="Black" Height="18" Margin="20,0,0,0"/>
+                            <TextBlock Text="光谱数据类型：" FontSize="13" Height="18" Margin="20,0,0,0" TextWrapping="Wrap" Width="120"/>
+                            <ComboBox x:Name="DataType" HorizontalAlignment="Left" VerticalAlignment="Center" Width="130" FontSize="13">
+                                <ComboBoxItem Content="平均后的光谱数据" IsSelected="True"/>
+                                <ComboBoxItem Content="扣暗电流光谱数据"/>
+                                <ComboBoxItem Content="暗电流光谱数据"/>
+                                <ComboBoxItem Content="有光光谱数据"/>
+                            </ComboBox>
                             <Rectangle Height="10" Margin="70 15 0 0"  Stretch="Fill" Width="10"  VerticalAlignment="Top" Fill="Green"/>
                             <Label  VerticalContentAlignment="Top" HorizontalContentAlignment="Center" FontStyle="Normal"  Height="23" Width="90" Margin="0,8" Content="读数间隔(s)"/>
                             <TextBox x:Name="ReadInterval" Text="5" Width="80" Margin="0,8,0,7" Style="{DynamicResource textStyle}"/>
@@ -171,12 +177,12 @@
                     </Border>
                 </Grid>
                 <!--中间-->
-                <Grid Name="gridCenterColumn" Grid.Row="3" Grid.Column="1" Background="{StaticResource MyBrush}" Margin="3,0,0,2">
+                <Grid Name="gridCenterColumn" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="{StaticResource MyBrush}" Margin="3,0,0,2">
                     <ContentControl x:Name="ChartPage"/>
                 </Grid>
                 <GridSplitter Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="1" Background="Transparent"></GridSplitter>
                 <!---中间下部-->
-                <Grid Name="gridCenterbottomColumn" Grid.Row="4" Grid.Column="1" Grid.RowSpan="2" Background="{StaticResource MyBrush}" Margin="3,0,0,2">
+                <Grid Name="gridCenterbottomColumn" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="{StaticResource MyBrush}" Margin="3,0,0,2">
                     <Button x:Name="ClearLogBoxBtn" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="999" Width="14" Height="23" Margin="0,0,20,0" Click="ClearLogBoxBtn_Click">
                         <Button.Template>
                             <ControlTemplate>

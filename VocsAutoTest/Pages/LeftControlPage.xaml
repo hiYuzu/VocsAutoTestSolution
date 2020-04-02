@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Column="0" Grid.Row="0">
             <TextBlock Margin="15,10,25,60" TextWrapping="Wrap" Text="光谱数据类型：" FontSize="15" Height="25" Width="120"/>
-            <ComboBox x:Name="DataType" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Width="130" FontSize="13" Tag="11">
+            <ComboBox x:Name="DataType" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Width="130" FontSize="13">
                 <ComboBoxItem Content="平均后的光谱数据" IsSelected="True"/>
                 <ComboBoxItem Content="扣暗电流光谱数据"/>
                 <ComboBoxItem Content="暗电流光谱数据"/>

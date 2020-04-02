@@ -109,6 +109,8 @@ namespace VocsAutoTest.Pages
                 textbox_gas3_input.IsEnabled = false;
                 label_gas4_input.Content = "气体4";
                 textbox_gas4_input.IsEnabled = false;
+                //解锁测量信息
+                LockMeasInfo(false);
             }
             else if (optInt == 2)
             {
@@ -164,10 +166,47 @@ namespace VocsAutoTest.Pages
                     label_gas4_input.Content = "气体4";
                     textbox_gas4_input.IsEnabled = false;
                 }
+                //锁定测量信息
+                LockMeasInfo(true);
                 AddComlumns();
             }
             SetAverageTime();
             AlgorithmPro.GetInstance();
+        }
+        private void LockMeasInfo(bool lockText)
+        {
+            if (lockText)
+            {
+                text_mach_id.IsEnabled = false;
+                text_room_id.IsEnabled = false;
+                text_in_fine.IsEnabled = false;
+                text_temp.IsEnabled = false; 
+                text_vol.IsEnabled = false;
+                text_person.IsEnabled = false;
+                text_instr_id.IsEnabled = false;
+                text_light_id.IsEnabled = false;
+                text_out_fine.IsEnabled = false;
+                text_press.IsEnabled = false;
+                text_times.IsEnabled = false;
+                text_peak_position.IsEnabled = false;
+                button_info_import.IsEnabled = false;
+            }
+            else
+            {
+                text_mach_id.IsEnabled = true;
+                text_room_id.IsEnabled = true;
+                text_in_fine.IsEnabled = true;
+                text_temp.IsEnabled = true;
+                text_vol.IsEnabled = true;
+                text_person.IsEnabled = true;
+                text_instr_id.IsEnabled = true;
+                text_light_id.IsEnabled = true;
+                text_out_fine.IsEnabled = true;
+                text_press.IsEnabled = true;
+                text_times.IsEnabled = true;
+                text_peak_position.IsEnabled = true;
+                button_info_import.IsEnabled = true;
+            }
         }
 
         private void InitCombox()
@@ -319,6 +358,7 @@ namespace VocsAutoTest.Pages
                 MessageBox.Show("没有光谱数据", "错误信息", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else {
+                double totalFlow = 0;
                 List<string> list = new List<string>();
                 int orderNumber = _obervableCollection.Count + 1;
                 list.Add(Convert.ToString(orderNumber));
@@ -335,6 +375,7 @@ namespace VocsAutoTest.Pages
                     else
                     {
                         list.Add(gas1);
+                        totalFlow += double.Parse(gas1);
                     }
                 }
                 if (textbox_gas2_input.IsEnabled)
@@ -349,6 +390,7 @@ namespace VocsAutoTest.Pages
                     else
                     {
                         list.Add(gas2);
+                        totalFlow += double.Parse(gas2);
                     }
                 }
                 if (textbox_gas3_input.IsEnabled)
@@ -363,6 +405,7 @@ namespace VocsAutoTest.Pages
                     else
                     {
                         list.Add(gas3);
+                        totalFlow += double.Parse(gas3);
                     }
                 }
                 if (textbox_gas4_input.IsEnabled)
@@ -377,12 +420,41 @@ namespace VocsAutoTest.Pages
                     else
                     {
                         list.Add(gas4);
+                        totalFlow += double.Parse(gas4);
                     }
                 }
                 if (list != null && list.Count > 0)
                 {
-                    int count = list.Count;
-                    for (int i = 0; i < count * 2; i++)
+                    int count = list.Count-2;
+                    //添加浓度
+                    for (int i = 0; i < count-1; i++)
+                    {
+                        double result = 0;
+                        double gasFlow = double.Parse(list[i + 3]);//除去序号、勾选和N2，从3开始
+                        double gasPpm = 0;
+                        if (i==0) {
+                            gasPpm = double.Parse(textbox_gas2_ppm.Text.Trim());
+                        }
+                        if (i == 1)
+                        {
+                            gasPpm = double.Parse(textbox_gas3_ppm.Text.Trim());
+                        }
+                        if (i == 2)
+                        {
+                            gasPpm = double.Parse(textbox_gas4_ppm.Text.Trim());
+                        }
+                        if (totalFlow == 0)
+                        {
+                            result = 0;
+                        }
+                        else
+                        {
+                            result = gasPpm * (gasFlow / totalFlow);
+                        }
+                        list.Add(Convert.ToString(Math.Round(result,2)));
+                    }
+                    //添加误差
+                    for (int i = 0; i < count; i++)
                     {
                         list.Add(string.Empty);
                     }
@@ -563,7 +635,6 @@ namespace VocsAutoTest.Pages
         private void Button_densityCalculate_Click(object sender, RoutedEventArgs e)
         {
             List<string[]> list = new List<string[]>();
-            Random rd = new Random();
             int indexCount = _gasIndex - 2;
             if (_obervableCollection != null && _obervableCollection.Count > 0)
             {
@@ -576,7 +647,7 @@ namespace VocsAutoTest.Pages
                         {
                             if (i >= _gasIndex && i< _gasIndex + (indexCount - 1))
                             {
-                                arraysNew[i] = rd.Next(100).ToString();
+                                arraysNew[i] = Convert.ToString(Math.Round(ConcentrationCalc(arrays, i),2));
                             }
                             else if(arrays.Length<=i)
                             {
@@ -597,6 +668,47 @@ namespace VocsAutoTest.Pages
                 _obervableCollection.Add(arrays);
             }
 
+        }
+
+        private double ConcentrationCalc(string[] arrays,int gasPosition) {
+            double result = 0;
+            int indexCount = _gasIndex - 2;
+            for (int n= indexCount;n>=0;n--) {
+                double totalFlow = 0;
+                double gasFlow = 0;
+                double gasPpm = 0; 
+                for (int i = 2; i < _gasIndex; i++)
+                {
+                    string flow = arrays[i];
+                    if (!string.IsNullOrEmpty(flow)) {
+                        totalFlow += double.Parse(flow);
+                        if ((gasPosition - indexCount) == i)
+                        {
+                            gasFlow = double.Parse(arrays[i+1]);
+                            if ((gasPosition - _gasIndex) == 0) {
+                                gasPpm = double.Parse(textbox_gas2_ppm.Text.Trim());
+                            } else if ((gasPosition - _gasIndex) == 1) {
+                                gasPpm = double.Parse(textbox_gas3_ppm.Text.Trim());
+                            }
+                            else if ((gasPosition - _gasIndex) == 2)
+                            {
+                                gasPpm = double.Parse(textbox_gas4_ppm.Text.Trim());
+                            }
+                        }
+                    }
+
+                }
+                if (totalFlow == 0)
+                {
+                    result = 0;
+                }
+                else
+                {
+                    result = gasPpm * (gasFlow / totalFlow);
+                }
+            }
+
+            return result;
         }
 
         private void Button_gas_import_Click(object sender, RoutedEventArgs e)

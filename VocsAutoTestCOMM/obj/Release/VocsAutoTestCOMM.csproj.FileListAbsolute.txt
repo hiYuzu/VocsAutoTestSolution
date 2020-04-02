@@ -1,8 +1,0 @@
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\bin\Release\VocsAutoTestCOMM.dll
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\bin\Release\VocsAutoTestCOMM.pdb
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\bin\Release\log4net.dll
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\bin\Release\log4net.xml
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\obj\Release\VocsAutoTestCOMM.csprojAssemblyReference.cache
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\obj\Release\VocsAutoTestCOMM.csproj.CopyComplete
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\obj\Release\VocsAutoTestCOMM.dll
-E:\VisualStudioWorkspace\VocsAutoTestSolution\VocsAutoTestCOMM\obj\Release\VocsAutoTestCOMM.pdb
