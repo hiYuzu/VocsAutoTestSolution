@@ -1,3 +1,4 @@
 /.svn
 VocsAutoTest/.vs
 */bin/*
+*/obj/*
