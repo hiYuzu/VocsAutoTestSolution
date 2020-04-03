@@ -60,7 +60,6 @@
                         <ComboBox x:Name="lSType" Grid.Column="1" Grid.Row="4" Height="25" Width="250">
                             <ComboBoxItem Content="氙灯" IsSelected="True"/>
                             <ComboBoxItem Content="氘灯"/>
-                            <ComboBoxItem Content="Hg灯"/>
                         </ComboBox>
                         <Label Grid.Column="0" Grid.Row="5" Content="光源控制电压(V)" Height="25" HorizontalAlignment="Center"/>
                         <TextBox x:Name="lSControlVol" Grid.Column="1" Grid.Row="5" Text="4.0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
@@ -73,8 +72,8 @@
                         <Label Grid.Column="0" Grid.Row="7" Content="调零对应的浓度计算次数" Height="25" HorizontalAlignment="Center"/>
                         <TextBox x:Name="zeroConcCalTimes" Grid.Column="1" Grid.Row="7" Text="100" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Grid Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Margin="0">
-                            <Button x:Name="ReadCommParam" Content="读取" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
-                            <Button x:Name="SetCommParam" Content="设置" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="ReadCommParam" Content="读取" Click="ReadCommParam_Click" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="SetCommParam" Content="设置" Click="SetCommParam_Click" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -150,8 +149,8 @@
                         <Label Grid.Column="0" Grid.Row="13" Content="光路切换时间间隔(s)" Height="25" HorizontalAlignment="Center"/>
                         <TextBox x:Name="lPSwitchInterval" Grid.Column="1" Grid.Row="13" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Grid Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="2" Margin="0">
-                            <Button x:Name="ReadLPParam" Content="读取" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
-                            <Button x:Name="SetLPParam" Content="设置" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="ReadLPParam" Content="读取" Click="ReadLPParam_Click" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="SetLPParam" Content="设置" Click="SetLPParam_Click" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -183,8 +182,8 @@
                         <Label Grid.Column="0" Grid.Row="4" Content="气体4判据数据" Height="25" HorizontalAlignment="Center"/>
                         <TextBox x:Name="gas_4_critData" Grid.Column="1" Grid.Row="4" Text="6000" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Grid Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Margin="0">
-                            <Button x:Name="ReadRangeSwitch" Content="读取" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
-                            <Button x:Name="SetRangeSwitch" Content="设置" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="ReadRangeSwitch" Content="读取" Click="ReadRangeSwitch_Click" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="SetRangeSwitch" Content="设置" Click="SetRangeSwitch_Click" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -218,7 +217,7 @@
                         <Label Grid.Column="0" Grid.Row="3" Content="气体2低量程零点值" Height="25" HorizontalAlignment="Center"/>
                         <TextBox x:Name="gas_2_lowRangZC" Grid.Column="1" Grid.Row="3" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="4" Content="气体2高量程零点值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_2_highRangZCe" Grid.Column="1" Grid.Row="4" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
+                        <TextBox x:Name="gas_2_highRangZC" Grid.Column="1" Grid.Row="4" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="5" Content="气体3低量程零点值" Height="25" HorizontalAlignment="Center"/>
                         <TextBox x:Name="gas_3_lowRangZC" Grid.Column="1" Grid.Row="5" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="6" Content="气体3高量程零点值" Height="25" HorizontalAlignment="Center"/>
@@ -228,8 +227,8 @@
                         <Label Grid.Column="0" Grid.Row="8" Content="气体4高量程零点值" Height="25" HorizontalAlignment="Center"/>
                         <TextBox x:Name="gas_4_highRangZC" Grid.Column="1" Grid.Row="8" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Grid Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Margin="0">
-                            <Button x:Name="ReadZeroCoeffi" Content="读取" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
-                            <Button x:Name="SetZeroCoeffi" Content="设置" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="ReadZeroCoeffi" Content="读取" Click="ReadZeroCoeffi_Click" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="SetZeroCoeffi" Content="设置" Click="SetZeroCoeffi_Click" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -273,12 +272,12 @@
                         <Label Grid.Column="0" Grid.Row="8" Content="气体4高量程标定系数" Height="25" HorizontalAlignment="Center"/>
                         <TextBox x:Name="gas_4_highRangCC" Grid.Column="1" Grid.Row="8" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Grid Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Margin="0">
-                            <Button x:Name="ReadCaliCoeffi" Content="读取" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
-                            <Button x:Name="SetCaliCoeffi" Content="设置" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="ReadCaliCoeffi" Content="读取" Click="ReadCaliCoeffi_Click" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="SetCaliCoeffi" Content="设置" Click="SetCaliCoeffi_Click" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                         </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="读取浓度命令">
+                <!--<TabItem Header="读取浓度命令">
                     <Grid Margin="0" Height="auto">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="160"/>
@@ -382,7 +381,7 @@
                             <Button Content="设置" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}" IsEnabled="False"/>
                         </Grid>
                     </Grid>
-                </TabItem>
+                </TabItem> -->
                 <TabItem Header="读写向量表信息">
                     <Grid Margin="0" Height="auto">
                         <Grid.ColumnDefinitions>
@@ -423,8 +422,8 @@
                         <TextBox x:Name="vectorFilePath" Grid.Column="1" Grid.Row="4" Height="25" TextWrapping="Wrap" Text="" Width="auto" MinWidth="90" MaxWidth="150" MouseDoubleClick="VectorFileFolder_Click" IsReadOnly="True" Style="{DynamicResource textStyle}"/>
                         <Button  Grid.Column="1" Grid.Row="4" x:Name="VectorFileFolder" Content="..." HorizontalAlignment="Right" Margin="0 0 10 0" Width="40" Height="25" Style="{StaticResource btnOther}" Click="VectorFileFolder_Click"/>
                         <Grid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0">
-                            <Button x:Name="ReadVectorInfo" Content="读取" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
-                            <Button x:Name="SetVectorInfo" Content="设置" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="ReadVectorInfo" Content="读取" Click="ReadVectorInfo_Click" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                            <Button x:Name="SetVectorInfo" Content="设置" Click="SetVectorInfo_Click" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                         </Grid>
                     </Grid>
                 </TabItem>

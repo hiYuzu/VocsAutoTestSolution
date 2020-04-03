@@ -136,11 +136,17 @@ namespace VocsAutoTestBLL
         //读取公共参数
         public event DataForwardDelegate ReadCommParam;
         //读取光谱仪光路x参数
-        public event DataForwardDelegate ReadVocsParam;
+        public event DataForwardDelegate ReadLPParam;
         //读取光谱数据命令
         public event DataForwardDelegate ReadSpecData;
         //读取浓度测量数据
         public event DataForwardDelegate ReadConcMeasure;
+        //读取量程切换判据
+        public event DataForwardDelegate ReadRangeSwitch;
+        //零点系数
+        public event DataForwardDelegate ReadZeroParam;
+        //标定系数
+        public event DataForwardDelegate ReadCaliParam;
         #endregion
 
         /// <summary>
@@ -158,14 +164,19 @@ namespace VocsAutoTestBLL
                         ReadCommParam(this, command);
                         break;
                     case "21":
-                        ReadVocsParam(this, command);
-                        break;
-                    case "22":
-                        break;
-                    case "23":
+                        ReadLPParam(this, command);
                         break;
                     case "24":
                         ReadSpecData(this, command);
+                        break;
+                    case "26":
+                        ReadRangeSwitch(this, command);
+                        break;
+                    case "27":
+                        ReadZeroParam(this, command);
+                        break;
+                    case "28":
+                        ReadCaliParam(this, command);
                         break;
                     case "29":
                         ReadConcMeasure(this, command);

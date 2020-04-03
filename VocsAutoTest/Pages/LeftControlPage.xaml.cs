@@ -57,8 +57,6 @@ namespace VocsAutoTest.Pages
                     Data = "00 08"
                 }
             };
-            DataForward.Instance.ReadCommParam += new DataForwardDelegate(SetCommParam);
-            DataForward.Instance.ReadVocsParam += new DataForwardDelegate(SetVocsParam);
             SuperSerialPort.Instance.SendAll(commands, true);
         }
         /// <summary>
