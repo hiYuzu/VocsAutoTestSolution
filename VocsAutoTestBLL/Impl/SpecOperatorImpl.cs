@@ -12,8 +12,8 @@ namespace VocsAutoTestBLL.Impl
         private ushort pageFlag;
         //当前包号
         private int currentPackage;
-        //数据类型
         private string dataType;
+        private string lightPath;
         //缓存
         private readonly SpecDataModel dataCache;
         //单例模式
@@ -41,7 +41,7 @@ namespace VocsAutoTestBLL.Impl
         }
         public event SpecDataDelegate SpecDataEvent;
         public event SpecDataDelegate AlgoDataEvent;
-        public void SendSpecCmn(string dataType, ushort pageFlag) 
+        public void SendSpecCmn(string lightPath, string dataType, ushort pageFlag) 
         {
             this.pageFlag = pageFlag;
             if (resetFlag)
@@ -54,11 +54,12 @@ namespace VocsAutoTestBLL.Impl
                 }
             }
             this.dataType = dataType;
+            this.lightPath = lightPath;
             SuperSerialPort.Instance.Send(new Command
             {
                 Cmn = "24",
                 ExpandCmn = "55",
-                Data = "00 " + dataType + " 0" + currentPackage.ToString()
+                Data = lightPath + dataType + "0" + currentPackage.ToString()
             }, true);
             resetFlag = true;
             errorCount++;
@@ -108,7 +109,7 @@ namespace VocsAutoTestBLL.Impl
                 dataCache.AddDataArray(bytes);
                 //再发送
                 currentPackage++;
-                SendSpecCmn(this.dataType, pageFlag);
+                SendSpecCmn(lightPath, dataType, pageFlag);
             }
             else if (currentPackage == data[4])
             {
@@ -117,11 +118,9 @@ namespace VocsAutoTestBLL.Impl
                 Array.Copy(data, 5, bytes, 0, bytes.Length);
                 dataCache.AddDataArray(bytes);
                 //存储本次数据
-                byte[] datas = dataCache.GetAllData(true);
                 currentPackage = 1;
-                dataCache.StorgeSpecModel(new SpecDataModel() { LightInfo = data[1], DataType = data[2], DataInfo = datas});
                 //从缓存中取出所有数据并解析
-                ParseSpecData(datas);
+                ParseSpecData(dataCache.GetAllData(true));
             }
         }
         private void ParseSpecData(byte[] datas)

@@ -8,6 +8,6 @@ namespace VocsAutoTestBLL.Interface
     {
         event SpecDataDelegate SpecDataEvent;
         event SpecDataDelegate AlgoDataEvent;
-        void SendSpecCmn(string dataType, ushort pageFlag);
+        void SendSpecCmn(string lightPath, string dataType, ushort pageFlag);
     }
 }

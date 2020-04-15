@@ -12,7 +12,7 @@ namespace VocsAutoTestBLL.Interface
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    public delegate void PassPortDelegate(object sender, PassPortEventArgs e);
+    public delegate void PassPortDelegate(object sender, PortModel e);
 
     /// <summary>
     /// 接口
@@ -21,17 +21,5 @@ namespace VocsAutoTestBLL.Interface
     {
         event PassPortDelegate PassValueEvent;
         void GetPort(PortModel portModel);
-    }
-
-    /// <summary>
-    /// 事件
-    /// </summary>
-    public class PassPortEventArgs : EventArgs
-    {
-        public PortModel portModel;
-        public void UpdatePort(PortModel port)
-        {
-            this.portModel = port;
-        }
     }
 }

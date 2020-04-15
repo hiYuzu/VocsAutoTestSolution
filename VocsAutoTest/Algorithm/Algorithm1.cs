@@ -1,5 +1,5 @@
 ﻿using MathWorks.MATLAB.NET.Arrays;
-using p1;
+using paravector;
 using System;
 
 namespace VocsAutoTest.Algorithm
@@ -20,7 +20,7 @@ namespace VocsAutoTest.Algorithm
             }
             catch (Exception ex)
             {
-                Console.WriteLine("加载p1.dll失败,是否已经安装matlab？", ex);
+                Console.WriteLine("加载paravector.dll失败,是否已经安装matlab？", ex);
             }
         }
 
@@ -32,9 +32,9 @@ namespace VocsAutoTest.Algorithm
             }
             return algorithm;
         }
-        public MWArray Calculate(MWArray Conc, MWArray Ri, MWArray P, MWArray T)
+        public MWArray[] Calculate(int numArgsOut, MWArray Conc, MWArray Ri, MWArray P, MWArray T)
         {
-                return (MWArray)algorithm.paravector(Conc, Ri, P, T);
+                return (MWArray[])algorithm.paravector(numArgsOut,Conc, Ri, P, T);
         }
     }
 }

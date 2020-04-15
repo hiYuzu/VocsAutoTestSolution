@@ -333,6 +333,7 @@ namespace VocsAutoTest.Pages
         /// </summary>
         public void RemoveAllSeries()
         {
+            dataSeriesMap.Clear();
             chart.Series.Clear();
         }
 

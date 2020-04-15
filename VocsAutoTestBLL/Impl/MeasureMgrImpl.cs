@@ -20,6 +20,7 @@ namespace VocsAutoTestBLL.Impl
         public bool StartMeasure { get; set; } = false;
         //光谱数据类型
         public string specType = string.Empty;
+        public string lightPath = string.Empty;
         //当前页面标识 1：光谱采集 2：浓度测量 3：算法生成
         public ushort pageFlag = 0;
         //温度，压力参数
@@ -70,6 +71,7 @@ namespace VocsAutoTestBLL.Impl
         private void MultiMeasure()
         {
             specType += specType;
+            lightPath = "0" + lightPath;
             int times = 0;
             while (true)
             {
@@ -129,18 +131,18 @@ namespace VocsAutoTestBLL.Impl
             if (pageFlag == 1)
             {
                 //光谱采集
-                SpecOperatorImpl.Instance.SendSpecCmn(specType, pageFlag);
+                SpecOperatorImpl.Instance.SendSpecCmn(lightPath, specType, pageFlag);
             }
             else if (pageFlag == 2)
             {
                 //浓度测量
-                string data = "00" + ByteStrUtil.ByteToHexStr(tempValues) + ByteStrUtil.ByteToHexStr(pressValues);
+                string data = lightPath + ByteStrUtil.ByteToHexStr(tempValues) + ByteStrUtil.ByteToHexStr(pressValues);
                 SuperSerialPort.Instance.Send(new Command { Cmn = "29", ExpandCmn = "55", Data = data }, true);
             }
             else if (pageFlag == 3)
             {
                 //算法生成
-                SpecOperatorImpl.Instance.SendSpecCmn(specType, pageFlag);
+                SpecOperatorImpl.Instance.SendSpecCmn(lightPath, specType, pageFlag);
             }
         }
     }

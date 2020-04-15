@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using VocsAutoTestBLL;
+using VocsAutoTestBLL.Impl;
 using VocsAutoTestCOMM;
 
 namespace VocsAutoTest.Pages
@@ -87,7 +85,7 @@ namespace VocsAutoTest.Pages
                 //调零次数 2字节
                 byte[] calTimes = BitConverter.GetBytes(Convert.ToUInt16(zeroConcCalTimes.Text));
                 Array.Reverse(calTimes);
-                return lightSource + ByteStrUtil.ByteToHexStr(controlVol) + " " + appModeInfo + ByteStrUtil.ByteToHexStr(calTimes);
+                return lightSource + ByteStrUtil.ByteToHexStr(controlVol) + appModeInfo + ByteStrUtil.ByteToHexStr(calTimes);
             }
             catch
             {
@@ -181,7 +179,7 @@ namespace VocsAutoTest.Pages
                 Array.Reverse(samplInter);
                 byte[] lPSwitchInter = BitConverter.GetBytes(Convert.ToUInt16(lPSwitchInterval.Text));
                 Array.Reverse(lPSwitchInter);
-                return lPInfo + " 0F " + comptInfo + " " + rangeInfo1 + " " + rangeInfo2 + " " + sATs + " " + coATs + " " + zATs + " " + caATs + " " + lTs + ByteStrUtil.ByteToHexStr(integrTimes) + ByteStrUtil.ByteToHexStr(samplInter) + ByteStrUtil.ByteToHexStr(lPSwitchInter);
+                return lPInfo + "0F" + comptInfo + rangeInfo1 + rangeInfo2 + sATs + coATs + zATs + caATs + lTs + ByteStrUtil.ByteToHexStr(integrTimes) + ByteStrUtil.ByteToHexStr(samplInter) + ByteStrUtil.ByteToHexStr(lPSwitchInter);
             }
             catch
             {
@@ -207,22 +205,22 @@ namespace VocsAutoTest.Pages
                 byte[] gas_1_crit = new byte[4];
                 Array.Copy(data, 2, gas_1_crit, 0, 4);
                 Array.Reverse(gas_1_crit, 0, gas_1_crit.Length);
-                gas_1_critData.Text = BitConverter.ToSingle(gas_1_crit, 0).ToString("f1");
+                gas_1_critData.Text = BitConverter.ToSingle(gas_1_crit, 0).ToString();
 
                 byte[] gas_2_crit = new byte[4];
                 Array.Copy(data, 6, gas_2_crit, 0, 4);
                 Array.Reverse(gas_2_crit, 0, gas_2_crit.Length);
-                gas_2_critData.Text = BitConverter.ToSingle(gas_2_crit, 0).ToString("f1");
+                gas_2_critData.Text = BitConverter.ToSingle(gas_2_crit, 0).ToString();
 
                 byte[] gas_3_crit = new byte[4];
                 Array.Copy(data, 10, gas_3_crit, 0, 4);
                 Array.Reverse(gas_3_crit, 0, gas_3_crit.Length);
-                gas_3_critData.Text = BitConverter.ToSingle(gas_3_crit, 0).ToString("f1");
+                gas_3_critData.Text = BitConverter.ToSingle(gas_3_crit, 0).ToString();
 
                 byte[] gas_4_crit = new byte[4];
                 Array.Copy(data, 14, gas_4_crit, 0, 4);
                 Array.Reverse(gas_4_crit, 0, gas_4_crit.Length);
-                gas_4_critData.Text = BitConverter.ToSingle(gas_4_crit, 0).ToString("f1");
+                gas_4_critData.Text = BitConverter.ToSingle(gas_4_crit, 0).ToString();
             }));
         }
         private void SetRangeSwitch_Click(object sender, RoutedEventArgs e)
@@ -246,7 +244,7 @@ namespace VocsAutoTest.Pages
                 Array.Reverse(gas_3_crit);
                 byte[] gas_4_crit = BitConverter.GetBytes(Convert.ToSingle(gas_4_critData.Text));
                 Array.Reverse(gas_4_crit);
-                return rs_lpInfo.SelectedIndex.ToString("x2") + " 0F" + ByteStrUtil.ByteToHexStr(gas_1_crit) + ByteStrUtil.ByteToHexStr(gas_2_crit) + ByteStrUtil.ByteToHexStr(gas_3_crit) + ByteStrUtil.ByteToHexStr(gas_4_crit);
+                return rs_lpInfo.SelectedIndex.ToString("x2") + "0F" + ByteStrUtil.ByteToHexStr(gas_1_crit) + ByteStrUtil.ByteToHexStr(gas_2_crit) + ByteStrUtil.ByteToHexStr(gas_3_crit) + ByteStrUtil.ByteToHexStr(gas_4_crit);
             }
             catch
             {
@@ -430,7 +428,7 @@ namespace VocsAutoTest.Pages
                 byte[] gas_4_highCC = BitConverter.GetBytes(Convert.ToSingle(gas_4_highRangCC.Text));
                 Array.Reverse(gas_4_highCC);
 
-                return cc_lPInfo.SelectedIndex.ToString("x2") + " 0F" + ByteStrUtil.ByteToHexStr(gas_1_lowCC) + ByteStrUtil.ByteToHexStr(gas_1_highCC) + ByteStrUtil.ByteToHexStr(gas_2_lowCC) + ByteStrUtil.ByteToHexStr(gas_2_highCC) + ByteStrUtil.ByteToHexStr(gas_3_lowCC) + ByteStrUtil.ByteToHexStr(gas_3_highCC) + ByteStrUtil.ByteToHexStr(gas_4_lowCC) + ByteStrUtil.ByteToHexStr(gas_4_highCC);
+                return cc_lPInfo.SelectedIndex.ToString("x2") + "0F" + ByteStrUtil.ByteToHexStr(gas_1_lowCC) + ByteStrUtil.ByteToHexStr(gas_1_highCC) + ByteStrUtil.ByteToHexStr(gas_2_lowCC) + ByteStrUtil.ByteToHexStr(gas_2_highCC) + ByteStrUtil.ByteToHexStr(gas_3_lowCC) + ByteStrUtil.ByteToHexStr(gas_3_highCC) + ByteStrUtil.ByteToHexStr(gas_4_lowCC) + ByteStrUtil.ByteToHexStr(gas_4_highCC);
             }
             catch
             {
@@ -446,21 +444,52 @@ namespace VocsAutoTest.Pages
         #region 读写向量表信息
         private void VectorFileFolder_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.FolderBrowserDialog openFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            if (openFolderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            try
             {
-                vectorFilePath.Text = openFolderDialog.SelectedPath;
-                ExceptionUtil.LogMethod("向量文件路径已设置为：" + vectorFilePath.Text);
+                ExceptionUtil.ShowLoadingAction(true);
+                OpenFileDialog op = new OpenFileDialog
+                {
+                    InitialDirectory = System.Windows.Forms.Application.StartupPath + "\\ParameterGen\\",
+                    RestoreDirectory = true,
+                    Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* "
+                };
+                if (op.ShowDialog() == true)
+                {
+                    vectorFilePath.Text = op.FileName;
+                    ExceptionUtil.LogMethod("向量文件已设置为：" + op.FileName);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("打开文件失败");
+            }
+            finally
+            {
+                ExceptionUtil.ShowLoadingAction(false);
             }
         }
         private void ReadVectorInfo_Click(object sender, RoutedEventArgs e)
         {
-
+            if (vectorFilePath.Text.EndsWith(".txt"))
+            {
+                RWVectorInfoImpl.Instance.SendVectorCmn(lP.SelectedIndex.ToString("x2"), gas.SelectedIndex.ToString("x2"), range.SelectedIndex.ToString("x2"), vectorFilePath.Text);
+            }
+            else
+            {
+                MessageBox.Show("请设置向量文件！");
+            }
         }
 
         private void SetVectorInfo_Click(object sender, RoutedEventArgs e)
         {
-
+            if (vectorFilePath.Text.EndsWith(".txt"))
+            {
+                RWVectorInfoImpl.Instance.SetVectorInfo(lP.SelectedIndex.ToString("x2"), gas.SelectedIndex.ToString("x2"), range.SelectedIndex.ToString("x2"), vectorFilePath.Text);
+            }
+            else
+            {
+                MessageBox.Show("请设置向量文件！");
+            }
         }
         #endregion
 
@@ -472,11 +501,17 @@ namespace VocsAutoTest.Pages
         private string[] ByteToBinary(byte data)
         {
             string b = Convert.ToString(data, 2);
-            for (int i = 0; i < 8 - b.Length; i++)
+            int count = 8 - b.Length;
+            for (int i = 0; i < count; i++)
             {
                 b = "0" + b;
             }
-            return b.Split();
+            string[] strs = new string[8];
+            for (int i = 0; i < b.Length; i++)
+            {
+                strs[i] = b.Substring(i, 1);
+            }
+            return strs;
         }
     }
 }

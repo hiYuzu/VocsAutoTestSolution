@@ -33,10 +33,7 @@ namespace VocsAutoTestBLL.Impl
 
         public void GetPort(PortModel portModel)
         {
-            PassPortEventArgs e = new PassPortEventArgs();
-            e.UpdatePort(portModel);
-            PassValueEvent(this, e);
-            PassValueEvent = null;
+            PassValueEvent(this, portModel);
         }
     }
 }

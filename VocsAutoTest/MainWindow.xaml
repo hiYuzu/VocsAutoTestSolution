@@ -109,10 +109,6 @@
                         </Button>
                     </StackPanel>
                 </Grid>
-                <!--左栏
-                <Grid Name="gridLeftColumn" Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Margin="0" Background="White" Opacity="1">
-                    <ContentControl x:Name="LeftControlPage"/>
-                </Grid>-->
                 <!--中间上部-->
                 <Grid Name="gridCentertopColumn" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="{StaticResource MyBrush}" Margin="0, 0, 0, 1">
                     <Border Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Margin="5,0,0,0">
@@ -123,6 +119,10 @@
                                 <ComboBoxItem Content="扣暗电流光谱数据"/>
                                 <ComboBoxItem Content="暗电流光谱数据"/>
                                 <ComboBoxItem Content="有光光谱数据"/>
+                            </ComboBox>
+                            <ComboBox x:Name="lightPath" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" FontSize="13" Margin="10, 0, 0, 0">
+                                <ComboBoxItem Content="光路1" IsSelected="True"/>
+                                <ComboBoxItem Content="光路2"/>
                             </ComboBox>
                             <Rectangle Height="10" Margin="70 15 0 0"  Stretch="Fill" Width="10"  VerticalAlignment="Top" Fill="Green"/>
                             <Label  VerticalContentAlignment="Top" HorizontalContentAlignment="Center" FontStyle="Normal"  Height="23" Width="90" Margin="0,8" Content="读数间隔(s)"/>

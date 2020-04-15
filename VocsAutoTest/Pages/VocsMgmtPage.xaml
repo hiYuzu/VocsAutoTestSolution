@@ -393,35 +393,29 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Content="读/写" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="readOrWrite" Grid.Column="1" Grid.Row="0" Height="25" Width="250">
-                            <ComboBoxItem Content="读" IsSelected="True"/>
-                            <ComboBoxItem Content="写"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="1" Content="光路" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="lP" Grid.Column="1" Grid.Row="1" Height="25" Width="250">
+                        <Label Grid.Column="0" Grid.Row="0" Content="光路" Height="25" HorizontalAlignment="Center"/>
+                        <ComboBox x:Name="lP" Grid.Column="1" Grid.Row="0" Height="25" Width="250">
                             <ComboBoxItem Content="光路1" IsSelected="True"/>
                             <ComboBoxItem Content="光路2"/>
                         </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="2" Content="气体" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="gas" Grid.Column="1" Grid.Row="2" Height="25" Width="250">
+                        <Label Grid.Column="0" Grid.Row="1" Content="气体" Height="25" HorizontalAlignment="Center"/>
+                        <ComboBox x:Name="gas" Grid.Column="1" Grid.Row="1" Height="25" Width="250">
                             <ComboBoxItem Content="气体1" IsSelected="True"/>
                             <ComboBoxItem Content="气体2"/>
                             <ComboBoxItem Content="气体3"/>
                             <ComboBoxItem Content="气体4"/>
                         </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="3" Content="量程" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="range" Grid.Column="1" Grid.Row="3" Height="25" Width="250">
+                        <Label Grid.Column="0" Grid.Row="2" Content="量程" Height="25" HorizontalAlignment="Center"/>
+                        <ComboBox x:Name="range" Grid.Column="1" Grid.Row="2" Height="25" Width="250">
                             <ComboBoxItem Content="低量程" IsSelected="True"/>
                             <ComboBoxItem Content="高量程"/>
                         </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="4" Content="向量文件路径" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="vectorFilePath" Grid.Column="1" Grid.Row="4" Height="25" TextWrapping="Wrap" Text="" Width="auto" MinWidth="90" MaxWidth="150" MouseDoubleClick="VectorFileFolder_Click" IsReadOnly="True" Style="{DynamicResource textStyle}"/>
-                        <Button  Grid.Column="1" Grid.Row="4" x:Name="VectorFileFolder" Content="..." HorizontalAlignment="Right" Margin="0 0 10 0" Width="40" Height="25" Style="{StaticResource btnOther}" Click="VectorFileFolder_Click"/>
-                        <Grid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0">
+                        <Label Grid.Column="0" Grid.Row="3" Content="向量文件" Height="25" HorizontalAlignment="Center"/>
+                        <TextBox x:Name="vectorFilePath" Grid.Column="1" Grid.Row="3" Height="25" TextWrapping="Wrap" Text="" Width="auto" MinWidth="90" MaxWidth="150" MouseDoubleClick="VectorFileFolder_Click" IsReadOnly="True" Style="{DynamicResource textStyle}"/>
+                        <Button  Grid.Column="1" Grid.Row="3" x:Name="VectorFileFolder" Content="..." HorizontalAlignment="Right" Margin="0 0 10 0" Width="40" Height="25" Style="{StaticResource btnOther}" Click="VectorFileFolder_Click"/>
+                        <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="0">
                             <Button x:Name="ReadVectorInfo" Content="读取" Click="ReadVectorInfo_Click" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                             <Button x:Name="SetVectorInfo" Content="设置" Click="SetVectorInfo_Click" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                         </Grid>

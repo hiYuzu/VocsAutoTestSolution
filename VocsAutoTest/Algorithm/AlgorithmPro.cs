@@ -43,17 +43,17 @@ namespace VocsAutoTest.Algorithm
             return instance;
         }
         //算法执行
-        public void Process(out double[,] V, float[,] Conc, float[,] Ri, float P, float T)
+        public void Process(out double[,] V, out double[,] E, float[,] Conc, float[,] Ri, float P, float T)
         {
             MWArray concMWArray = GetConc(Conc);
             MWArray riMWArray = GetRi(Ri);
-            MWArray mwarray = algorithm.Calculate(concMWArray, riMWArray, P, T);
-            V = Convert2Array2((MWNumericArray)mwarray);
-            Print(V);
+            MWArray[] mwarray = algorithm.Calculate(2,concMWArray, riMWArray, P, T);
+            V = Convert2Array2((MWNumericArray)mwarray[0]);
+            E = Convert2Array2((MWNumericArray)mwarray[1]);
         }
 
         //保存测量数据文件
-        public string SaveParameter(double[,] V, string machId, string instId, ArrayList selectedGases)
+        public string SaveParameter(double[,] V, double[,] E, string machId, string instId, ArrayList selectedGases)
         {
             string path = System.Windows.Forms.Application.StartupPath + "\\ParameterGen\\";
             if (!string.IsNullOrEmpty(machId) && !string.IsNullOrEmpty(instId))
@@ -86,7 +86,7 @@ namespace VocsAutoTest.Algorithm
                     }
                 }
             }
-            //FileControl.SaveMatrix(E, path + "拟合误差" + ".txt", 1, "F", head, null);
+            FileControl.SaveMatrix(E, path + "拟合误差.txt", 1, "F", head, null);
             return path;
         }
 

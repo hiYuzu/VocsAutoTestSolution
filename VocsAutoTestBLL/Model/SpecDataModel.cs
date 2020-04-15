@@ -8,9 +8,6 @@ namespace VocsAutoTestBLL.Model
 {
     public class SpecDataModel
     {
-        public byte LightInfo { get; set; }
-        public byte DataType { get; set; }
-        public byte[] DataInfo { get; set; }
         //缓存队列
         private readonly Queue<byte> specDataQueue = new Queue<byte>();
         private readonly List<SpecDataModel> specDatas = new List<SpecDataModel>();
@@ -43,19 +40,6 @@ namespace VocsAutoTestBLL.Model
         public void ClearAllData()
         {
             specDataQueue.Clear();
-        }
-
-        public void StorgeSpecModel(SpecDataModel spec)
-        {
-            specDatas.Add(spec);
-        }
-        public List<SpecDataModel> GetSpecDataModels()
-        {
-            return specDatas;
-        }
-        public void ClearList()
-        {
-            specDatas.Clear();
         }
     }
 }

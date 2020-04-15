@@ -32,7 +32,6 @@ namespace VocsAutoTest.Pages
         private const string HEAD_FLOW = "FLOW";
         private const string HEAD_SPEC = "SPEC";
         private const int GAS_NUMBER = 4;//最多选择气体种类
-        private int pixelNumber = 2048;//TODO 2048需要确认来源
         private int pixelSize = 512;//TODO 512需要确认来源
         //private const int MAX_DIST_COUNT = 60;//去掉
         //private int distCount = 0;//去掉
@@ -110,7 +109,7 @@ namespace VocsAutoTest.Pages
                 label_gas4_input.Content = "气体4";
                 textbox_gas4_input.IsEnabled = false;
                 //解锁测量信息
-                LockMeasInfo(false);
+                //LockMeasInfo(false);
             }
             else if (optInt == 2)
             {
@@ -167,7 +166,7 @@ namespace VocsAutoTest.Pages
                     textbox_gas4_input.IsEnabled = false;
                 }
                 //锁定测量信息
-                LockMeasInfo(true);
+                //LockMeasInfo(true);
                 AddComlumns();
             }
             SetAverageTime();
@@ -953,34 +952,27 @@ namespace VocsAutoTest.Pages
                 string[] str_array = (string[])dataGrid.CurrentCell.Item;
                 for (int i = 0; i < _obervableCollection.Count; i++)
                 {
-                    for (int j = 0; j < _obervableCollection[i].Length; j++)
+                    if (_obervableCollection[i][0].Equals(str_array[0]))
                     {
-                        if (_obervableCollection[i][j].Equals(str_array[0]))
+                        if (_obervableCollection[i][1].Equals("True"))
                         {
-                            if (_obervableCollection[i][1].Equals("True"))
-                            {
-                                _obervableCollection[i][1] = "False";
-                                algoPage.RemoveSeriesByIndex(_obervableCollection[i][j]);
-                            }
-                            else
-                            {
-                                _obervableCollection[i][1] = "True";
-                                algoPage.RecoveryDataSeries(_obervableCollection[i][j]);
-                            }
+                            string[] arrays = _obervableCollection[i];
+                            arrays[1] = "False";
+                            algoPage.RemoveSeriesByIndex(arrays[0]);
+                            _obervableCollection.RemoveAt(i);
+                            _obervableCollection.Insert(i, arrays);
+                        }
+                        else
+                        {
+                            string[] arrays = _obervableCollection[i];
+                            arrays[1] = "True";
+                            algoPage.RecoveryDataSeries(arrays[0]);
+                            _obervableCollection.RemoveAt(i);
+                            _obervableCollection.Insert(i, arrays);
                         }
                     }
                 }
 
-            }
-            List<string[]> list = new List<string[]>();
-            foreach (string[] arrays in _obervableCollection)
-            {
-                list.Add(arrays);
-            }
-            _obervableCollection.Clear();
-            foreach (string[] arrays in list)
-            {
-                _obervableCollection.Add(arrays);
             }
         }
 
@@ -1021,10 +1013,10 @@ namespace VocsAutoTest.Pages
                     text_instr_id.Focus();
                     return;
                 }
-
                 //开始计算
                 dataGrid.IsEnabled = false;
                 double[,] V;
+                double[,] E;
                 //浓度矩阵,每行对应1次测量，每列对应1种气体
                 float[,] thicknessData;
                 //光谱矩阵,每行对应1次测量，每列对应1个象素
@@ -1045,28 +1037,67 @@ namespace VocsAutoTest.Pages
                 string[] gasValue;
                 ArrayList arrayList = GetGasNode(out gasName,out gasValue);
 
-                AlgorithmPro.GetInstance().Process(out V, thicknessData, riData, float.Parse(press), float.Parse(temp));
+                AlgorithmPro.GetInstance().Process(out V, out E,thicknessData, riData, float.Parse(press), float.Parse(temp));
+
+                int index = 0;
+                for (int i = 0; i < _obervableCollection.Count; i++)
+                {
+                    string[] arrays = _obervableCollection[i];
+                    if (arrays[1].Equals("True"))
+                    {
+                        int gasCount = _gasIndex - 2 - 1;
+                        int start = _gasIndex+ gasCount;
+                        for (int j = 0; j < gasCount; j++)
+                        {
+                            arrays[start + j] = ((int)(E[index, j])).ToString();
+                        }
+                        _obervableCollection.RemoveAt(i);
+                        _obervableCollection.Insert(i, arrays);
+                        index++;
+                    }
+                }
+
                 //保存测量数据文件
-                string path = AlgorithmPro.GetInstance().SaveParameter(V, matchId, instrId, arrayList);
+                string path = AlgorithmPro.GetInstance().SaveParameter(V, E,matchId, instrId, arrayList);
                 //保存光谱数据
                 AlgorithmPro.GetInstance().SaveSpecData(path, gasName, gasValue, _obervableCollection, riDataMap);
                 //保存参量数据
                 SaveParameterInfo(path + "参量生成信息_" + matchId + ".txt");
                 //提示信息
-                MessageBox.Show("生成参量已完成！","提示",MessageBoxButton.OK,MessageBoxImage.Information);
-                ExceptionUtil.LogMethod("生成参量已完成，输出地址为：" + path);
+                if (IsMeasureSuccess(E)) {
+                    ExceptionUtil.LogMethod("生成参量已完成，输出地址为：" + path);
+                    MessageBox.Show("生成参量已完成！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    ExceptionUtil.LogMethod("误差过大,请重试！");
+                    MessageBox.Show("误差过大,请重试！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             catch (Exception ex)
             {
 
                 ExceptionUtil.ExceptionMethod("生成参量数据异常，异常信息为："+ex.ToString(), false);
-                return;
             }
             finally
             {
                 dataGrid.IsEnabled = true;
                 ExceptionUtil.ShowLoadingAction(false);
             }
+        }
+
+        //判断测量是否在误差范围内
+        public bool IsMeasureSuccess(double[,] E)
+        {
+            for (int j = 0; j < E.GetLength(1); j++)
+            {
+                for (int i = 0; i < E.GetLength(0); i++)
+                {
+                    if (E[i, j] > 2)
+                        return false;
+                }
+            }
+            return true;
         }
 
         public void SaveParameterInfo(string fileName)
@@ -1386,6 +1417,17 @@ namespace VocsAutoTest.Pages
         private void Textbox_average_time_TextChanged(object sender, TextChangedEventArgs e)
         {
             SetAverageTime();
+        }
+
+        private void Button_clearData_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult dr = MessageBox.Show("是否在清空数据", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            if (dr == MessageBoxResult.OK)
+            {
+                _obervableCollection.Clear();
+                riDataMap.Clear();
+                algoPage.RemoveAllSeries();
+            }
         }
     }
 }

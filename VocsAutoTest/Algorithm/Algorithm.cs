@@ -22,16 +22,16 @@ namespace VocsAutoTest.Algorithm
             try
             {
                 string assemblyFile = string.Empty;
-                assemblyFile = ConstConfig.AppPath + @"\p1.dll";
+                assemblyFile = ConstConfig.AppPath + @"\paravector.dll";
                 Assembly assembly = Assembly.LoadFrom(assemblyFile);
                 Type[] types = assembly.GetTypes();
                 Type type = types[0];
-                method = type.GetMethod("paravector", new Type[] { typeof(MWArray), typeof(MWArray), typeof(MWArray), typeof(MWArray) });
+                method = type.GetMethod("paravector", new Type[] { typeof(int), typeof(MWArray), typeof(MWArray), typeof(MWArray), typeof(MWArray) });
                 algorithm = Activator.CreateInstance(type);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("加载p1.dll失败,是否已经安装matlab？", ex);
+                Console.WriteLine("加载paravector.dll失败,是否已经安装matlab？", ex);
             }
         }
 
@@ -43,9 +43,9 @@ namespace VocsAutoTest.Algorithm
             }
             return algorithm;
         }
-        public MWArray Calculate(MWArray Conc, MWArray Ri, MWArray P, MWArray T)
+        public MWArray[] Calculate(int numArgsOut, MWArray Conc, MWArray Ri, MWArray P, MWArray T)
         {
-                return (MWArray)method.Invoke(GetAlgorithm(), new object[] { Conc, Ri, P, T });
+            return (MWArray[])method.Invoke(GetAlgorithm(), new object[] { numArgsOut, Conc, Ri, P, T });
         }
     }
 }

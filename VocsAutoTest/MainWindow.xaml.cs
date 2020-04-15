@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using VocsAutoTestCOMM;
 using VocsAutoTestBLL;
 using System.Threading;
+using VocsAutoTestBLL.Model;
 
 namespace VocsAutoTest
 {
@@ -50,7 +51,7 @@ namespace VocsAutoTest
         /// 异常日志保存
         /// </summary>
         /// <param name="msg"></param>
-        private void ShowExceptionMsg(object sender, string msg, bool isShow)
+        private void ShowExceptionMsg(string msg, bool isShow)
         {
             Console.WriteLine(msg);
             if (isShow)
@@ -71,7 +72,7 @@ namespace VocsAutoTest
         /// <param name="sender"></param>
         /// <param name="msg"></param>
         /// <param name="isShow"></param>
-        private void ShowLogMsg(object sender, string msg, bool isShow)
+        private void ShowLogMsg(string msg, bool isShow)
         {
             Console.WriteLine(msg);
             Dispatcher.BeginInvoke(new Action(() =>
@@ -153,18 +154,18 @@ namespace VocsAutoTest
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ReceievedValues(object sender, PassPortEventArgs e)
+        private void ReceievedValues(object sender, PortModel e)
         {
             
             SuperSerialPort.Instance.Close();
-            SuperSerialPort.Instance.SetPortInfo(e.portModel.Port, Convert.ToInt32(e.portModel.Baud), e.portModel.Parity, Convert.ToInt32(e.portModel.Data), Convert.ToInt32(e.portModel.Stop));
+            SuperSerialPort.Instance.SetPortInfo(e.Port, Convert.ToInt32(e.Baud), e.Parity, Convert.ToInt32(e.Data), Convert.ToInt32(e.Stop));
             if (SuperSerialPort.Instance.Open())
             {
-                LogUtil.Debug("修改串口信息为：串口号:" + e.portModel.Port + "，波特率:" + e.portModel.Baud + "，校检:" + e.portModel.Parity + "，数据位:" + e.portModel.Data + "，停止位:" + e.portModel.Stop, this);
+                ExceptionUtil.LogMethod("修改串口信息为：串口号:" + e.Port + "，波特率:" + e.Baud + "，校检:" + e.Parity + "，数据位:" + e.Data + "，停止位:" + e.Stop);
             }
             else
             {
-                LogUtil.Warn("修改串口信息失败！", this);
+                ExceptionUtil.ExceptionMethod("修改串口信息失败！", true);
             }
         }
         /// <summary>
@@ -467,13 +468,16 @@ namespace VocsAutoTest
             {
                 case 1:
                     measureMgr.specType = DataType.SelectedIndex.ToString();
+                    measureMgr.lightPath = lightPath.SelectedIndex.ToString();
                     break;
                 case 2:
+                    measureMgr.lightPath = lightPath.SelectedIndex.ToString();
                     measureMgr.tempValues = BitConverter.GetBytes(float.Parse(tempTextBox.Text));
                     measureMgr.pressValues = BitConverter.GetBytes(float.Parse(pressTextBox.Text));
                     break;
                 case 3:
                     measureMgr.specType = DataType.SelectedIndex.ToString();
+                    measureMgr.lightPath = lightPath.SelectedIndex.ToString();
                     break;
             }
             measureMgr.StartMultiMeasure();

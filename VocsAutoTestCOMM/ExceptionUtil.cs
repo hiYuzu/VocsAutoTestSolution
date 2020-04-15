@@ -7,7 +7,7 @@ namespace VocsAutoTestCOMM
     /// </summary>
     /// <param name="sender">发送者</param>
     /// <param name="msg">异常信息</param>
-    public delegate void ExceptionDelegate(object sender, string msg, bool isShow);
+    public delegate void ExceptionDelegate(string msg, bool isShow);
     /// <summary>
     /// 异常通知类
     /// </summary>
@@ -24,7 +24,7 @@ namespace VocsAutoTestCOMM
         /// <param name="isShow">是否显示在主界面</param>
         public static void ExceptionMethod(string msg, bool isShow)
         {
-            ExceptionEvent(new ExceptionUtil(), msg, isShow);
+            ExceptionEvent(msg, isShow);
         }
         /// <summary>
         /// 日志信息（显示在主界面）
@@ -32,7 +32,7 @@ namespace VocsAutoTestCOMM
         /// <param name="msg">信息</param>
         public static void LogMethod(string msg)
         {
-            LogEvent(new ExceptionUtil(), msg, true);
+            LogEvent(msg, true);
         }
     }
 }

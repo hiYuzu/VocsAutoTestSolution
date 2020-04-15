@@ -54,7 +54,7 @@ namespace VocsAutoTest
             if (CheckData())
             {
                 PassPortImpl.GetInstance().GetPort(new PortModel(portCombo.Text, baudCombo.Text, parityCombo.Text, dataCombo.Text, stopCombo.Text));
-                this.Close();
+                Close();
             }
             else
             {
@@ -84,7 +84,7 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

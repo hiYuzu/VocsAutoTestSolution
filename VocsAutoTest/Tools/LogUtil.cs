@@ -40,7 +40,7 @@ namespace VocsAutoTest
         public static void Debug(string log, MainWindow main)
         {
             Log4NetUtil.Debug(log);
-            LogBoxAppend(Colors.Black, "DEBUG", log, main);
+            LogBoxAppend(Colors.Black, "信息", log, main);
         }
         /// <summary>
         /// 粗粒度信息
@@ -70,7 +70,7 @@ namespace VocsAutoTest
         public static void Error(string log, MainWindow main)
         {
             Log4NetUtil.Error(log);
-            LogBoxAppend(Colors.Red, "ERROR", log, main);
+            LogBoxAppend(Colors.Red, "错误", log, main);
         }
         /// <summary>
         /// 严重错误
