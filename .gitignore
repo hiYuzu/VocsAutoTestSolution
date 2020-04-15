@@ -2,3 +2,5 @@
 VocsAutoTest/.vs
 */bin/*
 */obj/*
+VATSetup/Debug
+VATSetup/Release
