@@ -8,8 +8,8 @@ using VocsAutoTestBLL.Impl;
 using System.Windows.Threading;
 using VocsAutoTestCOMM;
 using VocsAutoTestBLL;
-using System.Threading;
 using VocsAutoTestBLL.Model;
+using System.Text;
 
 namespace VocsAutoTest
 {
@@ -21,7 +21,8 @@ namespace VocsAutoTest
         //页面*8
         private AlgoGeneraPage algoPage;
         private AlgoGeneraControlPage algoControlPage;
-        private SpecMeasurePage specPage;
+        //private SpecMeasurePage specPage;
+        private SpecComOne specPage;
         private SpecMeasureControlPage specControlPage;
         private ConcentrationMeasurePage concentrationPage;
         private ConcentrationMeasureControlPage concentrationControlPage;
@@ -35,6 +36,8 @@ namespace VocsAutoTest
         private ushort pageFlag = 1;
         //连续测量
         private MeasureMgrImpl measureMgr;
+        //设备号
+        private string deviceNo = "";
         public MainWindow()
         {
             InitializeComponent();
@@ -43,6 +46,7 @@ namespace VocsAutoTest
             measureMgr = MeasureMgrImpl.Instance;
             VocsCollectBtn_Click(null, null);
             PassPortImpl.GetInstance().PassValueEvent += new PassPortDelegate(ReceievedValues);
+            //DataForward.Instance.ReadDeviceNo += new DataForwardDelegate(SetDeviceNo);
             ExceptionUtil.ExceptionEvent += new ExceptionDelegate(ShowExceptionMsg);
             ExceptionUtil.LogEvent += new ExceptionDelegate(ShowLogMsg);
             ExceptionUtil.ShowLoadingAction += ShowLoading;
@@ -169,13 +173,26 @@ namespace VocsAutoTest
             }
         }
         /// <summary>
+        /// 设置光谱仪设备号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="command"></param>
+        private void SetDeviceNo(object sender, Command command)
+        {
+            byte[] data = ByteStrUtil.HexToByte(command.Data);
+            byte[] deviceNo = new byte[15];
+            Array.Copy(data, 1, deviceNo, 0, deviceNo.Length);
+            this.deviceNo = Encoding.Default.GetString(deviceNo).ToUpper();
+        }
+        /// <summary>
         /// 关于系统
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AboutSysBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Copyright © 天津七一二通信广播股份有限公司", "关于系统", MessageBoxButton.OK, MessageBoxImage.Information);
+            //SuperSerialPort.Instance.Send(new Command { Cmn = "32", ExpandCmn = "55", Data = ""}, true);
+            MessageBox.Show("Copyright © 天津七一二通信广播股份有限公司\n光谱仪设备号：" + deviceNo, "关于系统", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         /// <summary>
         /// 退出系统
@@ -267,7 +284,8 @@ namespace VocsAutoTest
             pageFlag = 1;
             if (specPage == null && specControlPage == null)
             {
-                specPage = new SpecMeasurePage();
+                //specPage = new SpecMeasurePage();
+                specPage = new SpecComOne();
                 specControlPage = new SpecMeasureControlPage(specPage);
             }
             ChartPage.Content = new Frame()

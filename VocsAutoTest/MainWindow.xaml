@@ -133,7 +133,7 @@
                                 <TextBox.Resources>
                                     <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
                                         <VisualBrush.Visual>
-                                            <TextBlock FontStyle="Italic" Background="White" Text="请输入温度值"/>
+                                            <TextBlock FontStyle="Italic" Background="White" Text="输入温度值℃"/>
                                         </VisualBrush.Visual>
                                     </VisualBrush>
                                 </TextBox.Resources>
@@ -150,11 +150,11 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <TextBox x:Name="pressTextBox" Width="80" Margin="0,8,0,7" IsEnabled="True" Visibility="Hidden">
+                            <TextBox x:Name="pressTextBox" Width="85" Margin="0,8,0,7" IsEnabled="True" Visibility="Hidden">
                                 <TextBox.Resources>
                                     <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
                                         <VisualBrush.Visual>
-                                            <TextBlock FontStyle="Italic" Background="White" Text="请输入压力值"/>
+                                            <TextBlock FontStyle="Italic" Background="White" Text="输入压力值kPa"/>
                                         </VisualBrush.Visual>
                                     </VisualBrush>
                                 </TextBox.Resources>

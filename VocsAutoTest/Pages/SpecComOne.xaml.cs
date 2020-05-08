@@ -1,48 +1,49 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
-using Visifire.Charts;
 using VocsAutoTest.Tools;
 using VocsAutoTestBLL.Impl;
 using VocsAutoTestBLL.Interface;
+using C1.WPF.C1Chart;
+using System.Windows.Input;
 
-namespace VocsAutoTest.Pages
+namespace VocsAutoTest
 {
     /// <summary>
-    /// VocsMgmtPage.xaml 的交互逻辑
+    /// SpecComOne.xaml 的交互逻辑
     /// </summary>
-    public partial class SpecMeasurePage : Page
+    public partial class SpecComOne : UserControl
     {
         //默认像素
         private int pixelNumber = 512;
         //波长
         private float[] waveLength = null;
-        private const string TITLE = "光谱曲线";
         private int lineNum = 0;
         //测量数据线
         private DataSeries currentDataSeries = null;
-        private Chart chart;
-        private Title title = null;
+        private readonly ChartData chartData = new ChartData();
         public bool IsPixel { get; set; }
         public bool IsVoltage { get; set; }
         public string XAxisTitle { get; set; }
         public string YAxisTitle { get; set; }
         public bool TitleEnabled { get; set; }
         //电压积分转换系数
-        private double FACTOR_VOL_TO_INTEG = 4.096 / 65536.0;
+        public double FACTOR_VOL_TO_INTEG = 4.096 / 65536.0;
         public List<List<string>> YListCollect { get; } = new List<List<string>>();
         public string[] CurrentData { get; private set; }
 
-        public SpecMeasurePage()
+        public SpecComOne()
         {
             InitializeComponent();
-            SpectrumChart.Children.Clear();
-            InitParam();
+            SpecChart.ActionEnter += new EventHandler(Actions_Enter);
+            SpecChart.ActionLeave += new EventHandler(Actions_Leave);
             SpecOperatorImpl.Instance.SpecDataEvent += new SpecDataDelegate(ImportCurrentData);
+            UpdateScrollbars();
+            InitParam();
         }
         /// <summary>
         /// 初始化参数
@@ -53,48 +54,78 @@ namespace VocsAutoTest.Pages
             IsVoltage = true;
             XAxisTitle = "像素";
             YAxisTitle = "电压值(V)";
-            InitChart();
+            SpecChart.BeginUpdate();
+            UpdateData();
+            SpecChart.EndUpdate();
         }
-        /// <summary>
-        /// 初始化折线图
-        /// </summary>
-        private void InitChart()
+        private void UpdateData()
         {
-            SpectrumChart.Children.Clear();
-            chart = new Chart
+            SpecChart.ChartType = ChartType.LineStacked;
+            SpecChart.View.AxisX.Title = XAxisTitle;
+            SpecChart.View.AxisY.Title = YAxisTitle;
+            SpecChart.View.AxisX.Min = 1;
+            foreach (DataSeries ds in SpecChart.Data.Children)
             {
-                Margin = new Thickness(5, 5, 5, 5),
-                ToolBarEnabled = false,
-                ScrollingEnabled = false,
-                View3D = true
-            };
-            title = new Title
-            {
-                Text = TITLE,
-                Padding = new Thickness(0, 10, 5, 0)
-            };
-            chart.Titles.Add(title);
-            chart.ZoomingEnabled = true;
-            chart.ZoomingMode = ZoomingMode.MouseDragAndWheel;
-            Axis xAxis = new Axis
-            {
-                AxisMinimum = 0,
-                Title = XAxisTitle,
-                IntervalType = IntervalTypes.Auto,
-                Interval = pixelNumber / 32
-            };
-            chart.AxesX.Add(xAxis);
-            Axis yAxis = new Axis
-            {
-                AxisMinimum = 0,
-                Title = YAxisTitle,
-                AxisType = AxisTypes.Primary
-            };
-            chart.AxesY.Add(yAxis);
-            Grid gr = new Grid();
-            gr.Children.Add(chart);
-            SpectrumChart.Children.Add(gr);
+                ds.SymbolStyle = FindResource("sstyle") as Style;
+                ds.ConnectionStyle = FindResource("sstyle") as Style;
+                ds.PointTooltipTemplate = FindResource("lbl") as DataTemplate;
+            }
         }
+        void Actions_Enter(object sender, EventArgs e)
+        {
+            if (sender is ScaleAction)
+            {
+                SpecChart.Cursor = Cursors.SizeNS;
+            }
+            else if (sender is TranslateAction)
+            {
+                SpecChart.Cursor = Cursors.SizeAll;
+            }
+            else
+            {
+                SpecChart.Cursor = Cursors.Hand;
+            }
+        }
+        void Actions_Leave(object sender, EventArgs e)
+        {
+            SpecChart.Cursor = Cursors.Arrow;
+            UpdateScrollbars();
+        }
+        private void UpdateScrollbars()
+        {
+            double sx = SpecChart.View.AxisX.Scale;
+            AxisScrollBar sbx = (AxisScrollBar)SpecChart.View.AxisX.ScrollBar;
+            if (sx >= 1.0)
+            {
+                sbx.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                sbx.Visibility = Visibility.Visible;
+            }
+            double sy = SpecChart.View.AxisY.Scale;
+            AxisScrollBar sby = (AxisScrollBar)SpecChart.View.AxisY.ScrollBar;
+            if (sy >= 1.0)
+            {
+                sby.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                sby.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SpecChart.BeginUpdate();
+            SpecChart.View.AxisX.Scale = 1;
+            SpecChart.View.AxisX.Value = 0.5;
+            SpecChart.View.AxisY.Scale = 1;
+            SpecChart.View.AxisY.Value = 0.5;
+            UpdateScrollbars();
+            SpecChart.EndUpdate();
+        }
+
         /// <summary>
         /// 事件响应
         /// </summary>
@@ -107,7 +138,7 @@ namespace VocsAutoTest.Pages
             {
                 SpecDataSave.Instance.SaveSpecDataContin(CurrentData);
             }
-            Dispatcher.BeginInvoke(new Action(() =>
+            Dispatcher.BeginInvoke(new System.Action(() =>
             {
                 CreateCurrentChart();
             }));
@@ -121,15 +152,19 @@ namespace VocsAutoTest.Pages
         /// </summary>
         public void CreateCurrentChart()
         {
-            chart.AxesX[0].Title = XAxisTitle;
-            chart.AxesY[0].Title = YAxisTitle;         
-            if(currentDataSeries != null)
+            if(CurrentData != null && CurrentData.Length > 0)
             {
-                chart.Series.Remove(currentDataSeries);
+                SpecChart.BeginUpdate();
+                if (currentDataSeries != null)
+                {
+                    SpecChart.Data.Children.Remove(currentDataSeries);
+                }
+                currentDataSeries = SetDataSeries(new List<string>(CurrentData), -1);
+                currentDataSeries.ConnectionFill = new SolidColorBrush(Colors.Red);
+                SpecChart.Data.Children.Add(currentDataSeries);
+                UpdateData();
+                SpecChart.EndUpdate();
             }
-            currentDataSeries = SetDataSeries(new List<string>(CurrentData), -1);
-            currentDataSeries.Color = new SolidColorBrush(Colors.Red);
-            chart.Series.Add(currentDataSeries);
         }
         /// <summary>
         /// 设置波长
@@ -140,7 +175,6 @@ namespace VocsAutoTest.Pages
         public void SetWave(int index, int pixels, float wavepara)
         {
             pixelNumber = pixels;
-            chart.AxesX[0].Interval = pixelNumber / 32;
             if (pixelNumber == 2048)
             {
                 FACTOR_VOL_TO_INTEG = 2.5 / 65536.0;
@@ -236,21 +270,20 @@ namespace VocsAutoTest.Pages
         {
             if (vocsCollectData.Count > 0)
             {
-                ClearHistoricalSeries();
                 int lineNum = vocsCollectData[0].Length;
                 //y轴，[数据线数量][每条线数据量]
-                for(int i = 0; i < lineNum; i++)
+                for (int i = 0; i < lineNum; i++)
                 {
                     YListCollect.Add(new List<string>());
                 }
                 for (int i = 0; i < vocsCollectData.Count; i++)
                 {
-                    for (int j = 0; j < lineNum; j++)
+                    for (int j = this.lineNum, k = 0; j < this.lineNum + lineNum; j++,k++)
                     {
-                        YListCollect[j].Add(vocsCollectData[i][j]);
+                        YListCollect[j].Add(vocsCollectData[i][k]);
                     }
                 }
-                this.lineNum = lineNum;
+                this.lineNum += lineNum;
                 CreateHistoricalChart();
             }
         }
@@ -261,12 +294,18 @@ namespace VocsAutoTest.Pages
         {
             if (lineNum != 0)
             {
-                chart.AxesX[0].Title = XAxisTitle;
-                chart.AxesY[0].Title = YAxisTitle;
+                SpecChart.BeginUpdate();
+                SpecChart.Data.Children.Clear();
+                if (currentDataSeries != null)
+                {
+                    SpecChart.Data.Children.Add(currentDataSeries);
+                }
                 for (int i = 0; i < lineNum; i++)
                 {
-                    chart.Series.Add(SetDataSeries(YListCollect[i], i));
+                    SpecChart.Data.Children.Add(SetDataSeries(YListCollect[i], i));
                 }
+                UpdateData();
+                SpecChart.EndUpdate();
             }
         }
         /// <summary>
@@ -276,71 +315,60 @@ namespace VocsAutoTest.Pages
         /// <returns>数据线</returns>
         private DataSeries SetDataSeries(List<string> yListCollect, int i)
         {
-            DataSeries dataSeries = new DataSeries
+            XYDataSeries dataSeries = new XYDataSeries
             {
-                RenderAs = RenderAs.Spline,
-                LegendText = "当前测量",
-                XValueType = ChartValueTypes.Auto
+                Label = "MES",
+                ConnectionStrokeThickness = 1
             };
             if (i > -1)
             {
-                dataSeries.LegendText = "历史数据" + i;
+                dataSeries.Label = "IMP_" + i;
             }
+            double[] valueY = new double[pixelNumber];
+            double[] valueX = new double[pixelNumber];
             //像素-电压
             if (IsPixel && IsVoltage)
             {
                 for (int j = 0; j < yListCollect.Count; j++)
                 {
-                    DataPoint dataPoint = new DataPoint
-                    {
-                        MarkerSize = 2
-                    };
-                    dataPoint.XValue = j + 1;
-                    dataPoint.YValue = double.Parse(yListCollect[j]) * FACTOR_VOL_TO_INTEG;
-                    dataSeries.DataPoints.Add(dataPoint);
-                }
+                    valueX[j] = j + 1;
+                    valueY[j] = double.Parse(yListCollect[j]) * FACTOR_VOL_TO_INTEG;
+                };
+                dataSeries.XValuesSource = valueX;
+                dataSeries.ValuesSource = valueY;
             }
             //像素-积分
             else if (IsPixel && !IsVoltage)
             {
                 for (int j = 0; j < yListCollect.Count; j++)
                 {
-                    DataPoint dataPoint = new DataPoint
-                    {
-                        MarkerSize = 2
-                    };
-                    dataPoint.XValue = j + 1;
-                    dataPoint.YValue = double.Parse(yListCollect[j]);
-                    dataSeries.DataPoints.Add(dataPoint);
-                }
+                    valueX[j] = j + 1;
+                    valueY[j] = double.Parse(yListCollect[j]);
+                };
+                dataSeries.XValuesSource = valueX;
+                dataSeries.ValuesSource = valueY;
             }
             //波长-电压
             else if (!IsPixel && IsVoltage)
             {
                 for (int j = 0; j < yListCollect.Count; j++)
                 {
-                    DataPoint dataPoint = new DataPoint
-                    {
-                        MarkerSize = 2
-                    };
-                    dataPoint.XValue = GetWaveByPixel(j + 1);
-                    dataPoint.YValue = double.Parse(yListCollect[j]) * FACTOR_VOL_TO_INTEG;
-                    dataSeries.DataPoints.Add(dataPoint);
-                }
+                    valueX[j] = GetWaveByPixel(j + 1);
+                    valueY[j] = double.Parse(yListCollect[j]) * FACTOR_VOL_TO_INTEG;
+                };
+                dataSeries.XValuesSource = valueX;
+                dataSeries.ValuesSource = valueY;
             }
             //波长-积分
             else if (!IsPixel && !IsVoltage)
             {
                 for (int j = 0; j < yListCollect.Count; j++)
                 {
-                    DataPoint dataPoint = new DataPoint
-                    {
-                        MarkerSize = 2
-                    };
-                    dataPoint.XValue = GetWaveByPixel(j + 1);
-                    dataPoint.YValue = double.Parse(yListCollect[j]);
-                    dataSeries.DataPoints.Add(dataPoint);
-                }
+                    valueX[j] = GetWaveByPixel(j + 1);
+                    valueY[j] = double.Parse(yListCollect[j]);
+                };
+                dataSeries.XValuesSource = valueX;
+                dataSeries.ValuesSource = valueY;
             }
             return dataSeries;
         }
@@ -355,16 +383,16 @@ namespace VocsAutoTest.Pages
                 switch (isShow)
                 {
                     case 0:
-                        title.Enabled = false;
+                        title.Visibility = Visibility.Hidden;
                         break;
                     case 1:
-                        title.Enabled = true;
+                        title.Visibility = Visibility.Visible;
                         break;
                     case 2:
-                        Console.WriteLine("隐藏Tag");
+                        c1legend.Visibility = Visibility.Collapsed;
                         break;
                     case 3:
-                        Console.WriteLine("显示Tag");
+                        c1legend.Visibility = Visibility.Visible;
                         break;
                     default:
                         break;
@@ -387,13 +415,16 @@ namespace VocsAutoTest.Pages
                 return float.NaN;
             }
             return waveLength[pixel];
-        } 
+        }
         /// <summary>
         /// 清除当前测量数据线
         /// </summary>
         public void ClearCurrentSeries()
         {
-            chart.Series.Remove(currentDataSeries);
+            SpecChart.BeginUpdate();
+            SpecChart.Data.Children.Remove(currentDataSeries);
+            SpecChart.EndUpdate();
+            CurrentData = null;
             currentDataSeries = null;
         }
         /// <summary>
@@ -403,21 +434,53 @@ namespace VocsAutoTest.Pages
         {
             lineNum = 0;
             YListCollect.Clear();
-            chart.Series.Clear();
-            if(currentDataSeries != null)
+            SpecChart.BeginUpdate();
+            SpecChart.Data.Children.Clear();
+            if (currentDataSeries != null)
             {
-                chart.Series.Add(currentDataSeries);
+                SpecChart.Data.Children.Add(currentDataSeries);
+                UpdateData();
             }
+            SpecChart.EndUpdate();
         }
         /// <summary>
         /// 清除全部曲线
         /// </summary>
         public void ClearAllSeries()
         {
+            CurrentData = null;
             currentDataSeries = null;
             lineNum = 0;
             YListCollect.Clear();
-            chart.Series.Clear();
+            SpecChart.BeginUpdate();
+            SpecChart.Data.Children.Clear();
+            SpecChart.EndUpdate();
+        }
+        /// <summary>
+        /// 标签左键隐藏
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            LegendItem cli = (sender as Label).DataContext as LegendItem;
+            if (cli != null)
+            {
+                XYDataSeries ds = cli.Item as XYDataSeries;
+                if(ds != null)
+                {
+                    if(ds.Visibility != Visibility.Hidden)
+                    {
+                        ds.Visibility = Visibility.Hidden;
+                        ds.SymbolFill = new SolidColorBrush(Colors.Gray);
+                    }
+                    else
+                    {
+                        ds.Visibility = Visibility.Visible;
+                        ds.SymbolFill = ds.ConnectionFill;
+                    }
+                }
+            }
         }
     }
 }

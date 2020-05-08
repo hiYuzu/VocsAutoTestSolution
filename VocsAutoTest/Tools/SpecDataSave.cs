@@ -98,11 +98,11 @@ namespace VocsAutoTest.Tools
             string path;
             if (SpecDataSavePath.EndsWith(@"\"))
             {
-                path = SpecDataSavePath + "raw-Current";
+                path = SpecDataSavePath + "raw-Current" + @"\";
             }
             else
             {
-                path = SpecDataSavePath + @"\" + "raw-Current";
+                path = SpecDataSavePath + @"\" + "raw-Current" + @"\";
             }
             if (!System.IO.Directory.Exists(path))
             {

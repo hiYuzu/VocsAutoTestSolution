@@ -149,6 +149,8 @@ namespace VocsAutoTestBLL
         public event DataForwardDelegate ReadCaliParam;
         //读写向量表信息
         public event DataForwardDelegate ReadVectorInfo;
+        //读取设备号
+        public event DataForwardDelegate ReadDeviceNo;
         #endregion
 
         /// <summary>
@@ -182,6 +184,9 @@ namespace VocsAutoTestBLL
                         break;
                     case "29":
                         ReadConcMeasure(this, command);
+                        break;
+                    case "32":
+                        ReadDeviceNo(this, command);
                         break;
                     case "2C":
                         ReadVectorInfo(this, command);

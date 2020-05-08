@@ -100,11 +100,11 @@ namespace VocsAutoTest.Algorithm
                     }
                 }
                 sw.Close();
-                ExceptionUtil.LogMethod("光谱文件已保存：" + name + @"\");
+                ExceptionUtil.LogMethod("光谱文件已保存：" + name);
             }
             catch (Exception ex)
             {
-                ExceptionUtil.ExceptionMethod("保存失败:" + ex.Message, false);
+                ExceptionUtil.ExceptionMethod("保存失败:" + ex.Message, true);
             }
         }
         public static void SaveRawFile(string name, ArrayList fblist, DateTime date)
@@ -164,7 +164,7 @@ namespace VocsAutoTest.Algorithm
             }
             catch (Exception ex)
             {
-                ExceptionUtil.ExceptionMethod("保存失败:" + ex.Message, false);
+                ExceptionUtil.ExceptionMethod("保存失败:" + ex.Message, true);
             }
         }
     }

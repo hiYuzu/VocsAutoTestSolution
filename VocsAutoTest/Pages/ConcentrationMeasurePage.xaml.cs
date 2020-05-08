@@ -52,10 +52,13 @@ namespace VocsAutoTest.Pages
             };
             chart.Titles.Add(title);
             chart.ZoomingEnabled = true;
+            chart.ZoomingMode = ZoomingMode.MouseDragAndWheel;
             Axis xAxis = new Axis
             {
                 Title = "时间",
-                ValueFormatString = "MM-dd HH:mm:ss"
+                ValueFormatString = "MM-dd HH:mm:ss",
+                Interval = 5,
+                IntervalType = IntervalTypes.Minutes
             };         
             chart.AxesX.Add(xAxis);
             Axis yAxis = new Axis

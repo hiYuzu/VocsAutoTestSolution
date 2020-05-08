@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Resources/ComboxStyle.xaml"/>
                 <ResourceDictionary Source="Resources/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="Resources/DataGridResource.xaml"/>
+                <ResourceDictionary Source="Resources/UserControlResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

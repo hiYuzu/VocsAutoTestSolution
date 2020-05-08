@@ -96,28 +96,35 @@ namespace VocsAutoTest.Pages
         private void GetConcMeasureData(object sender, Command command) {
             if (command != null)
             {
-                byte[] data = ByteStrUtil.HexToByte(command.Data);      
-                List<float> concList = new List<float>();
-                byte[] pressData = new byte[4];
-                byte[] tempData = new byte[4];
-                Array.Copy(data, 7, tempData, 0, 4);
-                Array.Copy(data, 11, pressData, 0, 4);
-                byte[] concData = new byte[data.Length - 15];
-                Array.Copy(data, 15, concData, 0, data.Length - 15);
-                for (int i = 0; i < concData.Length / 10; i++)
+                try
                 {
-                    byte[] conc = new byte[4];
-                    Array.Copy(concData, 10 * i + 2, conc, 0, 4);
-                    Array.Reverse(conc);
-                    concList.Add(BitConverter.ToSingle(conc,0));
+                    byte[] data = ByteStrUtil.HexToByte(command.Data);
+                    List<float> concList = new List<float>();
+                    byte[] pressData = new byte[4];
+                    byte[] tempData = new byte[4];
+                    Array.Copy(data, 7, tempData, 0, 4);
+                    Array.Copy(data, 11, pressData, 0, 4);
+                    byte[] concData = new byte[data.Length - 15];
+                    Array.Copy(data, 15, concData, 0, data.Length - 15);
+                    for (int i = 0; i < concData.Length / 10; i++)
+                    {
+                        byte[] conc = new byte[4];
+                        Array.Copy(concData, 10 * i + 2, conc, 0, 4);
+                        Array.Reverse(conc);
+                        concList.Add(BitConverter.ToSingle(conc, 0));
+                    }
+                    Array.Reverse(pressData);
+                    Array.Reverse(tempData);
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        UpadateUI(concList, BitConverter.ToSingle(pressData, 0), BitConverter.ToSingle(tempData, 0));
+                    }));
+                    concentrationPage.UpdateChart(concList);
                 }
-                Array.Reverse(pressData);
-                Array.Reverse(tempData);
-                Dispatcher.BeginInvoke(new Action(() =>
+                catch(Exception e)
                 {
-                    UpadateUI(concList, BitConverter.ToSingle(pressData, 0), BitConverter.ToSingle(tempData, 0));
-                }));
-                concentrationPage.UpdateChart(concList);
+                    ExceptionUtil.ExceptionMethod(e.Message, true);
+                }
             }
             else 
             {
@@ -191,7 +198,7 @@ namespace VocsAutoTest.Pages
                 }
             }
             catch (Exception ex) {
-                ExceptionUtil.ExceptionMethod("导入失败：" + ex.Message, false);
+                ExceptionUtil.ExceptionMethod("导入失败：" + ex.Message, true);
             }
 
         }
@@ -239,22 +246,22 @@ namespace VocsAutoTest.Pages
                 if (this.listGas1Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[0], this.listGas1Conc, this.listPress, this.listTemp, this.listTime);
-                    ExceptionUtil.LogMethod("文件已保存：" + savePath + GasName[0]);
+                    ExceptionUtil.LogMethod("文件已保存：" + savePath);
                 }
                 if (this.listGas2Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[1], this.listGas2Conc, this.listPress, this.listTemp, this.listTime);
-                    ExceptionUtil.LogMethod("文件已保存：" + savePath + GasName[1]);
+                    ExceptionUtil.LogMethod("文件已保存：" + savePath);
                 }
                 if (this.listGas3Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[2], this.listGas3Conc, this.listPress, this.listTemp, this.listTime);
-                    ExceptionUtil.LogMethod("文件已保存：" + savePath + GasName[2]);
+                    ExceptionUtil.LogMethod("文件已保存：" + savePath);
                 }
                 if (this.listGas4Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[3], this.listGas4Conc, this.listPress, this.listTemp, this.listTime);
-                    ExceptionUtil.LogMethod("文件已保存：" + savePath + GasName[3]);
+                    ExceptionUtil.LogMethod("文件已保存：" + savePath);
                 }
                 listPress.Clear();
                 listTemp.Clear();
@@ -262,7 +269,7 @@ namespace VocsAutoTest.Pages
             }
             catch (Exception ex)
             {
-                ExceptionUtil.ExceptionMethod("保存失败：" + ex.Message, false);
+                ExceptionUtil.ExceptionMethod("保存失败：" + ex.Message, true);
             }
         }
 

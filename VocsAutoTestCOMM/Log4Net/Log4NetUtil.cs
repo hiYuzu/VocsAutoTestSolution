@@ -100,10 +100,10 @@ namespace VocsAutoTestCOMM
             {
                 RollingFileAppender appender = new RollingFileAppender();
                 appender.Name = "root";
-                appender.File = "log.txt";
+                appender.File = "Log/logs.txt";
                 appender.AppendToFile = true;
                 appender.RollingStyle = RollingFileAppender.RollingMode.Composite;
-                appender.DatePattern = "yyyyMMdd-HHmm\".txt\"";
+                appender.DatePattern = "logs_yyyyMMdd\".txt\"";
                 appender.MaximumFileSize = "10MB";
                 appender.MaxSizeRollBackups = 10;
                 log4net.Layout.PatternLayout layout = new log4net.Layout.PatternLayout("%d{yyyy-MM-dd HH:mm:ss,fff}[%t] %-5p [%c] : %m%n");

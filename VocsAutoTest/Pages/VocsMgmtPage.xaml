@@ -20,7 +20,9 @@
                 <TabItem Header="公共参数">
                     <Grid Margin="0" Height="auto">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="103"/>
+                            <ColumnDefinition Width="11"/>
+                            <ColumnDefinition Width="46"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -34,44 +36,44 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Content="测量对象类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="meamtObjType" Grid.Column="1" Grid.Row="0" Height="25" Width="250">
+                        <Label Grid.Column="0" Grid.Row="0" Content="测量对象类型" Height="25" HorizontalAlignment="Center" Grid.ColumnSpan="3" Margin="39,2"/>
+                        <ComboBox x:Name="meamtObjType" Grid.Column="3" Grid.Row="0" Height="25" Width="250" Margin="17,2">
                             <ComboBoxItem Content="气体" IsSelected="True"/>
                             <ComboBoxItem Content="液体"/>
                         </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="1" Content="光路类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="lPType" Grid.Column="1" Grid.Row="1" Height="25" Width="250">
+                        <Label Grid.Column="0" Grid.Row="1" Content="光路类型" Height="25" HorizontalAlignment="Center" Margin="51,2,5,2" Grid.ColumnSpan="2"/>
+                        <ComboBox x:Name="lPType" Grid.Column="3" Grid.Row="1" Height="25" Width="250" Margin="17,2">
                             <ComboBoxItem Content="单光路" IsSelected="True"/>
                             <ComboBoxItem Content="双光路"/>
                         </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="2" Content="像素" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="pixel" Grid.Column="1" Grid.Row="2" Height="25" Width="250">
-                            <ComboBoxItem Content="512" IsSelected="True"/>
+                        <Label Grid.Column="0" Grid.Row="2" Content="像素" Height="25" HorizontalAlignment="Center" Margin="63,2,6,2"/>
+                        <ComboBox x:Name="pixel" Grid.Column="3" Grid.Row="2" Height="25" Width="250" Margin="17,2">
                             <ComboBoxItem Content="256"/>
+                            <ComboBoxItem Content="512" IsSelected="True"/>
                             <ComboBoxItem Content="1024"/>
                             <ComboBoxItem Content="2048"/>
                         </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="3" Content="传感器类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="sensorType" Grid.Column="1" Grid.Row="3" Height="25" Width="250">
+                        <Label Grid.Column="0" Grid.Row="3" Content="传感器类型" Height="25" HorizontalAlignment="Center" Grid.ColumnSpan="3" Margin="45,2"/>
+                        <ComboBox x:Name="sensorType" Grid.Column="3" Grid.Row="3" Height="25" Width="250" Margin="17,2">
                             <ComboBoxItem Content="CMOS" IsSelected="True"/>
                             <ComboBoxItem Content="CCD"/>
                         </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="4" Content="光源类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="lSType" Grid.Column="1" Grid.Row="4" Height="25" Width="250">
+                        <Label Grid.Column="0" Grid.Row="4" Content="光源类型" Height="25" HorizontalAlignment="Center" Margin="51,2,5,2" Grid.ColumnSpan="2"/>
+                        <ComboBox x:Name="lSType" Grid.Column="3" Grid.Row="4" Height="25" Width="250" Margin="17,2">
                             <ComboBoxItem Content="氙灯" IsSelected="True"/>
                             <ComboBoxItem Content="氘灯"/>
                         </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="5" Content="光源控制电压(V)" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="lSControlVol" Grid.Column="1" Grid.Row="5" Text="4.0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
-                        <Label Grid.Column="0" Grid.Row="6" Content="双光路应用模式信息字" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="dualLPAppModeInfo" Grid.Column="1" Grid.Row="6" Height="25" Width="250">
+                        <Label Grid.Column="0" Grid.Row="5" Content="光源控制电压(V)" Height="25" HorizontalAlignment="Center" Grid.ColumnSpan="3" Margin="31,2"/>
+                        <TextBox x:Name="lSControlVol" Grid.Column="3" Grid.Row="5" Text="4.0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250" Margin="17,2"/>
+                        <Label Grid.Column="0" Grid.Row="6" Content="双光路应用模式信息字" Height="25" HorizontalAlignment="Center" Grid.ColumnSpan="3" Margin="15,2"/>
+                        <ComboBox x:Name="dualLPAppModeInfo" Grid.Column="3" Grid.Row="6" Height="25" Width="250" Margin="17,2">
                             <ComboBoxItem Content="1拖2，测相同气体" IsSelected="True"/>
                             <ComboBoxItem Content="1拖2，测不同气体"/>
                             <ComboBoxItem Content="实时调零模式"/>
                         </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="7" Content="调零对应的浓度计算次数" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="zeroConcCalTimes" Grid.Column="1" Grid.Row="7" Text="100" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
-                        <Grid Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Margin="0">
+                        <Label Grid.Column="0" Grid.Row="7" Content="调零对应的浓度计算次数" Height="25" HorizontalAlignment="Center" Grid.ColumnSpan="3" Margin="9,2"/>
+                        <TextBox x:Name="zeroConcCalTimes" Grid.Column="3" Grid.Row="7" Text="100" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250" Margin="17,2"/>
+                        <Grid Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Margin="0">
                             <Button x:Name="ReadCommParam" Content="读取" Click="ReadCommParam_Click" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                             <Button x:Name="SetCommParam" Content="设置" Click="SetCommParam_Click" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                         </Grid>
@@ -145,7 +147,7 @@
                         <Label Grid.Column="0" Grid.Row="11" Content="积分时间(ms)" Height="25" HorizontalAlignment="Center"/>
                         <TextBox x:Name="integTime" Grid.Column="1" Grid.Row="11" Text="85" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="12" Content="采样时间间隔(0.1s)" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="samplInterval" Grid.Column="1" Grid.Row="12" Text="10" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
+                        <TextBox x:Name="samplInterval" Grid.Column="1" Grid.Row="12" Text="50" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="13" Content="光路切换时间间隔(s)" Height="25" HorizontalAlignment="Center"/>
                         <TextBox x:Name="lPSwitchInterval" Grid.Column="1" Grid.Row="13" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Grid Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="2" Margin="0">
@@ -211,21 +213,21 @@
                             <ComboBoxItem Content="光路2"/>
                         </ComboBox>
                         <Label Grid.Column="0" Grid.Row="1" Content="气体1低量程零点值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_1_lowRangZC" Grid.Column="1" Grid.Row="1" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
+                        <TextBox x:Name="gas_1_lowRangZC" Grid.Column="1" Grid.Row="1" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="2" Content="气体1高量程零点值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_1_highRangZC" Grid.Column="1" Grid.Row="2" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
+                        <TextBox x:Name="gas_1_highRangZC" Grid.Column="1" Grid.Row="2" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="3" Content="气体2低量程零点值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_2_lowRangZC" Grid.Column="1" Grid.Row="3" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
+                        <TextBox x:Name="gas_2_lowRangZC" Grid.Column="1" Grid.Row="3" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="4" Content="气体2高量程零点值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_2_highRangZC" Grid.Column="1" Grid.Row="4" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
+                        <TextBox x:Name="gas_2_highRangZC" Grid.Column="1" Grid.Row="4" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="5" Content="气体3低量程零点值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_3_lowRangZC" Grid.Column="1" Grid.Row="5" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
+                        <TextBox x:Name="gas_3_lowRangZC" Grid.Column="1" Grid.Row="5" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="6" Content="气体3高量程零点值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_3_highRangZC" Grid.Column="1" Grid.Row="6" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
+                        <TextBox x:Name="gas_3_highRangZC" Grid.Column="1" Grid.Row="6" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="7" Content="气体4低量程零点值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_4_lowRangZC" Grid.Column="1" Grid.Row="7" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
+                        <TextBox x:Name="gas_4_lowRangZC" Grid.Column="1" Grid.Row="7" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Label Grid.Column="0" Grid.Row="8" Content="气体4高量程零点值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_4_highRangZC" Grid.Column="1" Grid.Row="8" Text="1" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
+                        <TextBox x:Name="gas_4_highRangZC" Grid.Column="1" Grid.Row="8" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="250"/>
                         <Grid Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Margin="0">
                             <Button x:Name="ReadZeroCoeffi" Content="读取" Click="ReadZeroCoeffi_Click" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                             <Button x:Name="SetZeroCoeffi" Content="设置" Click="SetZeroCoeffi_Click" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VocsAutoTestCOMM;
 
 namespace VocsAutoTest
 {
@@ -21,17 +22,22 @@ namespace VocsAutoTest
     {
         public AlgorithmSettingWindow()
         {
+            ExceptionUtil.ShowLoadingAction(true);
             InitializeComponent();
         }
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        override protected void OnClosed(EventArgs e)
+        {
+            ExceptionUtil.ShowLoadingAction(false);
         }
     }
 }

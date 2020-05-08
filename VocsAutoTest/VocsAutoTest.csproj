@@ -60,6 +60,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="C1.WPF.C1Chart.4.5.2, Version=4.5.20193.685, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\ComponentOne\WPF Edition\bin\v452\C1.WPF.C1Chart.4.5.2.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -108,6 +112,15 @@
     <Compile Include="Algorithm\GasNode.cs" />
     <Compile Include="Algorithm\OMAAlgorithm.cs" />
     <Compile Include="Algorithm\SpectrumFile.cs" />
+    <Compile Include="Pages\AlgoComOne.xaml.cs">
+      <DependentUpon>AlgoComOne.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ConcentrationComOne.xaml.cs">
+      <DependentUpon>ConcentrationComOne.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SpecComOne.xaml.cs">
+      <DependentUpon>SpecComOne.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\VocsMgmtPage.xaml.cs">
       <DependentUpon>VocsMgmtPage.xaml</DependentUpon>
     </Compile>
@@ -120,9 +133,6 @@
     </Compile>
     <Compile Include="Pages\ConcentrationMeasurePage.xaml.cs">
       <DependentUpon>ConcentrationMeasurePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LeftControlPage.xaml.cs">
-      <DependentUpon>LeftControlPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SpecMeasurePage.xaml.cs">
       <DependentUpon>SpecMeasurePage.xaml</DependentUpon>
@@ -152,7 +162,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ChartTest.xaml">
+    <Page Include="Pages\AlgoComOne.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ConcentrationComOne.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SpecComOne.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,9 +181,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ChartTest.xaml.cs">
-      <DependentUpon>ChartTest.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -180,10 +195,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ConcentrationMeasurePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\LeftControlPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -220,6 +231,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\TextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\UserControlResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

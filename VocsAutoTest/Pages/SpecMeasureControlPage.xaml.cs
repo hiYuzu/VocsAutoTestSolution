@@ -17,10 +17,11 @@ namespace VocsAutoTest.Pages
     public partial class SpecMeasureControlPage : Page
     {
         private int pixelNumber = 512;
-        private readonly SpecMeasurePage specPage;
+        //private readonly SpecMeasurePage specPage;
+        private readonly SpecComOne specPage;
         private readonly SpecDataSave specDataSave;
         private List<string> historyData = null;
-        public SpecMeasureControlPage(SpecMeasurePage page)
+        public SpecMeasureControlPage(SpecComOne page)
         {
             InitializeComponent();
             if (page != null)
@@ -106,7 +107,12 @@ namespace VocsAutoTest.Pages
             //像素，波长=>像素
             specPage.IsPixel = true;
             specPage.XAxisTitle = "像素";
-            ChangeAxis();
+            if (!ChangeAxis())
+            {
+                specPage.IsPixel = false;
+                specPage.XAxisTitle = "波长";
+                wavelength.IsChecked = true;
+            }
         }
         private void Pixel_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -114,7 +120,12 @@ namespace VocsAutoTest.Pages
             //波长，像素=>波长
             specPage.IsPixel = false;
             specPage.XAxisTitle = "波长";
-            ChangeAxis();
+            if (!ChangeAxis())
+            {
+                specPage.IsPixel = true;
+                specPage.XAxisTitle = "像素";
+                pixel.IsChecked = true;
+            }
         }
         /// <summary>
         /// Y轴单位
@@ -127,7 +138,12 @@ namespace VocsAutoTest.Pages
             //电压值，积分=>电压
             specPage.YAxisTitle = "电压值(V)";
             specPage.IsVoltage = true;
-            ChangeAxis();
+            if (!ChangeAxis())
+            {
+                specPage.YAxisTitle = "积分值";
+                specPage.IsVoltage = false;
+                integralValue.IsChecked = true;
+            }
         }
         private void VoltageValue_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -135,18 +151,25 @@ namespace VocsAutoTest.Pages
             //积分值，电压=>积分
             specPage.YAxisTitle = "积分值";
             specPage.IsVoltage = false;
-            ChangeAxis();
+            if (!ChangeAxis())
+            {
+                specPage.YAxisTitle = "电压值(V)";
+                specPage.IsVoltage = true;
+                voltageValue.IsChecked = true;
+            }
         }
-        private void ChangeAxis()
+        private bool ChangeAxis()
         {
             try
             {
                 specPage.CreateCurrentChart();
                 specPage.CreateHistoricalChart();
+                return true;
             }
             catch
             {
                 MessageBox.Show("无图表数据");
+                return false;
             }
         }
         /// <summary>
@@ -198,11 +221,12 @@ namespace VocsAutoTest.Pages
         /// </summary>
         private void ModifyImportCurveBox()
         {
-            for(int i = 0; i < specPage.YListCollect.Count; i++)
+            importCurve.Items.Clear();
+            for (int i = 0; i < specPage.YListCollect.Count; i++)
             {
                 ComboBoxItem item = new ComboBoxItem
                 {
-                    Content = "历史数据_" + i + 1
+                    Content = "IMP_" + i
                 };
                 importCurve.Items.Add(item);
             }
@@ -214,7 +238,14 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void ImportCurve_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            historyData = specPage.YListCollect[importCurve.SelectedIndex];
+            if(specPage.YListCollect.Count > 0)
+            {
+                historyData = specPage.YListCollect[importCurve.SelectedIndex];
+            }
+            else
+            {
+                historyData = null;
+            }
         }
         /// <summary>
         /// 设置波长
@@ -227,10 +258,12 @@ namespace VocsAutoTest.Pages
             {
                 uint fstParam = Convert.ToUInt32(firstParam.Text);
                 specPage.SetWave(sensorType.SelectedIndex, pixelNumber, fstParam);
+                ExceptionUtil.LogMethod("传感器类型：" + sensorType.SelectedItem.ToString() + "\t第一参量：" + fstParam.ToString());
             }
-            catch
+            catch(Exception ex)
             {
-                //TODO..
+                MessageBox.Show("设置失败");
+                ExceptionUtil.ExceptionMethod("设置波长操作失败：" + ex.Message, false);
             }
         }
         /// <summary>
@@ -276,11 +309,29 @@ namespace VocsAutoTest.Pages
                 IMPY.Text = "";
                 if (specPage.CurrentData != null && specPage.CurrentData.Length >= xValue)
                 {
-                    MESY.Text = (Convert.ToDouble(specPage.CurrentData[xValue - 1]) / 1000).ToString();
+                    string value = string.Empty;
+                    if(specPage.IsVoltage)
+                    {
+                        value = (Convert.ToDouble(specPage.CurrentData[xValue - 1]) * specPage.FACTOR_VOL_TO_INTEG).ToString();
+                    }
+                    else
+                    {
+                        value = (Convert.ToDouble(specPage.CurrentData[xValue - 1])).ToString();
+                    }
+                    MESY.Text = value;
                 }
                 if(historyData != null && historyData.Count > 0)
                 {
-                    IMPY.Text = (Convert.ToDouble(historyData[xValue - 1]) / 1000).ToString();
+                    string value = string.Empty;
+                    if (specPage.IsVoltage)
+                    {
+                        value = (Convert.ToDouble(historyData[xValue - 1]) * specPage.FACTOR_VOL_TO_INTEG).ToString();
+                    }
+                    else
+                    {
+                        value = (Convert.ToDouble(historyData[xValue - 1])).ToString();
+                    }
+                    IMPY.Text = value;
                 }
             }
             catch
@@ -302,6 +353,7 @@ namespace VocsAutoTest.Pages
         {
             historyData = null;
             specPage.ClearAllSeries();
+            importCurve.Items.Clear();
         }
         /// <summary>
         /// 清除当次测量曲线
@@ -321,6 +373,7 @@ namespace VocsAutoTest.Pages
         {
             historyData = null;
             specPage.ClearHistoricalSeries();
+            importCurve.Items.Clear();
         }
         /// <summary>
         /// 设置光谱限值
@@ -353,6 +406,10 @@ namespace VocsAutoTest.Pages
                     sb.Append(CalPos(doubledata).ToString()).Append("\r\n");
                 }
                 MessageBox.Show(sb.ToString());
+            }
+            else
+            {
+                MessageBox.Show("当前无历史数据！");
             }
         }
         private float CalPos(double[] specData)

@@ -4,16 +4,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:VocsAutoTest.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AlgoGeneraControlPage">
-
+      mc:Ignorable="d" d:DesignWidth="800"
+      Title="AlgoGeneraControlPage" Background="White">
+    <!-- <ScrollViewer x:Name="ScrollViewer1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"> -->
     <Grid Margin="0,0,0,0" Height="auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="250"/>
+            <RowDefinition Height="240"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,0,0">
@@ -143,11 +142,11 @@
             <TextBox x:Name="textbox_gas3_input" Grid.Column="2" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
             <Label x:Name="label_gas4_input" Content="气体4" Grid.Column="3" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"></Label>
             <TextBox x:Name="textbox_gas4_input" Grid.Column="3" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
-            <Button x:Name="button_gas_input" Content="新增" Grid.Column="4" Grid.Row="3" Height="25" Width="60" Style="{StaticResource btnOther}" Click="Button_gas_input_Click"></Button>
+            <Button x:Name="button_gas_input" Content="新增" Grid.Column="4" Grid.Row="3" Height="25" Width="60" Style="{StaticResource btnOther}" Click="Button_gas_input_Click" IsEnabled="False"></Button>
             <Label Content="平均次数" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
             <TextBox x:Name="textbox_average_time" Grid.Column="1" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="60" Text="5" Style="{DynamicResource textStyle}" TextChanged="Textbox_average_time_TextChanged"></TextBox>
         </Grid>
     </Grid>
-
+    <!-- </ScrollViewer> -->
 
 </Page>

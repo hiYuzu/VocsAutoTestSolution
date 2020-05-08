@@ -4,6 +4,8 @@ using System.Windows.Controls;
 using VocsAutoTestBLL.Interface;
 using VocsAutoTestBLL.Impl;
 using VocsAutoTestBLL.Model;
+using VocsAutoTestCOMM;
+using System;
 
 namespace VocsAutoTest
 {
@@ -14,6 +16,7 @@ namespace VocsAutoTest
     {
         public PortSettingWindow()
         {
+            ExceptionUtil.ShowLoadingAction(true);
             InitializeComponent();
             InitSerialPort();
             SetCurrentData();
@@ -85,6 +88,11 @@ namespace VocsAutoTest
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        override protected void OnClosed(EventArgs e)
+        {
+            ExceptionUtil.ShowLoadingAction(false);
         }
     }
 }

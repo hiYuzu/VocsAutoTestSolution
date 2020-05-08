@@ -71,6 +71,7 @@ namespace VocsAutoTest.Pages
             };
             chart.Titles.Add(title);
             chart.ZoomingEnabled = true;
+            chart.ZoomingMode = ZoomingMode.MouseDragAndWheel;
             Axis xAxis = new Axis
             {
                 AxisMinimum = 0,

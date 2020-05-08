@@ -108,6 +108,8 @@ namespace VocsAutoTest.Pages
                 textbox_gas3_input.IsEnabled = false;
                 label_gas4_input.Content = "气体4";
                 textbox_gas4_input.IsEnabled = false;
+                button_gas_input.IsEnabled = false;
+
                 //解锁测量信息
                 //LockMeasInfo(false);
             }
@@ -165,6 +167,7 @@ namespace VocsAutoTest.Pages
                     label_gas4_input.Content = "气体4";
                     textbox_gas4_input.IsEnabled = false;
                 }
+                button_gas_input.IsEnabled = true;
                 //锁定测量信息
                 //LockMeasInfo(true);
                 AddComlumns();
@@ -641,18 +644,19 @@ namespace VocsAutoTest.Pages
                 {
                     if (arrays != null && arrays.Length > 0)
                     {
-                        string[] arraysNew = new string[_gasIndex + (indexCount-1)*2];
+                        string[] arraysNew = new string[_gasIndex + (indexCount - 1) * 2];
                         for (int i = 0; i < arraysNew.Length; i++)
                         {
-                            if (i >= _gasIndex && i< _gasIndex + (indexCount - 1))
+                            if (i >= _gasIndex && i < _gasIndex + (indexCount - 1))
                             {
-                                arraysNew[i] = Convert.ToString(Math.Round(ConcentrationCalc(arrays, i),2));
+                                arraysNew[i] = Convert.ToString(Math.Round(ConcentrationCalc(arrays, i), 2));
                             }
-                            else if(arrays.Length<=i)
+                            else if (arrays.Length <= i)
                             {
                                 arraysNew[i] = "";
                             }
-                            else {
+                            else
+                            {
                                 arraysNew[i] = arrays[i];
                             }
 
@@ -660,11 +664,14 @@ namespace VocsAutoTest.Pages
                         list.Add(arraysNew);
                     }
                 }
+                _obervableCollection.Clear();
+                foreach (string[] arrays in list)
+                {
+                    _obervableCollection.Add(arrays);
+                }
             }
-            _obervableCollection.Clear();
-            foreach (string[] arrays in list)
-            {
-                _obervableCollection.Add(arrays);
+            else {
+                MessageBox.Show("数据列表不能为空！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
@@ -948,30 +955,35 @@ namespace VocsAutoTest.Pages
         {
             if (this.dataGrid.CurrentCell.Item != null && dataGrid.CurrentCell.Item != DependencyProperty.UnsetValue)
             {
-
-                string[] str_array = (string[])dataGrid.CurrentCell.Item;
-                for (int i = 0; i < _obervableCollection.Count; i++)
-                {
-                    if (_obervableCollection[i][0].Equals(str_array[0]))
+                try {
+                    string[] str_array = (string[])dataGrid.CurrentCell.Item;
+                    for (int i = 0; i < _obervableCollection.Count; i++)
                     {
-                        if (_obervableCollection[i][1].Equals("True"))
+                        if (_obervableCollection[i][0].Equals(str_array[0]))
                         {
-                            string[] arrays = _obervableCollection[i];
-                            arrays[1] = "False";
-                            algoPage.RemoveSeriesByIndex(arrays[0]);
-                            _obervableCollection.RemoveAt(i);
-                            _obervableCollection.Insert(i, arrays);
-                        }
-                        else
-                        {
-                            string[] arrays = _obervableCollection[i];
-                            arrays[1] = "True";
-                            algoPage.RecoveryDataSeries(arrays[0]);
-                            _obervableCollection.RemoveAt(i);
-                            _obervableCollection.Insert(i, arrays);
+                            if (_obervableCollection[i][1].Equals("True"))
+                            {
+                                string[] arrays = _obervableCollection[i];
+                                arrays[1] = "False";
+                                algoPage.RemoveSeriesByIndex(arrays[0]);
+                                _obervableCollection.RemoveAt(i);
+                                _obervableCollection.Insert(i, arrays);
+                            }
+                            else
+                            {
+                                string[] arrays = _obervableCollection[i];
+                                arrays[1] = "True";
+                                algoPage.RecoveryDataSeries(arrays[0]);
+                                _obervableCollection.RemoveAt(i);
+                                _obervableCollection.Insert(i, arrays);
+                            }
                         }
                     }
                 }
+                catch (Exception ex) {
+                    ExceptionUtil.LogMethod("出现异常错误，信息为："+ex.Message);
+                }
+
 
             }
         }
@@ -1046,7 +1058,7 @@ namespace VocsAutoTest.Pages
                     if (arrays[1].Equals("True"))
                     {
                         int gasCount = _gasIndex - 2 - 1;
-                        int start = _gasIndex+ gasCount;
+                        int start = _gasIndex + gasCount;
                         for (int j = 0; j < gasCount; j++)
                         {
                             arrays[start + j] = ((int)(E[index, j])).ToString();
@@ -1077,7 +1089,7 @@ namespace VocsAutoTest.Pages
             catch (Exception ex)
             {
 
-                ExceptionUtil.ExceptionMethod("生成参量数据异常，异常信息为："+ex.ToString(), false);
+                ExceptionUtil.ExceptionMethod("生成参量数据异常，异常信息为："+ex.ToString(), true);
             }
             finally
             {

@@ -183,11 +183,12 @@ namespace VocsAutoTestBLL.Impl
             byte[] offset = new byte[2];
             Array.Copy(datas, 38, offset, 0, offset.Length);
             Array.Reverse(offset, 0, offset.Length);
-            uint endZeroNum = pixel - startAddress - BitConverter.ToUInt16(offset, 0);
-            byte[] vector = new byte[556];
+            uint offsetNum = BitConverter.ToUInt16(offset, 0);
+            uint endZeroNum = pixel - startAddress - offsetNum;
+            byte[] vector = new byte[offsetNum * 4];
             Array.Copy(datas, 40, vector, 0, vector.Length);
             byte[] coeffi = new byte[20];
-            Array.Copy(datas, 596, coeffi, 0, coeffi.Length);
+            Array.Copy(datas, (offsetNum * 4) + 40, coeffi, 0, coeffi.Length);
             StorgeToFile(vectorInfo, startAddress, vector, endZeroNum, coeffi);
         }
         private void StorgeToFile(List<string> info, uint startAddr, byte[] vector, uint endZeroNum, byte[] coeffi)
@@ -229,6 +230,7 @@ namespace VocsAutoTestBLL.Impl
                 }
                 sw.Close();
                 sw.Dispose();
+                ExceptionUtil.LogMethod("向量表数据保存到文件:" + fileName);
             }
             catch(Exception e)
             {
@@ -325,7 +327,7 @@ namespace VocsAutoTestBLL.Impl
             Array.Reverse(reOffset);
             data = AddByte(data, reOffset);
             //压缩后的数据
-            for(int i = 0; i < offset - 1; i++)
+            for (int i = 0; i < offset; i++)
             {
                 byte[] reVD = BitConverter.GetBytes(Convert.ToSingle(vectorData[startAddr + i]));
                 Array.Reverse(reVD);
