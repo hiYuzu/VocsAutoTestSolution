@@ -19,7 +19,7 @@ namespace VocsAutoTest
     public partial class SpecComOne : UserControl
     {
         //默认像素
-        private int pixelNumber = 512;
+        public static int pixelNumber = 512;
         //波长
         private float[] waveLength = null;
         private int lineNum = 0;
@@ -32,7 +32,7 @@ namespace VocsAutoTest
         public string YAxisTitle { get; set; }
         public bool TitleEnabled { get; set; }
         //电压积分转换系数
-        public double FACTOR_VOL_TO_INTEG = 4.096 / 65536.0;
+        public double FACTOR_VOL_TO_INTEG = (4.096 / 65536.0);
         public List<List<string>> YListCollect { get; } = new List<List<string>>();
         public string[] CurrentData { get; private set; }
 
@@ -55,12 +55,12 @@ namespace VocsAutoTest
             XAxisTitle = "像素";
             YAxisTitle = "电压值(V)";
             SpecChart.BeginUpdate();
+            SpecChart.ChartType = ChartType.Line;
             UpdateData();
             SpecChart.EndUpdate();
         }
         private void UpdateData()
         {
-            SpecChart.ChartType = ChartType.LineStacked;
             SpecChart.View.AxisX.Title = XAxisTitle;
             SpecChart.View.AxisY.Title = YAxisTitle;
             SpecChart.View.AxisX.Min = 1;

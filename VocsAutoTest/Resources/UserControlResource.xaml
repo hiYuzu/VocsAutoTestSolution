@@ -33,16 +33,6 @@
             </Grid>
         </Border>
     </DataTemplate>
-    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="chartTypes">
-        <ObjectDataProvider.MethodParameters>
-            <x:Type TypeName="c1c:ChartType" />
-        </ObjectDataProvider.MethodParameters>
-    </ObjectDataProvider>
-    <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="chartPalettes">
-        <ObjectDataProvider.MethodParameters>
-            <x:Type TypeName="c1c:ColorGeneration" />
-        </ObjectDataProvider.MethodParameters>
-    </ObjectDataProvider>
     <Style x:Key="sstyle" TargetType="{x:Type c1c:PlotElement}">
         <Setter Property="OpacityMask">
             <Setter.Value>

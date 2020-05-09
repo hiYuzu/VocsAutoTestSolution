@@ -48,8 +48,7 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Canvas  Width="24" Height="24" VerticalAlignment="Center">
-                                <ContentControl Canvas.Top="11" Content="{Binding Path=Line}" Width="24" Height="20"/>
-                                <ContentControl Canvas.Left="11" Canvas.Top="5" Content="{Binding Path=Symbol}" Width="14" Height="14"/>
+                                <ContentControl Canvas.Top="2" Content="{Binding Path=Line}" Width="24" Height="20"/>
                             </Canvas>
                             <Label Content="{Binding Path=Label}"  VerticalAlignment="Center"  MouseLeftButtonUp="Label_MouseLeftButtonUp"/>
                         </StackPanel>

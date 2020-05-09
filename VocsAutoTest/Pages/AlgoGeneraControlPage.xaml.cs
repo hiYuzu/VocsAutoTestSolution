@@ -24,7 +24,8 @@ namespace VocsAutoTest.Pages
     {
         private ObservableCollection<string[]> _obervableCollection = new ObservableCollection<string[]>();//测量数据
         private Dictionary<int, float[]> riDataMap = new Dictionary<int, float[]>();//光谱数据
-        private AlgoGeneraPage algoPage;
+        //private AlgoGeneraPage algoPage;
+        private AlgoComOne algoPage;
         private int _gasIndex = 0;
         //选择文件默认地址
         private string importRoad = null;
@@ -47,7 +48,7 @@ namespace VocsAutoTest.Pages
             InitPage(0);
         }
 
-        public AlgoGeneraControlPage(AlgoGeneraPage algoPage)
+        public AlgoGeneraControlPage(AlgoComOne algoPage)
         {
             InitializeComponent();
             InitPage(0);

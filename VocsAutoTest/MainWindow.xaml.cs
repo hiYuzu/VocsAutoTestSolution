@@ -19,12 +19,14 @@ namespace VocsAutoTest
     public partial class MainWindow : Window
     {
         //页面*8
-        private AlgoGeneraPage algoPage;
+        //private AlgoGeneraPage algoPage;
+        private AlgoComOne algoPage;
         private AlgoGeneraControlPage algoControlPage;
         //private SpecMeasurePage specPage;
         private SpecComOne specPage;
         private SpecMeasureControlPage specControlPage;
         private ConcentrationMeasurePage concentrationPage;
+        //private ConcentrationComOne concentrationPage;
         private ConcentrationMeasureControlPage concentrationControlPage;
         private VocsMgmtPage vocsMgmtPage;
         //日志栏折叠
@@ -319,6 +321,7 @@ namespace VocsAutoTest
             if (concentrationPage == null && concentrationControlPage == null)
             {
                 concentrationPage = new ConcentrationMeasurePage();
+                //concentrationPage = new ConcentrationComOne();
                 concentrationControlPage = new ConcentrationMeasureControlPage(concentrationPage);
             }
             ChartPage.Content = new Frame()
@@ -348,7 +351,8 @@ namespace VocsAutoTest
             pageFlag = 3;
             if (algoPage == null)
             {
-                algoPage = new AlgoGeneraPage();
+                //algoPage = new AlgoGeneraPage();
+                algoPage = new AlgoComOne();
             }
             if(algoControlPage == null)
             {
