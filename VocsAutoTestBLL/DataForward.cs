@@ -173,6 +173,9 @@ namespace VocsAutoTestBLL
                     case "24":
                         ReadSpecData(this, command);
                         break;
+                    case "25":
+                        ReadDeviceNo(this, command);
+                        break;
                     case "26":
                         ReadRangeSwitch(this, command);
                         break;
@@ -184,9 +187,6 @@ namespace VocsAutoTestBLL
                         break;
                     case "29":
                         ReadConcMeasure(this, command);
-                        break;
-                    case "32":
-                        ReadDeviceNo(this, command);
                         break;
                     case "2C":
                         ReadVectorInfo(this, command);

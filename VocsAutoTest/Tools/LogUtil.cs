@@ -30,6 +30,7 @@ namespace VocsAutoTest
             paragraph = new Paragraph();
             paragraph.Inlines.Add(run);
             main.LogBox.Document.Blocks.Add(paragraph);
+            main.LogBox.Focus();
             main.LogBox.UpdateLayout();
             main.LogBox.CaretPosition = main.LogBox.Document.ContentEnd;//设置光标的位置到文本尾
         }

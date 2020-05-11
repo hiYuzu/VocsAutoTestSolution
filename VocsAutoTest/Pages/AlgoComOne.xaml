@@ -51,7 +51,6 @@
                                 <ContentControl Canvas.Top="2" Content="{Binding Path=Line}" Width="24" Height="20"/>
                             </Canvas>
                             <Label Content="{Binding Path=Label}"  VerticalAlignment="Center"/>
-                            <Label Content="{Binding Path=Label}"  VerticalAlignment="Center" MouseLeftButtonUp="Label_MouseLeftButtonUp"/>
                         </StackPanel>
                     </DataTemplate>
                 </c1c:C1ChartLegend.ItemTemplate>

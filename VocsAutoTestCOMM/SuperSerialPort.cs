@@ -12,6 +12,7 @@ namespace VocsAutoTestCOMM
         private static volatile SuperSerialPort instance;
         private static readonly object obj = new object();
         private List<byte> buffer = new List<byte>(4096);
+        public bool isForward = true;
         private SuperSerialPort()
         {
             serialPort.DataReceived += Serialport_DataReceived;
@@ -164,7 +165,7 @@ namespace VocsAutoTestCOMM
         {
             if (command != null && Open())
             {
-                byte[] data = FPI.Encoder(command, isForward);
+                byte[] data = FPI.Encoder(command, this.isForward);
                 Console.WriteLine("发送命令: " + ByteStrUtil.ByteToKHex(data));
                 serialPort.Write(data, 0, data.Length);
                 return true;

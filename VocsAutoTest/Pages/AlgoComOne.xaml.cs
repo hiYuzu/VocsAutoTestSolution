@@ -1,5 +1,4 @@
-﻿using C1.WPF.C1Chart;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -7,6 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Collections;
+
+using C1.WPF.C1Chart;
 
 namespace VocsAutoTest.Pages
 {
@@ -169,7 +170,7 @@ namespace VocsAutoTest.Pages
             string index = Convert.ToString(i + 1);
             XYDataSeries dataSeries = new XYDataSeries
             {
-                Label = "数据_" + i,
+                Label = "数据_" + (i + 1),
                 ConnectionStrokeThickness = 1
             };
             double[] valueY = new double[SpecComOne.pixelNumber];
@@ -321,32 +322,6 @@ namespace VocsAutoTest.Pages
             else
             {
                 sby.Visibility = Visibility.Visible;
-            }
-        }
-        /// <summary>
-        /// 标签左键隐藏
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Label_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            LegendItem cli = (sender as Label).DataContext as LegendItem;
-            if (cli != null)
-            {
-                XYDataSeries ds = cli.Item as XYDataSeries;
-                if (ds != null)
-                {
-                    if (ds.Visibility != Visibility.Hidden)
-                    {
-                        ds.Visibility = Visibility.Hidden;
-                        ds.SymbolFill = new SolidColorBrush(Colors.Gray);
-                    }
-                    else
-                    {
-                        ds.Visibility = Visibility.Visible;
-                        ds.SymbolFill = ds.ConnectionFill;
-                    }
-                }
             }
         }
     }

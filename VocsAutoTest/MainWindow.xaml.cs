@@ -181,11 +181,9 @@ namespace VocsAutoTest
         /// <param name="command"></param>
         private void SetDeviceNo(object sender, Command command)
         {
-            byte[] data = ByteStrUtil.HexToByte(command.Data);
-            byte[] deviceNo = new byte[15];
-            Array.Copy(data, 1, deviceNo, 0, deviceNo.Length);
+            byte[] deviceNo = ByteStrUtil.HexToByte(command.Data);
             this.deviceNo = Encoding.Default.GetString(deviceNo).ToUpper();
-            MessageBox.Show("Copyright © 天津七一二通信广播股份有限公司\n光谱仪设备号：" + this.deviceNo, "关于系统", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Copyright © 天津七一二通信广播股份有限公司\n光谱仪软件版本：" + this.deviceNo, "关于系统", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         /// <summary>
         /// 关于系统
@@ -194,8 +192,7 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void AboutSysBtn_Click(object sender, RoutedEventArgs e)
         {
-            SuperSerialPort.Instance.Send(new Command { Cmn = "32", ExpandCmn = "55", Data = ""}, true);
-            
+            SuperSerialPort.Instance.Send(new Command { Cmn = "25", ExpandCmn = "55", Data = ""}, true);
         }
         /// <summary>
         /// 退出系统
@@ -515,6 +512,18 @@ namespace VocsAutoTest
                     MultiMeasure.Content = "连续测量";
                 }));
             }
+        }
+
+        private void ForwardCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ExceptionUtil.LogMethod("转发：关");
+            SuperSerialPort.Instance.isForward = false;
+        }
+
+        private void ForwardCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            ExceptionUtil.LogMethod("转发：开");
+            SuperSerialPort.Instance.isForward = true;
         }
     }
 }

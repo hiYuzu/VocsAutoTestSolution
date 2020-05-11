@@ -173,6 +173,7 @@
                             </TextBox>
                             <Button x:Name="SingleMeasure" Content="单次测量" Click="SingleMeasure_Click" Height="23" Width="60" Margin="50,8,50,7" Style="{StaticResource btnOther}"/>
                             <Button x:Name="MultiMeasure" Content="连续测量" Click="MultiMeasure_Click" Height="23" Width="60" Margin="0,8,0,7" Style="{StaticResource btnOther}"/>
+                            <CheckBox x:Name="ForwardCheckBox" Content="转发" Margin="58 13 5 0" VerticalAlignment="Top" IsChecked="True" Checked="ForwardCheckBox_Checked" Unchecked="ForwardCheckBox_Unchecked"/>
                         </StackPanel>
                     </Border>
                 </Grid>

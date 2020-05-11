@@ -90,7 +90,7 @@ namespace VocsAutoTest.Pages
         /// </summary>
         public void Stop_Measure() {
             timer.Dispose();
-            DataForward.Instance.ReadConcMeasure -= new DataForwardDelegate(GetConcMeasureData);
+            //DataForward.Instance.ReadConcMeasure -= new DataForwardDelegate(GetConcMeasureData);
         }
 
         private void GetConcMeasureData(object sender, Command command) {
@@ -109,7 +109,7 @@ namespace VocsAutoTest.Pages
                     for (int i = 0; i < concData.Length / 10; i++)
                     {
                         byte[] conc = new byte[4];
-                        Array.Copy(concData, 10 * i + 2, conc, 0, 4);
+                        Array.Copy(concData, 10 * i + 6, conc, 0, 4);
                         Array.Reverse(conc);
                         concList.Add(BitConverter.ToSingle(conc, 0));
                     }
