@@ -48,7 +48,7 @@ namespace VocsAutoTest
             measureMgr = MeasureMgrImpl.Instance;
             VocsCollectBtn_Click(null, null);
             PassPortImpl.GetInstance().PassValueEvent += new PassPortDelegate(ReceievedValues);
-            //DataForward.Instance.ReadDeviceNo += new DataForwardDelegate(SetDeviceNo);
+            DataForward.Instance.ReadDeviceNo += new DataForwardDelegate(SetDeviceNo);
             ExceptionUtil.ExceptionEvent += new ExceptionDelegate(ShowExceptionMsg);
             ExceptionUtil.LogEvent += new ExceptionDelegate(ShowLogMsg);
             ExceptionUtil.ShowLoadingAction += ShowLoading;
@@ -185,6 +185,7 @@ namespace VocsAutoTest
             byte[] deviceNo = new byte[15];
             Array.Copy(data, 1, deviceNo, 0, deviceNo.Length);
             this.deviceNo = Encoding.Default.GetString(deviceNo).ToUpper();
+            MessageBox.Show("Copyright © 天津七一二通信广播股份有限公司\n光谱仪设备号：" + this.deviceNo, "关于系统", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         /// <summary>
         /// 关于系统
@@ -193,8 +194,8 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void AboutSysBtn_Click(object sender, RoutedEventArgs e)
         {
-            //SuperSerialPort.Instance.Send(new Command { Cmn = "32", ExpandCmn = "55", Data = ""}, true);
-            MessageBox.Show("Copyright © 天津七一二通信广播股份有限公司\n光谱仪设备号：" + deviceNo, "关于系统", MessageBoxButton.OK, MessageBoxImage.Information);
+            SuperSerialPort.Instance.Send(new Command { Cmn = "32", ExpandCmn = "55", Data = ""}, true);
+            
         }
         /// <summary>
         /// 退出系统

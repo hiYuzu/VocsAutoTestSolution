@@ -64,8 +64,8 @@
             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                 <BeginStoryboard>
                     <Storyboard>
-                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX" To="1" Duration="0:0:0.4" />
-                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleY" To="1" BeginTime="0:0:0.4" Duration="0:0:0.4" />
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX" To="1" Duration="0:0:0" />
+                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleY" To="1" BeginTime="0:0:0" Duration="0:0:0" />
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>

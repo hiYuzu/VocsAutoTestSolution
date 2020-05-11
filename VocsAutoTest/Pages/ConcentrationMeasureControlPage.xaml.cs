@@ -278,6 +278,9 @@ namespace VocsAutoTest.Pages
             if (concentrationPage != null) {
                 concentrationPage.ClearConcChart();
                 gas1_ConcDataCompute.Reset();
+                gas2_ConcDataCompute.Reset();
+                gas3_ConcDataCompute.Reset();
+                gas4_ConcDataCompute.Reset();
             }
         }
 
