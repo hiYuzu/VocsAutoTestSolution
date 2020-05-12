@@ -123,7 +123,7 @@ namespace VocsAutoTest.Pages
                 }
                 catch(Exception e)
                 {
-                    ExceptionUtil.ExceptionMethod(e.Message, true);
+                    ExceptionUtil.Instance.ExceptionMethod(e.Message, true);
                 }
             }
             else 
@@ -198,7 +198,7 @@ namespace VocsAutoTest.Pages
                 }
             }
             catch (Exception ex) {
-                ExceptionUtil.ExceptionMethod("导入失败：" + ex.Message, true);
+                ExceptionUtil.Instance.ExceptionMethod("导入失败：" + ex.Message, true);
             }
 
         }
@@ -246,22 +246,22 @@ namespace VocsAutoTest.Pages
                 if (this.listGas1Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[0], this.listGas1Conc, this.listPress, this.listTemp, this.listTime);
-                    ExceptionUtil.LogMethod("文件已保存：" + savePath);
+                    ExceptionUtil.Instance.LogMethod("文件已保存：" + savePath);
                 }
                 if (this.listGas2Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[1], this.listGas2Conc, this.listPress, this.listTemp, this.listTime);
-                    ExceptionUtil.LogMethod("文件已保存：" + savePath);
+                    ExceptionUtil.Instance.LogMethod("文件已保存：" + savePath);
                 }
                 if (this.listGas3Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[2], this.listGas3Conc, this.listPress, this.listTemp, this.listTime);
-                    ExceptionUtil.LogMethod("文件已保存：" + savePath);
+                    ExceptionUtil.Instance.LogMethod("文件已保存：" + savePath);
                 }
                 if (this.listGas4Conc.Count > 0)
                 {
                     FileOperate.SaveConc(savePath + GasName[3], this.listGas4Conc, this.listPress, this.listTemp, this.listTime);
-                    ExceptionUtil.LogMethod("文件已保存：" + savePath);
+                    ExceptionUtil.Instance.LogMethod("文件已保存：" + savePath);
                 }
                 listPress.Clear();
                 listTemp.Clear();
@@ -269,7 +269,7 @@ namespace VocsAutoTest.Pages
             }
             catch (Exception ex)
             {
-                ExceptionUtil.ExceptionMethod("保存失败：" + ex.Message, true);
+                ExceptionUtil.Instance.ExceptionMethod("保存失败：" + ex.Message, true);
             }
         }
 

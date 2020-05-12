@@ -201,11 +201,11 @@ namespace VocsAutoTestBLL
                 switch (command.Data)
                 {
                     case "88":
-                        ExceptionUtil.LogMethod("设置成功");
+                        ExceptionUtil.Instance.LogMethod("设置成功");
                         //Console.WriteLine("设置成功");
                         break;
                     case "99":
-                        ExceptionUtil.ExceptionMethod("设置失败", true);
+                        ExceptionUtil.Instance.ExceptionMethod("设置失败", true);
                         //Console.WriteLine("设置失败");
                         break;
                     default:
@@ -215,15 +215,15 @@ namespace VocsAutoTestBLL
                             switch (data[5])
                             {
                                 case 0x88:
-                                    ExceptionUtil.LogMethod("设置成功");
+                                    ExceptionUtil.Instance.LogMethod("设置成功");
                                     //Console.WriteLine("设置成功");
                                     break;
                                 case 0x99:
-                                    ExceptionUtil.ExceptionMethod("设置失败", true);
+                                    ExceptionUtil.Instance.ExceptionMethod("设置失败", true);
                                     //Console.WriteLine("设置失败");
                                     break;
                                 case 0xAA:
-                                    ExceptionUtil.ExceptionMethod("向量更新失败，全部重传", true);
+                                    ExceptionUtil.Instance.ExceptionMethod("向量更新失败，全部重传", true);
                                     //Console.WriteLine("向量更新失败，全部重传");
                                     break;
                             }

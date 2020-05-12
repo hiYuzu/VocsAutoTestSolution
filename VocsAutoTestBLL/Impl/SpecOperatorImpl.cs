@@ -50,7 +50,7 @@ namespace VocsAutoTestBLL.Impl
                 currentPackage = 1;
                 if (errorCount > 5)
                 {
-                    ExceptionUtil.ExceptionMethod("等待超时，请检查设备或尝试调整读数间隔", true);
+                    ExceptionUtil.Instance.ExceptionMethod("等待超时，请检查设备或尝试调整读数间隔", true);
                 }
             }
             this.dataType = dataType;
@@ -97,7 +97,7 @@ namespace VocsAutoTestBLL.Impl
                 }
                 dataCache.ClearAllData();
                 currentPackage = 1;
-                ExceptionUtil.ExceptionMethod(msg, true);
+                ExceptionUtil.Instance.ExceptionMethod(msg, true);
                 return;
             }
             currentPackage = data[3];

@@ -49,9 +49,9 @@ namespace VocsAutoTest
             VocsCollectBtn_Click(null, null);
             PassPortImpl.GetInstance().PassValueEvent += new PassPortDelegate(ReceievedValues);
             DataForward.Instance.ReadDeviceNo += new DataForwardDelegate(SetDeviceNo);
-            ExceptionUtil.ExceptionEvent += new ExceptionDelegate(ShowExceptionMsg);
-            ExceptionUtil.LogEvent += new ExceptionDelegate(ShowLogMsg);
-            ExceptionUtil.ShowLoadingAction += ShowLoading;
+            ExceptionUtil.Instance.LogEvent += new ExceptionDelegate(ShowLogMsg);
+            ExceptionUtil.Instance.ExceptionEvent += new ExceptionDelegate(ShowExceptionMsg);
+            ExceptionUtil.Instance.ShowLoadingAction += ShowLoading;
         }
         /// <summary>
         /// 异常日志保存
@@ -167,11 +167,11 @@ namespace VocsAutoTest
             SuperSerialPort.Instance.SetPortInfo(e.Port, Convert.ToInt32(e.Baud), e.Parity, Convert.ToInt32(e.Data), Convert.ToInt32(e.Stop));
             if (SuperSerialPort.Instance.Open())
             {
-                ExceptionUtil.LogMethod("修改串口信息为：串口号:" + e.Port + "，波特率:" + e.Baud + "，校检:" + e.Parity + "，数据位:" + e.Data + "，停止位:" + e.Stop);
+                ExceptionUtil.Instance.LogMethod("修改串口信息为：串口号:" + e.Port + "，波特率:" + e.Baud + "，校检:" + e.Parity + "，数据位:" + e.Data + "，停止位:" + e.Stop);
             }
             else
             {
-                ExceptionUtil.ExceptionMethod("修改串口信息失败！", true);
+                ExceptionUtil.Instance.ExceptionMethod("修改串口信息失败！", true);
             }
         }
         /// <summary>
@@ -516,13 +516,13 @@ namespace VocsAutoTest
 
         private void ForwardCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            ExceptionUtil.LogMethod("转发：关");
+            ExceptionUtil.Instance.LogMethod("转发：关");
             SuperSerialPort.Instance.isForward = false;
         }
 
         private void ForwardCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ExceptionUtil.LogMethod("转发：开");
+            ExceptionUtil.Instance.LogMethod("转发：开");
             SuperSerialPort.Instance.isForward = true;
         }
     }
