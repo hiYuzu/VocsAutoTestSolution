@@ -60,9 +60,8 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="C1.WPF.C1Chart.4.5.2, Version=4.5.20193.685, Culture=neutral, PublicKeyToken=2aa4ec5576d6c3ce, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\ComponentOne\WPF Edition\bin\v452\C1.WPF.C1Chart.4.5.2.dll</HintPath>
+    <Reference Include="C1.WPF.C1Chart.4.5.2">
+      <HintPath>..\others\C1.WPF.C1Chart.4.5.2.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -72,7 +71,7 @@
       <HintPath>bin\Debug\MWArray.dll</HintPath>
     </Reference>
     <Reference Include="paravector">
-      <HintPath>bin\Debug\paravector.dll</HintPath>
+      <HintPath>..\others\paravector.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
@@ -91,9 +90,8 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFVisifire.Charts, Version=5.1.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\WPFVisifire.Charts.dll</HintPath>
+    <Reference Include="WPFVisifire.Charts">
+      <HintPath>..\others\WPFVisifire.Charts.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

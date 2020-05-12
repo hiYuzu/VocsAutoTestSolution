@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocsAutoTestDAL", "..\VocsA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocsAutoTestCOMM", "..\VocsAutoTestCOMM\VocsAutoTestCOMM.csproj", "{AD3A232A-5344-4BA5-A45E-8B8A15E7546F}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "VATSetup", "..\VATSetup\VATSetup.vdproj", "{4A96FF6B-204D-4CE2-A554-435809CE16E7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{AD3A232A-5344-4BA5-A45E-8B8A15E7546F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD3A232A-5344-4BA5-A45E-8B8A15E7546F}.Release|x64.ActiveCfg = Release|Any CPU
 		{AD3A232A-5344-4BA5-A45E-8B8A15E7546F}.Release|x64.Build.0 = Release|Any CPU
-		{4A96FF6B-204D-4CE2-A554-435809CE16E7}.Debug|Any CPU.ActiveCfg = Debug
-		{4A96FF6B-204D-4CE2-A554-435809CE16E7}.Debug|x64.ActiveCfg = Debug
-		{4A96FF6B-204D-4CE2-A554-435809CE16E7}.Release|Any CPU.ActiveCfg = Release
-		{4A96FF6B-204D-4CE2-A554-435809CE16E7}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
