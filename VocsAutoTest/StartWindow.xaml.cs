@@ -24,7 +24,7 @@ namespace VocsAutoTest
                 SuperSerialPort.Instance.SetPortInfo(portCombo.Text, Convert.ToInt32(baudCombo.Text), parityCombo.Text, Convert.ToInt32(dataCombo.Text), Convert.ToInt32(stopCombo.Text));
                 MainWindow main = new MainWindow();
                 main.Show();
-                ExceptionUtil.LogMethod("当前串口信息：串口号:" + portCombo.Text + "，波特率:" + baudCombo.Text + "，校检:" + parityCombo.Text + "，数据位:" + dataCombo.Text + "，停止位:" + stopCombo.Text);                
+                ExceptionUtil.Instance.LogMethod("当前串口信息：串口号:" + portCombo.Text + "，波特率:" + baudCombo.Text + "，校检:" + parityCombo.Text + "，数据位:" + dataCombo.Text + "，停止位:" + stopCombo.Text);                
                 Close();
             }
             else

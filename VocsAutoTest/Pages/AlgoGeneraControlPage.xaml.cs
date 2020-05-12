@@ -466,7 +466,7 @@ namespace VocsAutoTest.Pages
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         if (!algoPage.CreateCurrentChart(orderNumber.ToString(), lineData)) {
-                            ExceptionUtil.LogMethod("算法生成图表数据异常！");
+                            ExceptionUtil.Instance.LogMethod("算法生成图表数据异常！");
                         }
                     }));
                 }
@@ -722,7 +722,7 @@ namespace VocsAutoTest.Pages
         {
             try
             {
-                ExceptionUtil.ShowLoadingAction(true);
+                ExceptionUtil.Instance.ShowLoadingAction(true);
                 OpenFileDialog op = new OpenFileDialog();
                 op.InitialDirectory = System.Windows.Forms.Application.StartupPath + "\\ParameterGen\\"; ;//默认的打开路径
                 if (importRoad != null)
@@ -738,7 +738,7 @@ namespace VocsAutoTest.Pages
                 }
             }
             finally {
-                ExceptionUtil.ShowLoadingAction(false);
+                ExceptionUtil.Instance.ShowLoadingAction(false);
             }
             
         }
@@ -945,10 +945,11 @@ namespace VocsAutoTest.Pages
                 text_vol.Text = paramInfo.Vol.Trim();
                 text_times.Text = paramInfo.AvgTimes.Trim();
                 text_person.Text = paramInfo.Person.Trim();
+                XePosition_Click(null, null);
             }
             catch (Exception ex)
             {
-                ExceptionUtil.LogMethod("加载参数错误，异常信息为：" + ex.ToString());
+                ExceptionUtil.Instance.LogMethod("加载参数错误，异常信息为：" + ex.ToString());
             }
         }
 
@@ -982,7 +983,7 @@ namespace VocsAutoTest.Pages
                     }
                 }
                 catch (Exception ex) {
-                    ExceptionUtil.LogMethod("出现异常错误，信息为："+ex.Message);
+                    ExceptionUtil.Instance.LogMethod("出现异常错误，信息为："+ex.Message);
                 }
 
 
@@ -993,7 +994,7 @@ namespace VocsAutoTest.Pages
         {
             try
             {
-                ExceptionUtil.ShowLoadingAction(true);
+                ExceptionUtil.Instance.ShowLoadingAction(true);
                 //压力
                 string press = text_press.Text.Trim();
                 if (string.IsNullOrEmpty(press))
@@ -1078,24 +1079,24 @@ namespace VocsAutoTest.Pages
                 SaveParameterInfo(path + "参量生成信息_" + matchId + ".txt");
                 //提示信息
                 if (IsMeasureSuccess(E)) {
-                    ExceptionUtil.LogMethod("生成参量已完成，输出地址为：" + path);
+                    ExceptionUtil.Instance.LogMethod("生成参量已完成，输出地址为：" + path);
                     MessageBox.Show("生成参量已完成！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    ExceptionUtil.LogMethod("误差过大,请重试！");
+                    ExceptionUtil.Instance.LogMethod("误差过大,请重试！");
                     MessageBox.Show("误差过大,请重试！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
             {
 
-                ExceptionUtil.ExceptionMethod("生成参量数据异常，异常信息为："+ex.ToString(), true);
+                ExceptionUtil.Instance.ExceptionMethod("生成参量数据异常，异常信息为："+ex.ToString(), true);
             }
             finally
             {
                 dataGrid.IsEnabled = true;
-                ExceptionUtil.ShowLoadingAction(false);
+                ExceptionUtil.Instance.ShowLoadingAction(false);
             }
         }
 
@@ -1441,6 +1442,11 @@ namespace VocsAutoTest.Pages
                 riDataMap.Clear();
                 algoPage.RemoveAllSeries();
             }
+        }
+
+        private void XePosition_Click(object sender, RoutedEventArgs e)
+        {
+            text_peak_position.Text = "249";
         }
     }
 }

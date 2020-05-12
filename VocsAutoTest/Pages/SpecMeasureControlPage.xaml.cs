@@ -57,7 +57,7 @@ namespace VocsAutoTest.Pages
             {
                 FolderPath.Text = openFolderDialog.SelectedPath;
                 specDataSave.SpecDataSavePath = openFolderDialog.SelectedPath;
-                ExceptionUtil.LogMethod("光谱文件目录已设置为：" + FolderPath.Text);
+                ExceptionUtil.Instance.LogMethod("光谱文件目录已设置为：" + FolderPath.Text);
             }
         }
         /// <summary>
@@ -189,7 +189,7 @@ namespace VocsAutoTest.Pages
         {
             try
             {
-                ExceptionUtil.ShowLoadingAction(true);
+                ExceptionUtil.Instance.ShowLoadingAction(true);
                 OpenFileDialog op = new OpenFileDialog();
                 if (FolderPath.Text != null && !"".Equals(FolderPath.Text))
                 {
@@ -213,7 +213,7 @@ namespace VocsAutoTest.Pages
             }
             finally
             {
-                ExceptionUtil.ShowLoadingAction(false);
+                ExceptionUtil.Instance.ShowLoadingAction(false);
             }
         }
         /// <summary>
@@ -258,12 +258,12 @@ namespace VocsAutoTest.Pages
             {
                 uint fstParam = Convert.ToUInt32(firstParam.Text);
                 specPage.SetWave(sensorType.SelectedIndex, pixelNumber, fstParam);
-                ExceptionUtil.LogMethod("传感器类型：" + sensorType.SelectedItem.ToString() + "\t第一参量：" + fstParam.ToString());
+                ExceptionUtil.Instance.LogMethod("传感器类型：" + sensorType.SelectedItem.ToString() + "\t第一参量：" + fstParam.ToString());
             }
             catch(Exception ex)
             {
                 MessageBox.Show("设置失败");
-                ExceptionUtil.ExceptionMethod("设置波长操作失败：" + ex.Message, false);
+                ExceptionUtil.Instance.ExceptionMethod("设置波长操作失败：" + ex.Message, false);
             }
         }
         /// <summary>

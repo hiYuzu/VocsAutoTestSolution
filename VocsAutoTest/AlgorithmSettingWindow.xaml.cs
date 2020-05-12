@@ -22,7 +22,7 @@ namespace VocsAutoTest
     {
         public AlgorithmSettingWindow()
         {
-            ExceptionUtil.ShowLoadingAction(true);
+            ExceptionUtil.Instance.ShowLoadingAction(true);
             InitializeComponent();
         }
 
@@ -37,7 +37,7 @@ namespace VocsAutoTest
         }
         override protected void OnClosed(EventArgs e)
         {
-            ExceptionUtil.ShowLoadingAction(false);
+            ExceptionUtil.Instance.ShowLoadingAction(false);
         }
     }
 }

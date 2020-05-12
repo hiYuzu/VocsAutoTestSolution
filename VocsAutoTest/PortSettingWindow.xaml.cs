@@ -16,7 +16,7 @@ namespace VocsAutoTest
     {
         public PortSettingWindow()
         {
-            ExceptionUtil.ShowLoadingAction(true);
+            ExceptionUtil.Instance.ShowLoadingAction(true);
             InitializeComponent();
             InitSerialPort();
             SetCurrentData();
@@ -92,7 +92,7 @@ namespace VocsAutoTest
 
         override protected void OnClosed(EventArgs e)
         {
-            ExceptionUtil.ShowLoadingAction(false);
+            ExceptionUtil.Instance.ShowLoadingAction(false);
         }
     }
 }

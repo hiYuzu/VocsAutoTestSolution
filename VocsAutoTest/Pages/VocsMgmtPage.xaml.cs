@@ -51,7 +51,7 @@ namespace VocsAutoTest.Pages
                 Array.Reverse(calTimes, 0, calTimes.Length);
                 zeroConcCalTimes.Text = BitConverter.ToUInt16(calTimes, 0).ToString();
             }));
-            ExceptionUtil.LogMethod("读取光谱仪公共参数成功");
+            ExceptionUtil.Instance.LogMethod("读取光谱仪公共参数成功");
         }
 
         private void SetCommParam_Click(object sender, RoutedEventArgs e)
@@ -141,7 +141,7 @@ namespace VocsAutoTest.Pages
                     Array.Reverse(lPSwitchInter, 0, lPSwitchInter.Length);
                     lPSwitchInterval.Text = BitConverter.ToUInt16(lPSwitchInter, 0).ToString();
                 }));
-                ExceptionUtil.LogMethod("读取光谱仪所有光路参数成功");
+                ExceptionUtil.Instance.LogMethod("读取光谱仪所有光路参数成功");
             }       
         }
         private void SetLPParam_Click(object sender, RoutedEventArgs e)
@@ -225,7 +225,7 @@ namespace VocsAutoTest.Pages
                 Array.Reverse(gas_4_crit, 0, gas_4_crit.Length);
                 gas_4_critData.Text = BitConverter.ToSingle(gas_4_crit, 0).ToString();
             }));
-            ExceptionUtil.LogMethod("读取光谱仪量程切换判据成功");
+            ExceptionUtil.Instance.LogMethod("读取光谱仪量程切换判据成功");
         }
         private void SetRangeSwitch_Click(object sender, RoutedEventArgs e)
         {
@@ -306,7 +306,7 @@ namespace VocsAutoTest.Pages
                 Array.Reverse(gas_4_highZC, 0, gas_4_highZC.Length);
                 gas_1_highRangZC.Text = BitConverter.ToSingle(gas_4_highZC, 0).ToString("f1");
             }));
-            ExceptionUtil.LogMethod("读取光谱仪零点系数成功");
+            ExceptionUtil.Instance.LogMethod("读取光谱仪零点系数成功");
         }
         private void SetZeroCoeffi_Click(object sender, RoutedEventArgs e)
         {
@@ -399,7 +399,7 @@ namespace VocsAutoTest.Pages
                 Array.Reverse(gas_4_highCC, 0, gas_4_highCC.Length);
                 gas_1_highRangCC.Text = BitConverter.ToSingle(gas_4_highCC, 0).ToString("f1");
             }));
-            ExceptionUtil.LogMethod("读取光谱仪标定系数成功");
+            ExceptionUtil.Instance.LogMethod("读取光谱仪标定系数成功");
         }
         private void SetCaliCoeffi_Click(object sender, RoutedEventArgs e)
         {
@@ -452,7 +452,7 @@ namespace VocsAutoTest.Pages
         {
             try
             {
-                ExceptionUtil.ShowLoadingAction(true);
+                ExceptionUtil.Instance.ShowLoadingAction(true);
                 string path = currentFileName != "" ? currentFileName : System.Windows.Forms.Application.StartupPath;
                 OpenFileDialog op = new OpenFileDialog
                 {
@@ -463,7 +463,7 @@ namespace VocsAutoTest.Pages
                 if (op.ShowDialog() == true)
                 {
                     vectorFilePath.Text = op.FileName;
-                    ExceptionUtil.LogMethod("向量文件已设置为：" + op.FileName);
+                    ExceptionUtil.Instance.LogMethod("向量文件已设置为：" + op.FileName);
                     currentFileName = op.FileName.Substring(0, op.FileName.LastIndexOf('\\'));
                 }
             }
@@ -473,14 +473,14 @@ namespace VocsAutoTest.Pages
             }
             finally
             {
-                ExceptionUtil.ShowLoadingAction(false);
+                ExceptionUtil.Instance.ShowLoadingAction(false);
             }
         }
         private void ReadVectorInfo_Click(object sender, RoutedEventArgs e)
         {
             if (vectorFilePath.Text.EndsWith(".txt"))
             {
-                ExceptionUtil.LogMethod("开始读取向量表信息...");
+                ExceptionUtil.Instance.LogMethod("开始读取向量表信息...");
                 RWVectorInfoImpl.Instance.SendVectorCmn(lP.SelectedIndex.ToString("x2"), gas.SelectedIndex.ToString("x2"), range.SelectedIndex.ToString("x2"), vectorFilePath.Text);
             }
             else
@@ -499,7 +499,7 @@ namespace VocsAutoTest.Pages
                 }
                 catch(Exception ex)
                 {
-                    ExceptionUtil.ExceptionMethod(ex.Message, true);
+                    ExceptionUtil.Instance.ExceptionMethod(ex.Message, true);
                 }
             }
             else

@@ -115,7 +115,7 @@ namespace VocsAutoTestBLL.Impl
                 {
                     errorCount++;
                     Thread.Sleep(200);
-                    ExceptionUtil.ExceptionMethod(ex.Message, false);
+                    ExceptionUtil.Instance.ExceptionMethod(ex.Message, false);
                     if (errorCount > maxError)
                     {
                         break;
