@@ -96,13 +96,13 @@
                         <Label Content="输出光纤ID" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <Label Content="压力(Pa)" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                         <Label Content="光谱平均次数" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Button Content="Xe峰值位置" x:Name="XePosition" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource btnOther}" Click="XePosition_Click"></Button>
+                        <Button Content="生成Xe峰值" x:Name="XePosition" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource btnOther}" Click="XePosition_Click"></Button>
                         <TextBox x:Name="text_instr_id" Grid.Row="0" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                         <TextBox x:Name="text_light_id" Grid.Row="1" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                         <TextBox x:Name="text_out_fine" Grid.Row="2" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                         <TextBox x:Name="text_press" Grid.Row="3" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}" Text="101324"></TextBox>
                         <TextBox x:Name="text_times" Grid.Row="4" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox x:Name="text_peak_position" Grid.Row="5" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}" IsEnabled="False"></TextBox>
+                        <TextBox x:Name="text_peak_position" Grid.Row="5" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
                         <Button Content="测量信息导入" x:Name="button_info_import" Grid.Row="6" Grid.Column="3"  Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_info_import_Click"></Button>
                     </Grid>
                 </TabItem>

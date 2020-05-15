@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -945,7 +946,6 @@ namespace VocsAutoTest.Pages
                 text_vol.Text = paramInfo.Vol.Trim();
                 text_times.Text = paramInfo.AvgTimes.Trim();
                 text_person.Text = paramInfo.Person.Trim();
-                XePosition_Click(null, null);
             }
             catch (Exception ex)
             {
@@ -1446,7 +1446,15 @@ namespace VocsAutoTest.Pages
 
         private void XePosition_Click(object sender, RoutedEventArgs e)
         {
-            text_peak_position.Text = "249";
+            /*float[] lineData = GetAverageData();
+            if (lineData == null)
+            {
+                MessageBox.Show("没有光谱数据", "错误信息", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            float[] data = new float[20];
+            Array.Copy(lineData, 150, data, 0, data.Length);
+            text_peak_position.Text = data.Max().ToString();*/
         }
     }
 }
