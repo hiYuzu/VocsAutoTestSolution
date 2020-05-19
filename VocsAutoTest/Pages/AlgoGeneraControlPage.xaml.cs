@@ -187,12 +187,22 @@ namespace VocsAutoTest.Pages
                 text_temp.IsEnabled = false; 
                 text_vol.IsEnabled = false;
                 text_person.IsEnabled = false;
+
                 text_instr_id.IsEnabled = false;
                 text_light_id.IsEnabled = false;
                 text_out_fine.IsEnabled = false;
                 text_press.IsEnabled = false;
                 text_times.IsEnabled = false;
+                XePosition.IsEnabled = false;
                 text_peak_position.IsEnabled = false;
+
+                lrType.IsEnabled = false;
+                sensorType.IsEnabled = false;
+                pixel.IsEnabled = false;
+                lightPath.IsEnabled = false;
+                lightDistance.IsEnabled = false;
+                gasChamberType.IsEnabled = false;
+
                 button_info_import.IsEnabled = false;
             }
             else
@@ -203,12 +213,22 @@ namespace VocsAutoTest.Pages
                 text_temp.IsEnabled = true;
                 text_vol.IsEnabled = true;
                 text_person.IsEnabled = true;
+
                 text_instr_id.IsEnabled = true;
                 text_light_id.IsEnabled = true;
                 text_out_fine.IsEnabled = true;
                 text_press.IsEnabled = true;
                 text_times.IsEnabled = true;
+                XePosition.IsEnabled = true;
                 text_peak_position.IsEnabled = true;
+
+                lrType.IsEnabled = true;
+                sensorType.IsEnabled = true;
+                pixel.IsEnabled = true;
+                lightPath.IsEnabled = true;
+                lightDistance.IsEnabled = true;
+                gasChamberType.IsEnabled = true;
+
                 button_info_import.IsEnabled = true;
             }
         }
@@ -946,6 +966,13 @@ namespace VocsAutoTest.Pages
                 text_vol.Text = paramInfo.Vol.Trim();
                 text_times.Text = paramInfo.AvgTimes.Trim();
                 text_person.Text = paramInfo.Person.Trim();
+
+                lrType.SelectedIndex = 0;
+                sensorType.SelectedIndex = 0;
+                pixel.SelectedIndex = 0;
+                lightPath.SelectedIndex = 0;
+                lightDistance.Text = "1000";
+                gasChamberType.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -1070,7 +1097,7 @@ namespace VocsAutoTest.Pages
                         index++;
                     }
                 }
-
+                string[] beforeData = new string[] { instrId, lrType.SelectedIndex.ToString(), sensorType.SelectedIndex.ToString(), pixel.SelectedIndex.ToString(), temp, press, lightPath.SelectedIndex.ToString(), lightDistance.Text, gasChamberType.SelectedIndex.ToString(), "0", "1" };
                 //保存测量数据文件
                 string path = AlgorithmPro.GetInstance().SaveParameter(V, E,matchId, instrId, arrayList);
                 //保存光谱数据
@@ -1136,6 +1163,12 @@ namespace VocsAutoTest.Pages
                 sb.Append("电压: ").Append(text_vol.Text.Trim()).Append("\r\n");
                 sb.Append("光谱平均次数: ").Append(text_times.Text.Trim()).Append("\r\n");
                 sb.Append("实验人员: ").Append(text_person.Text.Trim()).Append("\r\n");
+                sb.Append("光源类型: ").Append(lrType.SelectedItem.ToString()).Append("\r\n");
+                sb.Append("传感器类型: ").Append(sensorType.SelectedItem.ToString()).Append("\r\n");
+                sb.Append("像素: ").Append(pixel.SelectedItem.ToString()).Append("\r\n");
+                sb.Append("光路: ").Append(lightPath.SelectedItem.ToString()).Append("\r\n");
+                sb.Append("光程(mm): ").Append(lightDistance.Text.Trim()).Append("\r\n");
+                sb.Append("气体室类型: ").Append(gasChamberType.SelectedItem.ToString()).Append("\r\n");
                 textWriter.Write(sb.ToString());
 
             }

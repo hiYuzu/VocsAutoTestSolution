@@ -84,7 +84,14 @@ namespace VocsAutoTest.Tools
             get { return person; }
             set { person = value; }
         }
-     
+
+        public int LrType { get; set; }
+        public int SensorType { get; set; }
+        public int LightPath { get; set; }
+        public int Pixel { get; set; }
+        public string LightDistance { get; set; }
+        public int GasChamberType { get; set; }
+
 
         //加载测量信息设定
         public void LoadParameterInfo(string fileName)
@@ -153,6 +160,70 @@ namespace VocsAutoTest.Tools
                     {
                         string tmp = "实验人员:";
                         person = info.Substring(tmp.Length);
+                    }
+                    else if (info.StartsWith("光源类型"))
+                    {
+                        string tmp = "光源类型:";
+                        string lrTpe = info.Substring(tmp.Length);
+                        LrType = 0;
+                        if ("氘灯".Equals(lrTpe)) {
+                            LrType = 1;
+                        }
+                    }
+                    else if (info.StartsWith("传感器类型"))
+                    {
+                        string tmp = "传感器类型:";
+                        string sensorType = info.Substring(tmp.Length);
+                        SensorType = 0;
+                        if ("CCD".Equals(sensorType))
+                        {
+                            SensorType = 1;
+                        }
+                    }
+                    else if (info.StartsWith("像素"))
+                    {
+                        string tmp = "像素:";
+                        string pixel = info.Substring(tmp.Length);
+                        switch(pixel)
+                        {
+                            case "256":
+                                Pixel = 0;
+                                break;
+                            case "512":
+                                Pixel = 1;
+                                break;
+                            case "1024":
+                                Pixel = 2;
+                                break;
+                            case "2048":
+                                Pixel = 3;
+                                break;
+                        }
+                    }
+                    else if (info.StartsWith("光路"))
+                    {
+                        string tmp = "光路:";
+                        string lightPath = info.Substring(tmp.Length);
+                        LightPath = 0;
+                        if("向量文件仅适用于光路2".Equals(lightPath))
+                        {
+                            LightPath = 1;
+                        }
+                    }
+                    else if (info.StartsWith("光程(mm)"))
+                    {
+                        string tmp = "光程(mm):";
+                        LightDistance = info.Substring(tmp.Length);
+                    }
+                    else if (info.StartsWith("气体室类型"))
+                    {
+                        string tmp = "气体室类型:";
+                        string gasChamberType = info.Substring(tmp.Length);
+                        GasChamberType = 1;
+                        if("折返式".Equals(gasChamberType))
+                        {
+                            GasChamberType = 0;
+                        }
                     }
                 }
 
