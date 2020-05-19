@@ -4,149 +4,180 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:VocsAutoTest.Pages"
-      mc:Ignorable="d" d:DesignWidth="800"
+      mc:Ignorable="d" d:DesignWidth="550"
       Title="AlgoGeneraControlPage" Background="White">
-    <!-- <ScrollViewer x:Name="ScrollViewer1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"> -->
-    <Grid Margin="0,0,0,0" Height="auto">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="240"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,0,0">
-            <TabControl Margin="0,0,-1.2,-256">
-                <TabItem Header="气体组分设定">
-                    <Grid Margin="0,0,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="49.515"/>
-                            <ColumnDefinition Width="39.485"/>
-                            <ColumnDefinition Width="12.667"/>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="50" />
-                            <ColumnDefinition Width="90"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="气体1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,14,5,13"></Label>
-                        <Label Content="气体2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,13,5,14"></Label>
-                        <Label Content="气体3" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,14,5,13"></Label>
-                        <Label Content="气体4" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,13,5,14"></Label>
-                        <ComboBox x:Name="combobox_gas1_name" Grid.Row="0" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
-                        <ComboBox x:Name="combobox_gas2_name" Grid.Row="1" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas2_name_SelectionChanged" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
-                        <ComboBox x:Name="combobox_gas3_name" Grid.Row="2" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas3_name_SelectionChanged" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
-                        <ComboBox x:Name="combobox_gas4_name" Grid.Row="3" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas4_name_SelectionChanged" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
-                        <Label Content="浓度" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,9,13"></Label>
-                        <Label Content="浓度" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,9,14"></Label>
-                        <Label Content="浓度" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,9,13"></Label>
-                        <Label Content="浓度" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,9,14"></Label>
-                        <TextBox x:Name="textbox_gas1_ppm" Grid.Row="0" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
-                        <TextBox x:Name="textbox_gas2_ppm" Grid.Row="1" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
-                        <TextBox x:Name="textbox_gas3_ppm" Grid.Row="2" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
-                        <TextBox x:Name="textbox_gas4_ppm" Grid.Row="3" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
-                        <Label Content="ppm" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,7,13"></Label>
-                        <Label Content="ppm" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,7,14"></Label>
-                        <Label Content="ppm" Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,7,13"></Label>
-                        <Label Content="ppm" Grid.Row="3" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,7,14"></Label>
-                        <Button Content="文件导入" x:Name="button_gas_import" Grid.Row="0" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_gas_import_Click" Margin="5,13,6,13"></Button>
-                        <Button Content="开始设定" x:Name="button_begin_set" Grid.Row="1" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_begin_set_Click" Margin="5,13,6,13"></Button>
-                        <Button Content="完成设定" x:Name="button_finish_set" Grid.Row="2" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_finish_set_Click" Margin="5,13,6,13"></Button>
-                        <Button Content="取消设定" x:Name="button_cancel_set" Grid.Row="3" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_cancel_set_Click" Margin="5,13,6,13"></Button>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="测量信息设定">
-                    <Grid Margin="0,0,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="40"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="整机ID" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Label Content="气体室编号" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Label Content="输入光纤ID" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Label Content="温度(K)" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Label Content="电压" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Label Content="实验人员" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <TextBox x:Name="text_mach_id" Grid.Row="0" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox x:Name="text_room_id" Grid.Row="1" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox x:Name="text_in_fine" Grid.Row="2" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox x:Name="text_temp" Grid.Row="3" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}" Text="298"></TextBox>
-                        <TextBox x:Name="text_vol" Grid.Row="4" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox x:Name="text_person" Grid.Row="5" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <Label Content="光谱仪ID" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Label Content="氙灯ID" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Label Content="输出光纤ID" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Label Content="压力(Pa)" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Label Content="光谱平均次数" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                        <Button Content="生成Xe峰值" x:Name="XePosition" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource btnOther}" Click="XePosition_Click"></Button>
-                        <TextBox x:Name="text_instr_id" Grid.Row="0" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox x:Name="text_light_id" Grid.Row="1" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox x:Name="text_out_fine" Grid.Row="2" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox x:Name="text_press" Grid.Row="3" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}" Text="101324"></TextBox>
-                        <TextBox x:Name="text_times" Grid.Row="4" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <TextBox x:Name="text_peak_position" Grid.Row="5" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
-                        <Button Content="测量信息导入" x:Name="button_info_import" Grid.Row="6" Grid.Column="3"  Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_info_import_Click"></Button>
-                    </Grid>
-                </TabItem>
-            </TabControl>
-        </Grid>
-        <Grid Grid.Column="0" Margin="0,0,0,0" Grid.Row="1">
+    <!--<ScrollViewer x:Name="ScrollViewer1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">-->
+        <Grid Margin="0,0,0,0" Height="auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="90"/>
-                <ColumnDefinition Width="90" />
-                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition MinHeight="160"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <WrapPanel Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <CheckBox x:Name="checkbox_flow" Content="流量" Margin="5" IsChecked="True" Checked="Checkbox_flow_CheckChange" Unchecked="Checkbox_flow_CheckChange"></CheckBox>
-                <CheckBox x:Name="checkbox_density" Content="浓度" Margin="5" IsChecked="True" Checked="Checkbox_density_CheckChange" Unchecked="Checkbox_density_CheckChange"></CheckBox>
-                <CheckBox x:Name="checkbox_error" Content="误差" Margin="5" IsChecked="True" Checked="Checkbox_error_CheckChange" Unchecked="Checkbox_error_CheckChange"></CheckBox>
-            </WrapPanel>
-            <Button x:Name="button_densityCalculate" Content="浓度计算" Grid.Column="3" Grid.Row="0" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_densityCalculate_Click"></Button>
-            <Button x:Name="button_generateParameter" Content="生成参量" Grid.Column="4" Grid.Row="0" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_generateParameter_Click"></Button>
-            <Button x:Name="button_clearData" Content="清空数据" Grid.Column="5" Grid.Row="0" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_clearData_Click"></Button>
-            <DataGrid x:Name="dataGrid" HeadersVisibility="Column" ItemsSource="{Binding}" DisplayMemberPath="Data" CanUserAddRows =" False" AutoGenerateColumns="False" Grid.ColumnSpan="6" Grid.Row="1" MouseDoubleClick="DataGrid_MouseDoubleClick">
-            </DataGrid>
-            <Label x:Name="label_gas1_input" Content="气体1" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"></Label>
-            <TextBox x:Name="textbox_gas1_input" Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
-            <Label x:Name="label_gas2_input" Content="气体2" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"></Label>
-            <TextBox x:Name="textbox_gas2_input" Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
-            <Label x:Name="label_gas3_input" Content="气体3" Grid.Column="2" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"></Label>
-            <TextBox x:Name="textbox_gas3_input" Grid.Column="2" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
-            <Label x:Name="label_gas4_input" Content="气体4" Grid.Column="3" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"></Label>
-            <TextBox x:Name="textbox_gas4_input" Grid.Column="3" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
-            <Button x:Name="button_gas_input" Content="新增" Grid.Column="4" Grid.Row="3" Height="25" Width="60" Style="{StaticResource btnOther}" Click="Button_gas_input_Click" IsEnabled="False"></Button>
-            <Label Content="平均次数" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
-            <TextBox x:Name="textbox_average_time" Grid.Column="1" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="60" Text="5" Style="{DynamicResource textStyle}" TextChanged="Textbox_average_time_TextChanged"></TextBox>
+        <ScrollViewer x:Name="ScrollViewer2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,0,0">
+                <TabControl Margin="0,0,-1.2,-256">
+                    <TabItem Header="气体组分设定">
+                        <Grid Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="49.515"/>
+                                <ColumnDefinition Width="39.485"/>
+                                <ColumnDefinition Width="12.667"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="90"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="气体1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,14,5,13"></Label>
+                            <Label Content="气体2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,13,5,14"></Label>
+                            <Label Content="气体3" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,14,5,13"></Label>
+                            <Label Content="气体4" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,13,5,14"></Label>
+                            <ComboBox x:Name="combobox_gas1_name" Grid.Row="0" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
+                            <ComboBox x:Name="combobox_gas2_name" Grid.Row="1" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas2_name_SelectionChanged" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
+                            <ComboBox x:Name="combobox_gas3_name" Grid.Row="2" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas3_name_SelectionChanged" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
+                            <ComboBox x:Name="combobox_gas4_name" Grid.Row="3" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas4_name_SelectionChanged" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
+                            <Label Content="浓度" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,9,13"></Label>
+                            <Label Content="浓度" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,9,14"></Label>
+                            <Label Content="浓度" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,9,13"></Label>
+                            <Label Content="浓度" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,9,14"></Label>
+                            <TextBox x:Name="textbox_gas1_ppm" Grid.Row="0" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
+                            <TextBox x:Name="textbox_gas2_ppm" Grid.Row="1" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
+                            <TextBox x:Name="textbox_gas3_ppm" Grid.Row="2" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
+                            <TextBox x:Name="textbox_gas4_ppm" Grid.Row="3" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
+                            <Label Content="ppm" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,7,13"></Label>
+                            <Label Content="ppm" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,7,14"></Label>
+                            <Label Content="ppm" Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,7,13"></Label>
+                            <Label Content="ppm" Grid.Row="3" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,7,14"></Label>
+                            <Button Content="文件导入" x:Name="button_gas_import" Grid.Row="0" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_gas_import_Click" Margin="5,13,6,13"></Button>
+                            <Button Content="开始设定" x:Name="button_begin_set" Grid.Row="1" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_begin_set_Click" Margin="5,13,6,13"></Button>
+                            <Button Content="完成设定" x:Name="button_finish_set" Grid.Row="2" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_finish_set_Click" Margin="5,13,6,13"></Button>
+                            <Button Content="取消设定" x:Name="button_cancel_set" Grid.Row="3" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_cancel_set_Click" Margin="5,13,6,13"></Button>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="测量信息设定">
+                        <Grid Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="整机ID" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="气体室编号" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="输入光纤ID" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="温度(K)" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="电压" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="实验人员" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <TextBox x:Name="text_mach_id" Grid.Row="0" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                            <TextBox x:Name="text_room_id" Grid.Row="1" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                            <TextBox x:Name="text_in_fine" Grid.Row="2" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                            <TextBox x:Name="text_temp" Grid.Row="3" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}" Text="298"></TextBox>
+                            <TextBox x:Name="text_vol" Grid.Row="4" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                            <TextBox x:Name="text_person" Grid.Row="5" Grid.Column="1"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                            <Label Content="光谱仪ID" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="氙灯ID" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="输出光纤ID" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="压力(Pa)" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="光谱平均次数" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Button Content="生成Xe峰值" x:Name="XePosition" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource btnOther}" Click="XePosition_Click"></Button>
+                            <TextBox x:Name="text_instr_id" Grid.Row="0" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                            <TextBox x:Name="text_light_id" Grid.Row="1" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                            <TextBox x:Name="text_out_fine" Grid.Row="2" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                            <TextBox x:Name="text_press" Grid.Row="3" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}" Text="101324"></TextBox>
+                            <TextBox x:Name="text_times" Grid.Row="4" Grid.Column="3"  Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                            <TextBox x:Name="text_peak_position" Grid.Row="5" Grid.Column="3" Height="25" Width="80" Style="{DynamicResource textStyle}"></TextBox>
+                            <Label Content="光源类型" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="传感器类型" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="像素" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="光路" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="光程(mm)" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <Label Content="气体室类型" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            <ComboBox x:Name="lrType" Grid.Row="0" Grid.Column="5" Height="25" Width="80">
+                                <ComboBoxItem Content="氙灯" IsSelected="True"/>
+                                <ComboBoxItem Content="氘灯"/>
+                            </ComboBox>
+                            <ComboBox x:Name="sensorType" Grid.Row="1" Grid.Column="5" Height="25" Width="80">
+                                <ComboBoxItem Content="CMOS" IsSelected="True"/>
+                                <ComboBoxItem Content="CCD"/>
+                            </ComboBox>
+                            <ComboBox x:Name="pixel" Grid.Row="2" Grid.Column="5" Height="25" Width="80">
+                                <ComboBoxItem Content="256"/>
+                                <ComboBoxItem Content="512" IsSelected="True"/>
+                                <ComboBoxItem Content="1024"/>
+                                <ComboBoxItem Content="2048"/>
+                            </ComboBox>
+                            <ComboBox x:Name="lightPath" Grid.Row="3" Grid.Column="5" Height="25" Width="80">
+                                <ComboBoxItem Content="向量文件适用于光路1和2" IsSelected="True"/>
+                                <ComboBoxItem Content="向量文件仅适用于光路2"/>
+                            </ComboBox>
+                            <TextBox x:Name="lightDistance" Grid.Row="4" Grid.Column="5" Height="25" Width="80" Text="800" Style="{DynamicResource textStyle}"></TextBox>
+                            <ComboBox x:Name="gasChamberType" Grid.Row="5" Grid.Column="5" Height="25" Width="80">
+                                <ComboBoxItem Content="折返式" IsSelected="True"/>
+                                <ComboBoxItem Content="直通式"/>
+                            </ComboBox>
+                            <Button Content="测量信息导入" x:Name="button_info_import" Grid.Row="6" Grid.Column="0"  Height="25" Width="80" VerticalAlignment="Top" Style="{StaticResource btnOther}" Click="Button_info_import_Click"></Button>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </ScrollViewer>
+        <Grid Grid.Column="0" Margin="0,0,0,0" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition MinHeight="160"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <WrapPanel Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <CheckBox x:Name="checkbox_flow" Content="流量" Margin="5" IsChecked="True" Checked="Checkbox_flow_CheckChange" Unchecked="Checkbox_flow_CheckChange"></CheckBox>
+                    <CheckBox x:Name="checkbox_density" Content="浓度" Margin="5" IsChecked="True" Checked="Checkbox_density_CheckChange" Unchecked="Checkbox_density_CheckChange"></CheckBox>
+                    <CheckBox x:Name="checkbox_error" Content="误差" Margin="5" IsChecked="True" Checked="Checkbox_error_CheckChange" Unchecked="Checkbox_error_CheckChange"></CheckBox>
+                </WrapPanel>
+                <Button x:Name="button_densityCalculate" Content="浓度计算" Grid.Column="3" Grid.Row="0" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_densityCalculate_Click"></Button>
+                <Button x:Name="button_generateParameter" Content="生成参量" Grid.Column="4" Grid.Row="0" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_generateParameter_Click"></Button>
+                <Button x:Name="button_clearData" Content="清空数据" Grid.Column="5" Grid.Row="0" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_clearData_Click"></Button>
+                <DataGrid x:Name="dataGrid" HeadersVisibility="Column" ItemsSource="{Binding}" DisplayMemberPath="Data" CanUserAddRows =" False" AutoGenerateColumns="False" Grid.ColumnSpan="6" Grid.Row="1" MouseDoubleClick="DataGrid_MouseDoubleClick">
+                </DataGrid>
+                <Label x:Name="label_gas1_input" Content="气体1" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"></Label>
+                <TextBox x:Name="textbox_gas1_input" Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
+                <Label x:Name="label_gas2_input" Content="气体2" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"></Label>
+                <TextBox x:Name="textbox_gas2_input" Grid.Column="1" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
+                <Label x:Name="label_gas3_input" Content="气体3" Grid.Column="2" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"></Label>
+                <TextBox x:Name="textbox_gas3_input" Grid.Column="2" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
+                <Label x:Name="label_gas4_input" Content="气体4" Grid.Column="3" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom"></Label>
+                <TextBox x:Name="textbox_gas4_input" Grid.Column="3" Grid.Row="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="50" IsEnabled="False" Style="{DynamicResource textStyle}"></TextBox>
+                <Button x:Name="button_gas_input" Content="新增" Grid.Column="4" Grid.Row="3" Height="25" Width="60" Style="{StaticResource btnOther}" Click="Button_gas_input_Click" IsEnabled="False"></Button>
+                <Label Content="平均次数" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+                <TextBox x:Name="textbox_average_time" Grid.Column="1" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="25" Width="60" Text="5" Style="{DynamicResource textStyle}" TextChanged="Textbox_average_time_TextChanged"></TextBox>
+            </Grid>
         </Grid>
-    </Grid>
-    <!-- </ScrollViewer> -->
-
+    <!--</ScrollViewer>-->
 </Page>
