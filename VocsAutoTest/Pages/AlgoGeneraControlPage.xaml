@@ -25,9 +25,9 @@
                                 <ColumnDefinition Width="49.515"/>
                                 <ColumnDefinition Width="39.485"/>
                                 <ColumnDefinition Width="12.667"/>
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="75"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="65" />
                                 <ColumnDefinition Width="90"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -36,26 +36,41 @@
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="50"/>
                             </Grid.RowDefinitions>
-                            <Label Content="气体1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,14,5,13"></Label>
-                            <Label Content="气体2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,13,5,14"></Label>
-                            <Label Content="气体3" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,14,5,13"></Label>
-                            <Label Content="气体4" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,13,5,14"></Label>
-                            <ComboBox x:Name="combobox_gas1_name" Grid.Row="0" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
-                            <ComboBox x:Name="combobox_gas2_name" Grid.Row="1" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas2_name_SelectionChanged" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
-                            <ComboBox x:Name="combobox_gas3_name" Grid.Row="2" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas3_name_SelectionChanged" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
-                            <ComboBox x:Name="combobox_gas4_name" Grid.Row="3" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas4_name_SelectionChanged" Grid.ColumnSpan="3" Margin="12,13,11,13"></ComboBox>
-                            <Label Content="浓度" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,9,13"></Label>
-                            <Label Content="浓度" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,9,14"></Label>
-                            <Label Content="浓度" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,9,13"></Label>
-                            <Label Content="浓度" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,9,14"></Label>
-                            <TextBox x:Name="textbox_gas1_ppm" Grid.Row="0" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
-                            <TextBox x:Name="textbox_gas2_ppm" Grid.Row="1" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
-                            <TextBox x:Name="textbox_gas3_ppm" Grid.Row="2" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
-                            <TextBox x:Name="textbox_gas4_ppm" Grid.Row="3" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="11,13,10,13"></TextBox>
-                            <Label Content="ppm" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,7,13"></Label>
-                            <Label Content="ppm" Grid.Row="1" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,7,14"></Label>
-                            <Label Content="ppm" Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,14,7,13"></Label>
-                            <Label Content="ppm" Grid.Row="3" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,13,7,14"></Label>
+                            <Label Content="气体1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
+                            <Label Content="气体2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
+                            <Label Content="气体3" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
+                            <Label Content="气体4" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
+                            <ComboBox x:Name="combobox_gas1_name" Grid.Row="0" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" Grid.ColumnSpan="3" Margin="0"></ComboBox>
+                            <ComboBox x:Name="combobox_gas2_name" Grid.Row="1" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas2_name_SelectionChanged" Grid.ColumnSpan="3" Margin="0"></ComboBox>
+                            <ComboBox x:Name="combobox_gas3_name" Grid.Row="2" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas3_name_SelectionChanged" Grid.ColumnSpan="3" Margin="0"></ComboBox>
+                            <ComboBox x:Name="combobox_gas4_name" Grid.Row="3" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas4_name_SelectionChanged" Grid.ColumnSpan="3" Margin="0"></ComboBox>
+                            <Label Content="浓度(ppm)" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
+                            <Label Content="浓度(ppm)" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
+                            <Label Content="浓度(ppm)" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
+                            <Label Content="浓度(ppm)" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
+                            <TextBox x:Name="textbox_gas1_ppm" Grid.Row="0" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="0"></TextBox>
+                            <TextBox x:Name="textbox_gas2_ppm" Grid.Row="1" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="0"></TextBox>
+                            <TextBox x:Name="textbox_gas3_ppm" Grid.Row="2" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="0"></TextBox>
+                            <TextBox x:Name="textbox_gas4_ppm" Grid.Row="3" Grid.Column="5" Height="25" Width="80" Style="{DynamicResource textStyle}" Margin="0"></TextBox>
+                            
+                            <ComboBox x:Name="gasRange1" Grid.Row="0" Grid.Column="6" Height="25" Width="65">
+                                <ComboBoxItem Content="" IsSelected="True"/>
+                                <ComboBoxItem Content="低量程"/>
+                                <ComboBoxItem Content="高量程"/>
+                            </ComboBox>
+                            <ComboBox x:Name="gasRange2" Grid.Row="1" Grid.Column="6" Height="25" Width="65">
+                                <ComboBoxItem Content="低量程" IsSelected="True"/>
+                                <ComboBoxItem Content="高量程"/>
+                            </ComboBox>
+                            <ComboBox x:Name="gasRange3" Grid.Row="2" Grid.Column="6" Height="25" Width="65">
+                                <ComboBoxItem Content="低量程" IsSelected="True"/>
+                                <ComboBoxItem Content="高量程"/>
+                            </ComboBox>
+                            <ComboBox x:Name="gasRange4" Grid.Row="3" Grid.Column="6" Height="25" Width="65">
+                                <ComboBoxItem Content="低量程" IsSelected="True"/>
+                                <ComboBoxItem Content="高量程"/>
+                            </ComboBox>
+                            
                             <Button Content="文件导入" x:Name="button_gas_import" Grid.Row="0" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_gas_import_Click" Margin="5,13,6,13"></Button>
                             <Button Content="开始设定" x:Name="button_begin_set" Grid.Row="1" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_begin_set_Click" Margin="5,13,6,13"></Button>
                             <Button Content="完成设定" x:Name="button_finish_set" Grid.Row="2" Grid.Column="7" Height="25" Width="80" Style="{StaticResource btnOther}" Click="Button_finish_set_Click" Margin="5,13,6,13"></Button>

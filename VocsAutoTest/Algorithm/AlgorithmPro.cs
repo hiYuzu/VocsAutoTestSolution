@@ -53,7 +53,7 @@ namespace VocsAutoTest.Algorithm
         }
 
         //保存测量数据文件
-        public string SaveParameter(double[,] V, double[,] E, string machId, string instId, ArrayList selectedGases)
+        public string SaveParameter(double[,] V, double[,] E, string machId, string instId, ArrayList selectedGases, Dictionary<string, List<string>> map)
         {
             string path = System.Windows.Forms.Application.StartupPath + "\\ParameterGen\\";
             if (!string.IsNullOrEmpty(machId) && !string.IsNullOrEmpty(instId))
@@ -79,10 +79,45 @@ namespace VocsAutoTest.Algorithm
                     GasNode node = (GasNode)selectedGases[j];
                     if (node.index == n)
                     {
-                        double[,] gasV = new double[V.GetLength(0), 1];
+                        string thingName = node.name;
+                        List<string> lists = map[thingName];
+                        int start = V.GetLength(0);
+                        int end = 0;
+                        int py=0;
                         for (int k = 0; k < V.GetLength(0); k++)
-                            gasV[k, 0] = V[k, n - 1];
-                        FileControl.SaveMatrix(gasV, path + node.name + "_" + machId + "_" + instId + ".txt", 1, "g", null, tail[n - 1]);
+                        {
+                            if (V[k, n - 1] != 0)
+                            {
+                                start = k;
+                                break;
+                            }
+                        }
+                        if(start< V.GetLength(0))
+                        {
+                            for (int k = V.GetLength(0) - 1; k >= 0; k--)
+                            {
+                                if (V[k, n - 1] !=0)
+                                {
+                                    end = k;
+                                    break;
+                                }
+                            }
+                            py = end - start + 1;
+                        }
+                        lists.Add(py.ToString());
+                        lists.Add("5");
+
+                        int length = V.GetLength(0) + 13;
+                        double[,] gasV = new double[length, 1];
+                        string fist = lists[0];
+                        for(int i = 1; i < lists.Count; i++)
+                        {
+                            gasV[i-1,0]= Convert.ToDouble(lists[i]); 
+                        }
+                        int listCount = lists.Count;
+                        for (int k = 0; k < V.GetLength(0); k++)
+                            gasV[listCount+k-1, 0] = V[k, n - 1];
+                        FileControl.SaveMatrix(gasV, path + node.name + "_" + machId + "_" + instId + ".txt", 1, "g", fist, null);
                     }
                 }
             }

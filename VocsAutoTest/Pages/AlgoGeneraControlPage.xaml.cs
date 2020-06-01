@@ -42,6 +42,7 @@ namespace VocsAutoTest.Pages
         private ArrayList dataList = new ArrayList();
         //平均次数全局变量
         private int averageTime;
+        private int gasCount;
 
         public AlgoGeneraControlPage()
         {
@@ -71,19 +72,27 @@ namespace VocsAutoTest.Pages
             {
                 //初始化
                 InitCombox();
-                combobox_gas1_name.SelectedValue = 1;
+                combobox_gas1_name.SelectedValue = 22;
                 combobox_gas1_name.IsEnabled = false;
                 textbox_gas1_ppm.IsEnabled = false;
+                gasRange1.IsEnabled = false;
                 textbox_gas1_ppm.Text = "9999";
-                combobox_gas2_name.SelectedValue = 2;
+
+                combobox_gas2_name.SelectedValue = 8;
                 combobox_gas2_name.IsEnabled = true;
                 textbox_gas2_ppm.IsEnabled = true;
-                combobox_gas3_name.SelectedValue = 3;
+                gasRange2.IsEnabled = true;
+
+                combobox_gas3_name.SelectedValue = 9;
                 combobox_gas3_name.IsEnabled = true;
                 textbox_gas3_ppm.IsEnabled = true;
+                gasRange3.IsEnabled = true;
+
                 combobox_gas4_name.SelectedValue = 0;
                 combobox_gas4_name.IsEnabled = true;
                 textbox_gas4_ppm.IsEnabled = false;
+                gasRange4.IsEnabled = true;
+
                 button_begin_set.IsEnabled = false;
                 button_finish_set.IsEnabled = true;
                 button_cancel_set.IsEnabled = true;
@@ -93,12 +102,20 @@ namespace VocsAutoTest.Pages
                 //开始设定
                 combobox_gas1_name.IsEnabled = false;
                 textbox_gas1_ppm.IsEnabled = false;
+                gasRange1.IsEnabled = false;
+
                 combobox_gas2_name.IsEnabled = true;
                 textbox_gas2_ppm.IsEnabled = true;
+                gasRange2.IsEnabled = true;
+
                 combobox_gas3_name.IsEnabled = true;
                 textbox_gas3_ppm.IsEnabled = true;
+                gasRange3.IsEnabled = true;
+
                 combobox_gas4_name.IsEnabled = true;
                 textbox_gas4_ppm.IsEnabled = true;
+                gasRange4.IsEnabled = true;
+
                 button_begin_set.IsEnabled = false;
                 button_finish_set.IsEnabled = true;
                 button_cancel_set.IsEnabled = true;
@@ -117,15 +134,24 @@ namespace VocsAutoTest.Pages
             }
             else if (optInt == 2)
             {
+                gasCount = 0;
                 //完成设定
                 combobox_gas1_name.IsEnabled = false;
                 textbox_gas1_ppm.IsEnabled = false;
+                gasRange1.IsEnabled = false;
+
                 combobox_gas2_name.IsEnabled = false;
                 textbox_gas2_ppm.IsEnabled = false;
+                gasRange2.IsEnabled = false;
+
                 combobox_gas3_name.IsEnabled = false;
                 textbox_gas3_ppm.IsEnabled = false;
+                gasRange3.IsEnabled = false;
+
                 combobox_gas4_name.IsEnabled = false;
                 textbox_gas4_ppm.IsEnabled = false;
+                gasRange4.IsEnabled = false;
+
                 button_begin_set.IsEnabled = true;
                 button_finish_set.IsEnabled = false;
                 button_cancel_set.IsEnabled = false;
@@ -133,6 +159,7 @@ namespace VocsAutoTest.Pages
                 {
                     label_gas1_input.Content = combobox_gas1_name.Text;
                     textbox_gas1_input.IsEnabled = true;
+                    gasCount++;
                 }
                 else
                 {
@@ -143,6 +170,7 @@ namespace VocsAutoTest.Pages
                 {
                     label_gas2_input.Content = combobox_gas2_name.Text;
                     textbox_gas2_input.IsEnabled = true;
+                    gasCount++;
                 }
                 else
                 {
@@ -153,6 +181,7 @@ namespace VocsAutoTest.Pages
                 {
                     label_gas3_input.Content = combobox_gas3_name.Text;
                     textbox_gas3_input.IsEnabled = true;
+                    gasCount++;
                 }
                 else
                 {
@@ -163,6 +192,7 @@ namespace VocsAutoTest.Pages
                 {
                     label_gas4_input.Content = combobox_gas4_name.Text;
                     textbox_gas4_input.IsEnabled = true;
+                    gasCount++;
                 }
                 else
                 {
@@ -237,14 +267,15 @@ namespace VocsAutoTest.Pages
         {
             List<ComboxSource> list = new List<ComboxSource>
             {
-                new ComboxSource { ID=0,Name=""},
-                new ComboxSource { ID = 1, Name = "N2" },
-                new ComboxSource { ID = 2, Name = "SO2" },
-                new ComboxSource { ID = 3, Name = "NO" },
-                new ComboxSource { ID = 4, Name = "Cl2(low)" },
-                new ComboxSource { ID = 5, Name = "Cl2(high)" },
-                new ComboxSource { ID = 6, Name = "HC1" },
-                new ComboxSource { ID = 7, Name = "H2S" }
+                new ComboxSource { ID=0, Name=""},
+                new ComboxSource { ID = 22, Name = "N2" },
+                new ComboxSource { ID = 8, Name = "NO" },
+                new ComboxSource { ID = 9, Name = "SO2" },
+                new ComboxSource { ID = 11, Name = "NH3" },
+                new ComboxSource { ID = 36, Name = "NO2" },
+                new ComboxSource { ID = 39, Name = "Cl2" },
+                new ComboxSource { ID = 15, Name = "HCl" },
+                new ComboxSource { ID = 31, Name = "H2S" }
             };
             combobox_gas1_name.ItemsSource = list;
             combobox_gas2_name.ItemsSource = list;
@@ -1062,7 +1093,6 @@ namespace VocsAutoTest.Pages
                 float[,] thicknessData;
                 //光谱矩阵,每行对应1次测量，每列对应1个象素
                 float[,] riData;
-
                 try
                 {
                     GetThicknessAndRiData(out thicknessData, out riData);
@@ -1097,9 +1127,35 @@ namespace VocsAutoTest.Pages
                         index++;
                     }
                 }
-                string[] beforeData = new string[] { instrId, lrType.SelectedIndex.ToString(), sensorType.SelectedIndex.ToString(), pixel.SelectedIndex.ToString(), temp, press, lightPath.SelectedIndex.ToString(), lightDistance.Text, gasChamberType.SelectedIndex.ToString(), "0", "1" };
+                Dictionary<string, List<string>> map = new Dictionary<string, List<string>>();
+                string[] gasInfo = new string[] { instrId, lrType.SelectedIndex.ToString(), sensorType.SelectedIndex.ToString(), pixel.SelectedIndex.ToString(), temp, press, lightPath.SelectedIndex.ToString(), lightDistance.Text, gasChamberType.SelectedIndex.ToString(), "0" };
+                List<string> gas1,gas2,gas3;
+                if (Convert.ToInt32(combobox_gas1_name.SelectedValue) != 0)
+                {
+                    gas1 = new List<string>(gasInfo)
+                    {
+                        gasRange2.SelectedIndex.ToString(),
+                        combobox_gas2_name.SelectedValue.ToString()
+                    };
+                    map.Add(((ComboxSource)combobox_gas2_name.SelectedItem).Name, gas1);
+                }
+                if (Convert.ToInt32(combobox_gas2_name.SelectedValue) != 0)
+                {
+                    gas2 = new List<string>(gasInfo);
+                    gas2.Add(gasRange3.SelectedIndex.ToString());
+                    gas2.Add(combobox_gas3_name.SelectedValue.ToString());
+                    map.Add(((ComboxSource)combobox_gas3_name.SelectedItem).Name, gas2);
+                }
+                if (Convert.ToInt32(combobox_gas3_name.SelectedValue) != 0)
+                {
+                    gas3 = new List<string>(gasInfo);
+                    gas3.Add(gasRange4.SelectedIndex.ToString());
+                    gas3.Add(combobox_gas4_name.SelectedValue.ToString());
+                    map.Add(((ComboxSource)combobox_gas4_name.SelectedItem).Name, gas3);
+                }
+
                 //保存测量数据文件
-                string path = AlgorithmPro.GetInstance().SaveParameter(V, E,matchId, instrId, arrayList);
+                string path = AlgorithmPro.GetInstance().SaveParameter(V, E,matchId, instrId, arrayList,map);
                 //保存光谱数据
                 AlgorithmPro.GetInstance().SaveSpecData(path, gasName, gasValue, _obervableCollection, riDataMap);
                 //保存参量数据

@@ -26,7 +26,14 @@ namespace VocsAutoTest.Algorithm
                     string line = "";
                     for (int j = 0; j < data.GetLength(1); j++)
                     {
-                        line = line + (data[i, j] * d).ToString(format) + "\t";
+                        if (j==data.GetLength(1)-1)
+                        {
+                            line = line + (data[i, j] * d).ToString(format);
+                        }
+                        else
+                        {
+                            line = line + (data[i, j] * d).ToString(format) + "\t";
+                        }
                     }
                     textWriter.WriteLine(line);
                 }
