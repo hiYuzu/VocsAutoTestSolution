@@ -37,7 +37,7 @@
                     <RowDefinition Height="26"/>
                     <RowDefinition Height="24.5"/>
                 </Grid.RowDefinitions>
-                <Label Content="窗口标题" HorizontalAlignment="Left" d:LayoutOverrides="Height" Width="171.79" Foreground="#A794E9FF" FontWeight="Bold"/>
+                <Label Content="烟气分析仪光谱分析软件" HorizontalAlignment="Left" d:LayoutOverrides="Height" Width="171.79" Foreground="#A794E9FF" FontWeight="Bold"/>
                 <TextBlock x:Name="Tt"  Margin="100 0 0  0" d:LayoutOverrides="Height" TextWrapping="Wrap"  VerticalAlignment="Center"
                            Foreground="#A794E9FF" FontWeight="Bold" HorizontalAlignment="Left" Grid.ColumnSpan="2">
                 </TextBlock>

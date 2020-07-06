@@ -192,6 +192,7 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void AboutSysBtn_Click(object sender, RoutedEventArgs e)
         {
+            //MessageBox.Show("Copyright © 天津七一二通信广播股份有限公司", "关于系统", MessageBoxButton.OK, MessageBoxImage.Information);
             SuperSerialPort.Instance.Send(new Command { Cmn = "25", ExpandCmn = "55", Data = ""}, true);
         }
         /// <summary>
