@@ -545,7 +545,7 @@ namespace VocsAutoTest.Pages
             dataGrid.Columns.Add(new DataGridTextColumn() { Header = "序号", Binding = new Binding("[" + i.ToString() + "]") });
             i++;
             //勾选框
-            dataGrid.Columns.Add(new DataGridCheckBoxColumn() { Header = "选择", Binding = new Binding("[" + i.ToString() + "]") });
+            dataGrid.Columns.Add(new DataGridCheckBoxColumn() { Header = "选择", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
             i++;
             //流量
             if (textbox_gas1_input.IsEnabled)
