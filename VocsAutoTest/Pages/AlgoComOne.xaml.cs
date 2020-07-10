@@ -24,7 +24,7 @@ namespace VocsAutoTest.Pages
         private Dictionary<string, XYDataSeries> dataSeriesMap = new Dictionary<string, XYDataSeries>();
         public const string XAxisTitle = "像素";
         public const string YAxisTitle = "积分值";
-        private DataSeries currentDataSeries = null;
+        private XYDataSeries currentDataSeries = null;
 
         public AlgoComOne()
         {
@@ -205,7 +205,7 @@ namespace VocsAutoTest.Pages
                 for (int i = 0; i < lineData.Length; i++)
                 {
 
-                    valueX[i] = i;
+                    valueX[i] = i + 1;
                     valueY[i] = lineData[i];
                 }
                 dataSeries.XValuesSource = valueX;
@@ -233,20 +233,20 @@ namespace VocsAutoTest.Pages
             XYDataSeries dataSeries = new XYDataSeries
             {
                 Label = "实时数据",
-                ConnectionStrokeThickness = 1
+                ConnectionStrokeThickness = 1,
+                ConnectionFill = new SolidColorBrush(Colors.Red)
             };
             double[] valueY = new double[currentData.Length];
             double[] valueX = new double[currentData.Length];
             for (int i = 0; i < currentData.Length; i++)
             {
 
-                valueX[i] = i;
+                valueX[i] = i + 1;
                 valueY[i] = currentData[i];
             }
             dataSeries.XValuesSource = valueX;
             dataSeries.ValuesSource = valueY;
             currentDataSeries = dataSeries;
-            currentDataSeries.ConnectionFill = new SolidColorBrush(Colors.Red);
             AlgoChart.Data.Children.Add(currentDataSeries);
             UpdateData();
             AlgoChart.EndUpdate();
