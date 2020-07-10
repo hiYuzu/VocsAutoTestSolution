@@ -76,7 +76,7 @@ namespace VocsAutoTest.Tools
         {
             return Path.Combine(appDir, type) + "\\";
         }
-
+        //路径文件夹存在未创建可能，修改参见Line:133-135
         public static string AppPath
         {
             get { return appDir; }
@@ -129,7 +129,11 @@ namespace VocsAutoTest.Tools
 
         private static string FileName
         {
-            get { return Path.Combine(XmlPath, "Const.xml"); }
+            get { 
+                if (!Directory.Exists(XmlPath)){
+                    Directory.CreateDirectory(XmlPath);
+                }
+                return Path.Combine(XmlPath, "Const.xml"); }
         }
 
         public static Hashtable GetKeyValueTable()
