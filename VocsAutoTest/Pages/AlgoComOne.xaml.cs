@@ -24,6 +24,7 @@ namespace VocsAutoTest.Pages
         private Dictionary<string, XYDataSeries> dataSeriesMap = new Dictionary<string, XYDataSeries>();
         public const string XAxisTitle = "像素";
         public const string YAxisTitle = "积分值";
+        private DataSeries currentDataSeries = null;
 
         public AlgoComOne()
         {
@@ -184,12 +185,12 @@ namespace VocsAutoTest.Pages
             return dataSeries;
         }
         /// <summary>
-        /// 设置曲线数据并显示
+        /// 创建显示平均光谱数据
         /// </summary>
         /// <param name="index">index</param>
         /// <param name="lineData">lineData</param>
         /// <returns>数据线</returns>
-        public bool CreateCurrentChart(string index, float[] lineData)
+        public bool CreateAvgChart(string index, float[] lineData)
         {
             bool flag;
             if (!dataSeriesMap.ContainsKey(index) && lineData != null)
@@ -218,6 +219,38 @@ namespace VocsAutoTest.Pages
                 flag = false;
             }
             return flag;
+        }
+        /// <summary>
+        /// 创建显示当前光谱数据
+        /// </summary>
+        public void CreateCurrentChart(float[] currentData)
+        {
+            AlgoChart.BeginUpdate();
+            if (currentDataSeries != null)
+            {
+                AlgoChart.Data.Children.Remove(currentDataSeries);
+            }
+            XYDataSeries dataSeries = new XYDataSeries
+            {
+                Label = "实时数据",
+                ConnectionStrokeThickness = 1,
+                Name = "currentSeries"
+            };
+            double[] valueY = new double[currentData.Length];
+            double[] valueX = new double[currentData.Length];
+            for (int i = 0; i < currentData.Length; i++)
+            {
+
+                valueX[i] = i;
+                valueY[i] = currentData[i];
+            }
+            dataSeries.XValuesSource = valueX;
+            dataSeries.ValuesSource = valueY;
+            currentDataSeries = dataSeries;
+            currentDataSeries.ConnectionFill = new SolidColorBrush(Colors.Red);
+            AlgoChart.Data.Children.Add(currentDataSeries);
+            UpdateData();
+            AlgoChart.EndUpdate();
         }
         /// <summary>
         /// 显示数据线

@@ -26,7 +26,7 @@ namespace VocsAutoTest.Pages
         private ObservableCollection<string[]> _obervableCollection = new ObservableCollection<string[]>();//测量数据
         private Dictionary<int, float[]> riDataMap = new Dictionary<int, float[]>();//光谱数据
         //private AlgoGeneraPage algoPage;
-        private AlgoComOne algoPage;
+        private readonly AlgoComOne algoPage;
         private int _gasIndex = 0;
         //选择文件默认地址
         private string importRoad = null;
@@ -523,7 +523,7 @@ namespace VocsAutoTest.Pages
                     riDataMap.Add(orderNumber, lineData);
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        if (!algoPage.CreateCurrentChart(orderNumber.ToString(), lineData))
+                        if (!algoPage.CreateAvgChart(orderNumber.ToString(), lineData))
                         {
                             ExceptionUtil.Instance.LogMethod("算法生成图表数据异常！");
                         }
@@ -1102,6 +1102,11 @@ namespace VocsAutoTest.Pages
                     text_instr_id.Focus();
                     return;
                 }
+                MessageBoxResult result = MessageBox.Show("请确认只勾选一条零点曲线！", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (result == MessageBoxResult.No)
+                {
+                    return;
+                }
                 //开始计算
                 dataGrid.IsEnabled = false;
                 double[,] V;
@@ -1443,6 +1448,7 @@ namespace VocsAutoTest.Pages
         public void ImportCurrentData(object sender, ushort[] specData)
         {
             float[] currentData = Array.ConvertAll<ushort, float>(specData, new Converter<ushort, float>(UshortToFloat));
+            algoPage.CreateCurrentChart(currentData);
             ParseSpecData(currentData);
         }
         private float UshortToFloat(ushort us)
