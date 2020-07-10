@@ -1448,7 +1448,10 @@ namespace VocsAutoTest.Pages
         public void ImportCurrentData(object sender, ushort[] specData)
         {
             float[] currentData = Array.ConvertAll<ushort, float>(specData, new Converter<ushort, float>(UshortToFloat));
-            algoPage.CreateCurrentChart(currentData);
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                algoPage.CreateCurrentChart(currentData);
+            }));
             ParseSpecData(currentData);
         }
         private float UshortToFloat(ushort us)

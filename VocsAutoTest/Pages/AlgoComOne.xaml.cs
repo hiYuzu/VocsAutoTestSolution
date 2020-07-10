@@ -233,8 +233,7 @@ namespace VocsAutoTest.Pages
             XYDataSeries dataSeries = new XYDataSeries
             {
                 Label = "实时数据",
-                ConnectionStrokeThickness = 1,
-                Name = "currentSeries"
+                ConnectionStrokeThickness = 1
             };
             double[] valueY = new double[currentData.Length];
             double[] valueX = new double[currentData.Length];
