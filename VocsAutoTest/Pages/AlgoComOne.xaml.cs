@@ -24,7 +24,7 @@ namespace VocsAutoTest.Pages
         private Dictionary<string, XYDataSeries> dataSeriesMap = new Dictionary<string, XYDataSeries>();
         public const string XAxisTitle = "像素";
         public const string YAxisTitle = "积分值";
-        private XYDataSeries currentDataSeries = null;
+        private DataSeries currentDataSeries = null;
 
         public AlgoComOne()
         {
@@ -247,6 +247,7 @@ namespace VocsAutoTest.Pages
             dataSeries.XValuesSource = valueX;
             dataSeries.ValuesSource = valueY;
             currentDataSeries = dataSeries;
+            dataSeries.ConnectionFill = null;
             AlgoChart.Data.Children.Add(currentDataSeries);
             UpdateData();
             AlgoChart.EndUpdate();
