@@ -24,7 +24,8 @@ namespace VocsAutoTest.Pages
         private Dictionary<string, XYDataSeries> dataSeriesMap = new Dictionary<string, XYDataSeries>();
         public const string XAxisTitle = "像素";
         public const string YAxisTitle = "积分值";
-        private DataSeries currentDataSeries = null;
+        private DataSeries currentDataSeries = new DataSeries();
+        private bool hadCurrent = false;
 
         public AlgoComOne()
         {
@@ -226,15 +227,14 @@ namespace VocsAutoTest.Pages
         public void CreateCurrentChart(float[] currentData)
         {
             AlgoChart.BeginUpdate();
-            if (currentDataSeries != null)
+            if (hadCurrent)
             {
                 AlgoChart.Data.Children.Remove(currentDataSeries);
             }
             XYDataSeries dataSeries = new XYDataSeries
             {
                 Label = "实时数据",
-                ConnectionStrokeThickness = 1,
-                ConnectionFill = new SolidColorBrush(Colors.Red)
+                ConnectionStrokeThickness = 1
             };
             double[] valueY = new double[currentData.Length];
             double[] valueX = new double[currentData.Length];
@@ -247,8 +247,9 @@ namespace VocsAutoTest.Pages
             dataSeries.XValuesSource = valueX;
             dataSeries.ValuesSource = valueY;
             currentDataSeries = dataSeries;
-            dataSeries.ConnectionFill = null;
+            currentDataSeries.ConnectionFill = new SolidColorBrush(Colors.Red);
             AlgoChart.Data.Children.Add(currentDataSeries);
+            hadCurrent = true;
             UpdateData();
             AlgoChart.EndUpdate();
         }
@@ -280,6 +281,7 @@ namespace VocsAutoTest.Pages
         /// </summary>
         public void RemoveAllSeries()
         {
+            hadCurrent = false;
             RemoveSeries(null);
         }
         void Actions_Enter(object sender, EventArgs e)
