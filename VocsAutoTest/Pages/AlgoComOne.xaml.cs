@@ -35,7 +35,6 @@ namespace VocsAutoTest.Pages
         private List<int> xList;
         private List<List<string>> yListCollect;
         private int lineNum = 0;
-        Colors
         //光谱数据
         private Dictionary<string, XYDataSeries> dataSeriesMap = new Dictionary<string, XYDataSeries>();
         public const string XAxisTitle = "像素";
