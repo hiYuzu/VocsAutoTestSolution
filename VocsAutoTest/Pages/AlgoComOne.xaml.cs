@@ -11,6 +11,21 @@ using C1.WPF.C1Chart;
 
 namespace VocsAutoTest.Pages
 {
+    class ColorRandom
+    {
+        public static Color ColorSelect()
+        {
+            long tick = DateTime.Now.Ticks;
+            Random random = new Random((int)(tick & 0xffffffffL) | (int)(tick >> 32));
+
+            int R = random.Next(255);
+            int G = random.Next(255);
+            int B = random.Next(255);
+            B = (R + G > 400) ? R + G - 400 : B;
+            B = (B > 255) ? 255 : B;
+            return Color.FromRgb((byte)R, (byte)G, (byte)B);
+        }
+    }
     /// <summary>
     /// AlgoComOne.xaml 的交互逻辑
     /// </summary>
@@ -20,6 +35,7 @@ namespace VocsAutoTest.Pages
         private List<int> xList;
         private List<List<string>> yListCollect;
         private int lineNum = 0;
+        Colors
         //光谱数据
         private Dictionary<string, XYDataSeries> dataSeriesMap = new Dictionary<string, XYDataSeries>();
         public const string XAxisTitle = "像素";
@@ -57,6 +73,8 @@ namespace VocsAutoTest.Pages
                 ds.PointTooltipTemplate = FindResource("lbl") as DataTemplate;
             }
         }
+
+        #region 导入曲线相关方法
         /// <summary>
         /// 导入历史数据
         /// </summary>
@@ -163,7 +181,7 @@ namespace VocsAutoTest.Pages
             }
         }
         /// <summary>
-        /// 设置并返回数据线
+        /// 设置并返回历史数据曲线
         /// </summary>
         /// <param name="i">lineNum</param>
         /// <returns>数据线</returns>
@@ -185,6 +203,8 @@ namespace VocsAutoTest.Pages
             dataSeriesMap.Add(index, dataSeries);
             return dataSeries;
         }
+        #endregion
+
         /// <summary>
         /// 创建显示平均光谱数据
         /// </summary>
@@ -199,7 +219,8 @@ namespace VocsAutoTest.Pages
                 XYDataSeries dataSeries = new XYDataSeries
                 {
                     Label = "数据_" + index,
-                    ConnectionStrokeThickness = 1
+                    ConnectionStrokeThickness = 1,
+                    ConnectionFill = new SolidColorBrush(ColorRandom.ColorSelect())
                 };
                 double[] valueY = new double[lineData.Length];
                 double[] valueX = new double[lineData.Length];
