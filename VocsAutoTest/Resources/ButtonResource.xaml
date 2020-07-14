@@ -26,7 +26,7 @@
 					<ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="Visibility" TargetName="bg" Value="Visible"/>
-                            <!--<Setter TargetName="ButtonText" Property="Foreground" Value="Yellow"/>-->
+                            <Setter TargetName="ButtonText" Property="Foreground" Value="Yellow"/>
                         </Trigger>
                         <Trigger Property="IsDefaulted" Value="False"/>
                         <MultiTrigger>
