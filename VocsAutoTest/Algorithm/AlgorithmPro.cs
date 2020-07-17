@@ -94,7 +94,7 @@ namespace VocsAutoTest.Algorithm
                         }
                         if(start< V.GetLength(0))
                         {
-                            for (int k = V.GetLength(0) - 1; k >= 0; k--)
+                            for (int k = V.GetLength(0) - 6; k >= 0; k--)
                             {
                                 if (V[k, n - 1] !=0)
                                 {
@@ -104,7 +104,8 @@ namespace VocsAutoTest.Algorithm
                             }
                             py = end - start + 1;
                         }
-                        lists.Add(py.ToString());
+                        int count = py + 1;
+                        lists.Add(count.ToString());
                         lists.Add("5");
 
                         int length = V.GetLength(0) + 13;
