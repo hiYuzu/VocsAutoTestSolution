@@ -44,7 +44,7 @@ namespace VocsAutoTestBLL.Impl
             }
         }
         /// <summary>
-        /// 读取向量表信息
+        /// 读取下载向量表信息
         /// </summary>
         /// <param name="lpInfo">光路信息</param>
         /// <param name="gas">气体</param>
@@ -77,6 +77,11 @@ namespace VocsAutoTestBLL.Impl
             resetFlag = true;
             errorCount++;
         }
+        /// <summary>
+        /// 接收向量数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="command"></param>
         private void GetVectorInfo(object sender, Command command)
         {
             resetFlag = false;
@@ -132,14 +137,22 @@ namespace VocsAutoTestBLL.Impl
                 ParseVectorData(datas);
             }
         }
+        /// <summary>
+        /// 解析byte
+        /// </summary>
+        /// <param name="datas"></param>
         private void ParseVectorData(byte[] datas)
         {
             List<string> vectorInfo = new List<string>();
+            //光谱仪设备号
             byte[] deviceNum = new byte[15];
             Array.Copy(datas, 0, deviceNum, 0, deviceNum.Length);
             vectorInfo.Add(Encoding.Default.GetString(deviceNum).ToUpper());
+            //光源类型
             vectorInfo.Add(datas[15].ToString());
+            //传感器类型
             vectorInfo.Add(datas[16].ToString());
+            //像素
             vectorInfo.Add(datas[17].ToString());
             uint pixel = 512;
             switch (datas[17].ToString())
@@ -154,39 +167,55 @@ namespace VocsAutoTestBLL.Impl
                     pixel = 2048;
                     break;
             }
+            //温度
             byte[] temp = new byte[4];
             Array.Copy(datas, 18, temp, 0, temp.Length);
             Array.Reverse(temp, 0, temp.Length);
             vectorInfo.Add(BitConverter.ToSingle(temp, 0).ToString());
+            //压力
             byte[] press = new byte[4];
             Array.Copy(datas, 22, press, 0, press.Length);
             Array.Reverse(press, 0, press.Length);
             vectorInfo.Add(BitConverter.ToSingle(press, 0).ToString());
+            //光路
             vectorInfo.Add(datas[26].ToString());
+            //光程
             byte[] lightLen = new byte[2];
             Array.Copy(datas, 27, lightLen, 0, lightLen.Length);
             Array.Reverse(lightLen, 0, lightLen.Length);
             vectorInfo.Add(BitConverter.ToUInt16(lightLen, 0).ToString());
+            //气体室类型
             vectorInfo.Add(datas[29].ToString());
+            //单位
             vectorInfo.Add(datas[30].ToString());
+            //量程
             vectorInfo.Add(datas[31].ToString());
+            //气体信息
             vectorInfo.Add(datas[32].ToString());
+            //向量数据个数
             byte[] vectorCount = new byte[2];
             Array.Copy(datas, 33, vectorCount, 0, vectorCount.Length);
             Array.Reverse(vectorCount, 0, vectorCount.Length);
             vectorInfo.Add(BitConverter.ToUInt16(vectorCount, 0).ToString());
+            //多项式系数个数
             vectorInfo.Add(datas[35].ToString());
+            //向量总数据
+            //起始地址
             byte[] startAddr = new byte[2];
             Array.Copy(datas, 36, startAddr, 0, startAddr.Length);
             Array.Reverse(startAddr, 0, startAddr.Length);
             uint startAddress = BitConverter.ToUInt16(startAddr, 0);
+            //偏移量
             byte[] offset = new byte[2];
             Array.Copy(datas, 38, offset, 0, offset.Length);
             Array.Reverse(offset, 0, offset.Length);
             uint offsetNum = BitConverter.ToUInt16(offset, 0);
+            //最后一个0数据所在位置
             uint endZeroNum = pixel - startAddress - offsetNum;
+            //实际向量总数据=偏移量字节数*4（float）
             byte[] vector = new byte[offsetNum * 4];
             Array.Copy(datas, 40, vector, 0, vector.Length);
+            //多项式系数
             byte[] coeffi = new byte[20];
             Array.Copy(datas, (offsetNum * 4) + 40, coeffi, 0, coeffi.Length);
             StorgeToFile(vectorInfo, startAddress, vector, endZeroNum, coeffi);
@@ -202,14 +231,17 @@ namespace VocsAutoTestBLL.Impl
                     fs.Dispose();
                 }
                 StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8);
+                //14项基本信息
                 foreach (string vi in info)
                 {
                     sw.WriteLine(vi);
                 }
+                //补零至第一位非零数据
                 for(uint i = 0; i < startAddr; i++)
                 {
                     sw.WriteLine(0);
                 }
+                //向量非零数据
                 for (int m = 0; m < vector.Length; m += 4)
                 {
                     byte[] vectorData = new byte[4];
@@ -217,10 +249,12 @@ namespace VocsAutoTestBLL.Impl
                     Array.Reverse(vectorData, 0, vectorData.Length);
                     sw.WriteLine(BitConverter.ToSingle(vectorData, 0).ToString());
                 }
+                //补零至向量个数
                 for(uint j = 0; j < endZeroNum; j++)
                 {
                     sw.WriteLine(0);
                 }
+                //多项式系数
                 for(int n = 0; n < coeffi.Length; n += 4)
                 {
                     byte[] coefficient = new byte[4];
@@ -239,7 +273,7 @@ namespace VocsAutoTestBLL.Impl
             }
         }
         /// <summary>
-        /// 设置向量表信息
+        /// 设置上传向量表信息
         /// </summary>
         /// <param name="fileName">向量文件路径</param>
         public void SetVectorInfo(string lpInfo, string gas, string range, string fileName)
@@ -258,7 +292,7 @@ namespace VocsAutoTestBLL.Impl
             }
             //设备号
             data = AddByte(data, Encoding.Default.GetBytes(text[0]));
-            //基本数据
+            //14项基本数据
             for(int i = 0; i < 13; i++)
             {
                 if(i == 3 || i == 4)
@@ -274,6 +308,7 @@ namespace VocsAutoTestBLL.Impl
                     byte[] bytes = BitConverter.GetBytes(Convert.ToUInt16(text[i + 1]));
                     Array.Reverse(bytes);
                     data = AddByte(data, bytes);
+                    //另取得偏移量
                     if(i == 11)
                     {
                         offset =(ushort)(Convert.ToInt32(text[i + 1]) - 1);
@@ -283,6 +318,7 @@ namespace VocsAutoTestBLL.Impl
                 {
                     //1字节
                     data.Add(byte.Parse(text[i + 1]));
+                    //另取得像素个数
                     if(i == 2)
                     {
                         switch(Convert.ToInt32(text[i + 1]))
@@ -298,6 +334,7 @@ namespace VocsAutoTestBLL.Impl
                                 break;
                         }
                     }
+                    //另取得系数个数
                     else if(i == 12)
                     {
                         coeffiNum = Convert.ToInt32(text[i + 1]);

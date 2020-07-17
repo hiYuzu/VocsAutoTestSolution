@@ -542,7 +542,7 @@ namespace VocsAutoTest.Pages
             dataGrid.IsEnabled = true;
             int i = 0;
             //序号
-            dataGrid.Columns.Add(new DataGridTextColumn() { Header = "序号", Binding = new Binding("[" + i.ToString() + "]") });
+            dataGrid.Columns.Add(new DataGridTextColumn() { Header = "序号", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
             i++;
             //勾选框
             dataGrid.Columns.Add(new DataGridCheckBoxColumn() { Header = "选择", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
@@ -550,65 +550,65 @@ namespace VocsAutoTest.Pages
             //流量
             if (textbox_gas1_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas1_input.Content + "流量", Binding = new Binding("[" + i.ToString() + "]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas1_input.Content + "流量", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
                 i++;
             }
             if (textbox_gas2_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas2_input.Content + "流量", Binding = new Binding("[" + i.ToString() + "]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas2_input.Content + "流量", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
                 i++;
             }
             if (textbox_gas3_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas3_input.Content + "流量", Binding = new Binding("[" + i.ToString() + "]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas3_input.Content + "流量", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
                 i++;
             }
             if (textbox_gas4_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas4_input.Content + "流量", Binding = new Binding("[" + i.ToString() + "]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas4_input.Content + "流量", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
                 i++;
             }
             _gasIndex = i;
             //浓度
             //if (textbox_gas1_input.IsEnabled)
             //{
-            //    dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas1_input.Content + "浓度", Binding = new Binding("[" + i.ToString() + "]") });
+            //    dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas1_input.Content + "浓度", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
             //    i++;
             //}
             if (textbox_gas2_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas2_input.Content + "浓度", Binding = new Binding("[" + i.ToString() + "]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas2_input.Content + "浓度", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
                 i++;
             }
             if (textbox_gas3_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas3_input.Content + "浓度", Binding = new Binding("[" + i.ToString() + "]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas3_input.Content + "浓度", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
                 i++;
             }
             if (textbox_gas4_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas4_input.Content + "浓度", Binding = new Binding("[" + i.ToString() + "]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas4_input.Content + "浓度", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
                 i++;
             }
             //误差
             //if (textbox_gas1_input.IsEnabled)
             //{
-            //    dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas1_input.Content + "误差", Binding = new Binding("[" + i.ToString() + "]") });
+            //    dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas1_input.Content + "误差", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
             //    i++;
             //}
             if (textbox_gas2_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas2_input.Content + "误差", Binding = new Binding("[" + i.ToString() + "]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas2_input.Content + "误差", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
                 i++;
             }
             if (textbox_gas3_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas3_input.Content + "误差", Binding = new Binding("[" + i.ToString() + "]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas3_input.Content + "误差", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
                 i++;
             }
             if (textbox_gas4_input.IsEnabled)
             {
-                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas4_input.Content + "误差", Binding = new Binding("[" + i.ToString() + "]") });
+                dataGrid.Columns.Add(new DataGridTextColumn() { Header = label_gas4_input.Content + "误差", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
             }
             //设置显示
             int indexCount = _gasIndex - 2;
@@ -1242,14 +1242,13 @@ namespace VocsAutoTest.Pages
                 sb.Append("电压: ").Append(text_vol.Text.Trim()).Append("\r\n");
                 sb.Append("光谱平均次数: ").Append(text_times.Text.Trim()).Append("\r\n");
                 sb.Append("实验人员: ").Append(text_person.Text.Trim()).Append("\r\n");
-                sb.Append("光源类型: ").Append(lrType.SelectedItem.ToString()).Append("\r\n");
-                sb.Append("传感器类型: ").Append(sensorType.SelectedItem.ToString()).Append("\r\n");
-                sb.Append("像素: ").Append(pixel.SelectedItem.ToString()).Append("\r\n");
-                sb.Append("光路: ").Append(lightPath.SelectedItem.ToString()).Append("\r\n");
+                sb.Append("光源类型: ").Append((lrType.SelectedItem as ComboBoxItem).Content).Append("\r\n");
+                sb.Append("传感器类型: ").Append((sensorType.SelectedItem as ComboBoxItem).Content).Append("\r\n");
+                sb.Append("像素: ").Append((pixel.SelectedItem as ComboBoxItem).Content).Append("\r\n");
+                sb.Append("光路: ").Append((lightPath.SelectedItem as ComboBoxItem).Content).Append("\r\n");
                 sb.Append("光程(mm): ").Append(lightDistance.Text.Trim()).Append("\r\n");
-                sb.Append("气体室类型: ").Append(gasChamberType.SelectedItem.ToString()).Append("\r\n");
+                sb.Append("气体室类型: ").Append((gasChamberType.SelectedItem as ComboBoxItem).Content).Append("\r\n");
                 textWriter.Write(sb.ToString());
-
             }
             catch (Exception e)
             {

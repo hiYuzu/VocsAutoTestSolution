@@ -485,7 +485,7 @@ namespace VocsAutoTest.Pages
             }
             else
             {
-                MessageBox.Show("请设置向量文件！");
+                MessageBox.Show("向量文件必须为txt文档！");
             }
         }
 
@@ -504,7 +504,7 @@ namespace VocsAutoTest.Pages
             }
             else
             {
-                MessageBox.Show("请设置向量文件！");
+                MessageBox.Show("请设置正确的向量文件！");
             }
         }
         #endregion
