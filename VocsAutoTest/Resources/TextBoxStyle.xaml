@@ -10,7 +10,7 @@
                     <Grid x:Name="Grid">
                         <Border x:Name="Border" SnapsToDevicePixels="True"
                                 CornerRadius="1"
-                                BorderBrush="LightBlue" BorderThickness="2" Background="White"/>
+                                BorderBrush="Black" BorderThickness="2" Background="White"/>
                         <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch"/>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -25,7 +25,8 @@
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Grid" Property="Opacity" Value="0.2" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="Black"/>
+                            <Setter TargetName="Border" Property="Opacity" Value="0.2" />
                         </Trigger>
 
                         <Trigger Property="IsReadOnly" Value="True">

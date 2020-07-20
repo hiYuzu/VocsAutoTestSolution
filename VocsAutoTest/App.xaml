@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="Resources/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="Resources/DataGridResource.xaml"/>
                 <ResourceDictionary Source="Resources/UserControlResource.xaml"/>
+                <ResourceDictionary Source="Resources/ScrollViewerResource.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

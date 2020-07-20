@@ -15,7 +15,7 @@
                 <RowDefinition Height="250"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-        <ScrollViewer x:Name="ScrollViewer2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer x:Name="ScrollViewer2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewer1}">
             <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,0,0">
                 <TabControl Margin="0,0,-1.2,-256">
                     <TabItem Header="气体组分设定">
@@ -146,8 +146,8 @@
                             </ComboBox>
                             <TextBox x:Name="lightDistance" Grid.Row="4" Grid.Column="5" Height="25" Width="80" Text="800" Style="{DynamicResource textStyle}"></TextBox>
                             <ComboBox x:Name="gasChamberType" Grid.Row="5" Grid.Column="5" Height="25" Width="80">
-                                <ComboBoxItem Content="直通式" IsSelected="True"/>
-                                <ComboBoxItem Content="折返式"/>
+                                <ComboBoxItem Content="直通式"/>
+                                <ComboBoxItem Content="折返式" IsSelected="True"/>
                             </ComboBox>
                             <Button Content="测量信息导入" x:Name="button_info_import" Grid.Row="6" Grid.Column="0"  Height="25" Width="80" VerticalAlignment="Top" Style="{StaticResource btnOther}" Click="Button_info_import_Click"></Button>
                         </Grid>
