@@ -1003,7 +1003,7 @@ namespace VocsAutoTest.Pages
                 paramInfo.LoadParameterInfo(fileName);
                 text_mach_id.Text = paramInfo.MachId.Trim();
                 text_instr_id.Text = paramInfo.InstrId.Trim();
-                text_temp.Text = paramInfo.Temp.Trim();
+                text_temp.Text = (int.Parse(paramInfo.Temp.Trim()) + 273).ToString();
                 text_press.Text = paramInfo.Press.Trim();
                 text_in_fine.Text = paramInfo.InFine.Trim();
                 text_out_fine.Text = paramInfo.OutFine.Trim();
@@ -1233,7 +1233,7 @@ namespace VocsAutoTest.Pages
                 StringBuilder sb = new StringBuilder();
                 sb.Append("整机ID: ").Append(text_mach_id.Text.Trim()).Append("\r\n");
                 sb.Append("光谱仪ID: ").Append(text_instr_id.Text.Trim()).Append("\r\n");
-                sb.Append("温度: ").Append(text_temp.Text.Trim()).Append("\r\n");
+                sb.Append("温度: ").Append(int.Parse(text_temp.Text.Trim()) - 273).Append("\r\n");
                 sb.Append("压力: ").Append(text_press.Text.Trim()).Append("\r\n");
                 sb.Append("输入光纤ID: ").Append(text_in_fine.Text.Trim()).Append("\r\n");
                 sb.Append("输出光纤ID: ").Append(text_out_fine.Text.Trim()).Append("\r\n");
@@ -1252,6 +1252,7 @@ namespace VocsAutoTest.Pages
             }
             catch (Exception e)
             {
+                ExceptionUtil.Instance.ExceptionMethod("测量信息参数异常：" + e.Message, true);
                 throw e;
             }
             finally
