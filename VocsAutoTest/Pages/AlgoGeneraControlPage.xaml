@@ -44,7 +44,7 @@
                             <ComboBox x:Name="combobox_gas2_name" Grid.Row="1" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas2_name_SelectionChanged" Grid.ColumnSpan="3" Margin="0"></ComboBox>
                             <ComboBox x:Name="combobox_gas3_name" Grid.Row="2" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas3_name_SelectionChanged" Grid.ColumnSpan="3" Margin="0"></ComboBox>
                             <ComboBox x:Name="combobox_gas4_name" Grid.Row="3" Grid.Column="1" Height="25" Width="80" DisplayMemberPath="Name" SelectedValuePath="ID" SelectionChanged="Combobox_gas4_name_SelectionChanged" Grid.ColumnSpan="3" Margin="0"></ComboBox>
-                            <Label Content="浓度(ppm)" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
+                            <Label Content="浓度(%)" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
                             <Label Content="浓度(ppm)" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
                             <Label Content="浓度(ppm)" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>
                             <Label Content="浓度(ppm)" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"></Label>

@@ -76,14 +76,14 @@ namespace VocsAutoTest.Pages
                 combobox_gas1_name.IsEnabled = false;
                 textbox_gas1_ppm.IsEnabled = false;
                 gasRange1.IsEnabled = false;
-                textbox_gas1_ppm.Text = "9999";
+                textbox_gas1_ppm.Text = "99.999";
 
-                combobox_gas2_name.SelectedValue = 8;
+                combobox_gas2_name.SelectedValue = 9;
                 combobox_gas2_name.IsEnabled = true;
                 textbox_gas2_ppm.IsEnabled = true;
                 gasRange2.IsEnabled = true;
 
-                combobox_gas3_name.SelectedValue = 9;
+                combobox_gas3_name.SelectedValue = 8;
                 combobox_gas3_name.IsEnabled = true;
                 textbox_gas3_ppm.IsEnabled = true;
                 gasRange3.IsEnabled = true;
