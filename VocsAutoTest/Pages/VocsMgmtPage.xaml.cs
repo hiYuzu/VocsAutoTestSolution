@@ -17,7 +17,7 @@ namespace VocsAutoTest.Pages
         {
             InitializeComponent();
         }
-        private string currentFileName = "";
+        private string currentFilePath = "";
         #region 公共参数
         private void ReadCommParam_Click(object sender, RoutedEventArgs e)
         {
@@ -453,18 +453,18 @@ namespace VocsAutoTest.Pages
             try
             {
                 ExceptionUtil.Instance.ShowLoadingAction(true);
-                string path = currentFileName != "" ? currentFileName : System.Windows.Forms.Application.StartupPath;
-                OpenFileDialog op = new OpenFileDialog
+                string path = currentFilePath != "" ? currentFilePath : System.Windows.Forms.Application.StartupPath;
+                SaveFileDialog sfd = new SaveFileDialog
                 {
                     InitialDirectory = path,
                     RestoreDirectory = true,
                     Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* "
                 };
-                if (op.ShowDialog() == true)
+                if (sfd.ShowDialog() == true)
                 {
-                    vectorFilePath.Text = op.FileName;
-                    ExceptionUtil.Instance.LogMethod("向量文件已设置为：" + op.FileName);
-                    currentFileName = op.FileName.Substring(0, op.FileName.LastIndexOf('\\'));
+                    vectorFilePath.Text = sfd.FileName;
+                    ExceptionUtil.Instance.LogMethod("向量文件已设置为：" + sfd.FileName);
+                    currentFilePath = sfd.FileName.Substring(0, sfd.FileName.LastIndexOf('\\'));
                 }
             }
             catch
