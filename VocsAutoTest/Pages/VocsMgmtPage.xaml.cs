@@ -491,21 +491,12 @@ namespace VocsAutoTest.Pages
 
         private void SetVectorInfo_Click(object sender, RoutedEventArgs e)
         {
-            if (vectorFilePath.Text.EndsWith(".txt"))
-            {
-                try
-                {
-                    RWVectorInfoImpl.Instance.SetVectorInfo(lP.SelectedIndex.ToString("x2"), gas.SelectedIndex.ToString("x2"), range.SelectedIndex.ToString("x2"), vectorFilePath.Text);
-                }
-                catch(Exception ex)
-                {
-                    ExceptionUtil.Instance.ExceptionMethod(ex.Message, true);
-                }
-            }
-            else
+            if (!vectorFilePath.Text.EndsWith(".txt"))
             {
                 MessageBox.Show("请设置正确的向量文件！");
+                return;
             }
+            RWVectorInfoImpl.Instance.SetVectorInfo(lP.SelectedIndex.ToString("x2"), gas.SelectedIndex.ToString("x2"), range.SelectedIndex.ToString("x2"), vectorFilePath.Text);
         }
         #endregion
 

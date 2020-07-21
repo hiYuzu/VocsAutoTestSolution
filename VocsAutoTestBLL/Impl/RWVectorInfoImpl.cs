@@ -278,132 +278,139 @@ namespace VocsAutoTestBLL.Impl
         /// <param name="fileName">向量文件路径</param>
         public void SetVectorInfo(string lpInfo, string gas, string range, string fileName)
         {
-            ushort startAddr = 0;
-            ushort offset = 0;
-            int coeffiNum = 0;
-            int pixel = 512;
-            List<byte> data = new List<byte>();
-            FileInfo file = new FileInfo(fileName);
-            TextReader textReader = file.OpenText();
-            string[] text = textReader.ReadToEnd().Split('\n');
-            for(int i = 0; i < text.Length; i++)
+            try
             {
-                text[i] = text[i].Replace("\n", "").Replace("\t", "").Replace("\r", "").Replace(" ", "");
-            }
-            //设备号
-            data = AddByte(data, Encoding.Default.GetBytes(text[0]));
-            //14项基本数据
-            for(int i = 0; i < 13; i++)
-            {
-                if(i == 3 || i == 4)
+                ushort startAddr = 0;
+                ushort offset = 0;
+                int coeffiNum = 0;
+                int pixel = 512;
+                List<byte> data = new List<byte>();
+                FileInfo file = new FileInfo(fileName);
+                TextReader textReader = file.OpenText();
+                string[] text = textReader.ReadToEnd().Split('\n');
+                for (int i = 0; i < text.Length; i++)
                 {
-                    //温度|| 压力 4字节
-                    byte[] bytes = BitConverter.GetBytes(Convert.ToSingle(text[i + 1]));
-                    Array.Reverse(bytes);
-                    data = AddByte(data, bytes);
+                    text[i] = text[i].Replace("\n", "").Replace("\t", "").Replace("\r", "").Replace(" ", "");
                 }
-                else if(i == 6 || i == 11)
+                //设备号
+                data = AddByte(data, Encoding.Default.GetBytes(text[0]));
+                //14项基本数据
+                for (int i = 0; i < 13; i++)
                 {
-                    //光程||压缩后的向量数据个数 2字节
-                    byte[] bytes = BitConverter.GetBytes(Convert.ToUInt16(text[i + 1]));
-                    Array.Reverse(bytes);
-                    data = AddByte(data, bytes);
-                    //另取得偏移量
-                    if(i == 11)
+                    if (i == 3 || i == 4)
                     {
-                        offset =(ushort)(Convert.ToInt32(text[i + 1]) - 1);
+                        //温度|| 压力 4字节
+                        byte[] bytes = BitConverter.GetBytes(Convert.ToSingle(text[i + 1]));
+                        Array.Reverse(bytes);
+                        data = AddByte(data, bytes);
                     }
-                }
-                else
-                {
-                    //1字节
-                    data.Add(byte.Parse(text[i + 1]));
-                    //另取得像素个数
-                    if(i == 2)
+                    else if (i == 6 || i == 11)
                     {
-                        switch(Convert.ToInt32(text[i + 1]))
+                        //光程||压缩后的向量数据个数 2字节
+                        byte[] bytes = BitConverter.GetBytes(Convert.ToUInt16(text[i + 1]));
+                        Array.Reverse(bytes);
+                        data = AddByte(data, bytes);
+                        //另取得偏移量
+                        if (i == 11)
                         {
-                            case 0:
-                                pixel = 256;
-                                break;
-                            case 2:
-                                pixel = 1024;
-                                break;
-                            case 3:
-                                pixel = 2048;
-                                break;
+                            offset = (ushort)(Convert.ToInt32(text[i + 1]) - 1);
                         }
                     }
-                    //另取得系数个数
-                    else if(i == 12)
+                    else
                     {
-                        coeffiNum = Convert.ToInt32(text[i + 1]);
+                        //1字节
+                        data.Add(byte.Parse(text[i + 1]));
+                        //另取得像素个数
+                        if (i == 2)
+                        {
+                            switch (Convert.ToInt32(text[i + 1]))
+                            {
+                                case 0:
+                                    pixel = 256;
+                                    break;
+                                case 2:
+                                    pixel = 1024;
+                                    break;
+                                case 3:
+                                    pixel = 2048;
+                                    break;
+                            }
+                        }
+                        //另取得系数个数
+                        else if (i == 12)
+                        {
+                            coeffiNum = Convert.ToInt32(text[i + 1]);
+                        }
+                    }
+                }
+                //起始地址
+                string[] vectorData = new string[pixel];
+                Array.Copy(text, 14, vectorData, 0, vectorData.Length);
+                foreach (string s in vectorData)
+                {
+                    try
+                    {
+                        Convert.ToInt32(s);
+                    }
+                    catch
+                    {
+                        break;
+                    }
+                    startAddr++;
+                }
+                byte[] reStartAddr = BitConverter.GetBytes(startAddr);
+                Array.Reverse(reStartAddr);
+                data = AddByte(data, reStartAddr);
+                //偏移量
+                byte[] reOffset = BitConverter.GetBytes(offset);
+                Array.Reverse(reOffset);
+                data = AddByte(data, reOffset);
+                //压缩后的数据
+                for (int i = 0; i < offset; i++)
+                {
+                    byte[] reVD = BitConverter.GetBytes(Convert.ToSingle(vectorData[startAddr + i]));
+                    Array.Reverse(reVD);
+                    data = AddByte(data, reVD);
+                }
+                //系数
+                string[] coefficient = new string[coeffiNum];
+                Array.Copy(text, 526, coefficient, 0, coeffiNum);
+                foreach (string coe in coefficient)
+                {
+                    byte[] reCoe = BitConverter.GetBytes(Convert.ToSingle(coe));
+                    Array.Reverse(reCoe);
+                    data = AddByte(data, reCoe);
+                }
+                string datas = ByteStrUtil.ByteToHex(data.ToArray());
+                int pkgNum = (int)Math.Ceiling((double)datas.Length / 512);
+                int startIndex = 0, length = 512;
+                for (int currPkgNum = 1; currPkgNum <= pkgNum; currPkgNum++)
+                {
+                    if (currPkgNum < pkgNum)
+                    {
+                        SuperSerialPort.Instance.Send(new Command
+                        {
+                            Cmn = "2C",
+                            ExpandCmn = "66",
+                            Data = lpInfo + gas + range + currPkgNum.ToString("x2") + pkgNum.ToString("x2") + datas.Substring(startIndex, length)
+                        }, true);
+                        startIndex = length * currPkgNum;
+                        Thread.Sleep(DefaultArgument.INTERVAL_TIME);
+                    }
+                    else
+                    {
+                        SuperSerialPort.Instance.Send(new Command
+                        {
+                            Cmn = "2C",
+                            ExpandCmn = "66",
+                            Data = lpInfo + gas + range + currPkgNum.ToString("x2") + pkgNum.ToString("x2") + datas.Substring(startIndex)
+                        }, true);
                     }
                 }
             }
-            //起始地址
-            string[] vectorData = new string[pixel];
-            Array.Copy(text, 14, vectorData, 0, vectorData.Length);
-            foreach(string s in vectorData)
+            catch (Exception ex)
             {
-                try
-                {
-                    Convert.ToInt32(s);
-                }
-                catch
-                {
-                    break;
-                }
-                startAddr++;
-            }
-            byte[] reStartAddr = BitConverter.GetBytes(startAddr);
-            Array.Reverse(reStartAddr);
-            data = AddByte(data, reStartAddr);
-            //偏移量
-            byte[] reOffset = BitConverter.GetBytes(offset);
-            Array.Reverse(reOffset);
-            data = AddByte(data, reOffset);
-            //压缩后的数据
-            for (int i = 0; i < offset; i++)
-            {
-                byte[] reVD = BitConverter.GetBytes(Convert.ToSingle(vectorData[startAddr + i]));
-                Array.Reverse(reVD);
-                data = AddByte(data, reVD);
-            }
-            //系数
-            string[] coefficient = new string[coeffiNum];
-            Array.Copy(text, 526, coefficient, 0, coeffiNum);
-            foreach(string coe in coefficient)
-            {
-                byte[] reCoe = BitConverter.GetBytes(Convert.ToSingle(coe));
-                Array.Reverse(reCoe);
-                data = AddByte(data, reCoe);
-            }
-            string datas = ByteStrUtil.ByteToHex(data.ToArray());
-            int pkgNum = (int)Math.Ceiling((double)datas.Length / 512);
-            int startIndex = 0, length = 512;
-            for (int currPkgNum = 1; currPkgNum <= pkgNum; currPkgNum++)
-            {
-                if (currPkgNum < pkgNum)
-                {
-                    SuperSerialPort.Instance.Send(new Command
-                    {
-                        Cmn = "2C",
-                        ExpandCmn = "66",
-                        Data = lpInfo + gas + range + currPkgNum.ToString("x2") + pkgNum.ToString("x2") + datas.Substring(startIndex, length)
-                    }, true);
-                    startIndex = length * currPkgNum;
-                    Thread.Sleep(DefaultArgument.INTERVAL_TIME);
-                }
-                else
-                {
-                    SuperSerialPort.Instance.Send(new Command
-                    {
-                        Cmn = "2C",
-                        ExpandCmn = "66",
-                        Data = lpInfo + gas + range + currPkgNum.ToString("x2") + pkgNum.ToString("x2") + datas.Substring(startIndex)
-                    }, true);
-                }
+                ExceptionUtil.Instance.ExceptionMethod(ex.Message, true);
             }
         }
         private List<byte> AddByte(List<byte> list, byte[] bytes)
