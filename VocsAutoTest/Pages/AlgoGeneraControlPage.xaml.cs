@@ -542,10 +542,10 @@ namespace VocsAutoTest.Pages
             dataGrid.IsEnabled = true;
             int i = 0;
             //序号
-            dataGrid.Columns.Add(new DataGridTextColumn() { Header = "序号", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
+            dataGrid.Columns.Add(new DataGridTextColumn() { Header = "序号", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true, Width = 30 });
             i++;
             //勾选框
-            dataGrid.Columns.Add(new DataGridCheckBoxColumn() { Header = "选择", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true });
+            dataGrid.Columns.Add(new DataGridCheckBoxColumn() { Header = "选择", Binding = new Binding("[" + i.ToString() + "]"), IsReadOnly = true, Width = 30 });
             i++;
             //流量
             if (textbox_gas1_input.IsEnabled)
@@ -569,6 +569,7 @@ namespace VocsAutoTest.Pages
                 i++;
             }
             _gasIndex = i;
+            
             //浓度
             //if (textbox_gas1_input.IsEnabled)
             //{
@@ -978,6 +979,11 @@ namespace VocsAutoTest.Pages
             return returnArray;
         }
 
+        /// <summary>
+        /// 测量信息导入
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_info_import_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog op = new OpenFileDialog();
@@ -1142,7 +1148,7 @@ namespace VocsAutoTest.Pages
                         int start = _gasIndex + gasCount;
                         for (int j = 0; j < gasCount; j++)
                         {
-                            arrays[start + j] = ((int)(E[index, j])).ToString();
+                            arrays[start + j] = (Math.Round(E[index, j], 2)).ToString();
                         }
                         _obervableCollection.RemoveAt(i);
                         _obervableCollection.Insert(i, arrays);
@@ -1565,19 +1571,6 @@ namespace VocsAutoTest.Pages
                 riDataMap.Clear();
                 algoPage.RemoveAllSeries();
             }
-        }
-
-        private void XePosition_Click(object sender, RoutedEventArgs e)
-        {
-            /*float[] lineData = GetAverageData();
-            if (lineData == null)
-            {
-                MessageBox.Show("没有光谱数据", "错误信息", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            float[] data = new float[20];
-            Array.Copy(lineData, 150, data, 0, data.Length);
-            text_peak_position.Text = data.Max().ToString();*/
         }
     }
 }
