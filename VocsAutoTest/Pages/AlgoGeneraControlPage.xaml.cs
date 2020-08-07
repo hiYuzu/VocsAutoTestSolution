@@ -1009,7 +1009,7 @@ namespace VocsAutoTest.Pages
                 paramInfo.LoadParameterInfo(fileName);
                 text_mach_id.Text = paramInfo.MachId.Trim();
                 text_instr_id.Text = paramInfo.InstrId.Trim();
-                text_temp.Text = (int.Parse(paramInfo.Temp.Trim()) + 273).ToString();
+                text_temp.Text = (int.Parse(paramInfo.Temp.Trim()) - 273).ToString();
                 text_press.Text = paramInfo.Press.Trim();
                 text_in_fine.Text = paramInfo.InFine.Trim();
                 text_out_fine.Text = paramInfo.OutFine.Trim();
