@@ -184,7 +184,7 @@ namespace VocsAutoTest.Tools
                     {
                         string tmp = "像素:";
                         string pixel = info.Substring(tmp.Length);
-                        switch(pixel)
+                        switch(pixel.Trim())
                         {
                             case "256":
                                 Pixel = 0;
@@ -260,6 +260,12 @@ namespace VocsAutoTest.Tools
                 sb.Append("电压:").Append(this.vol).Append("\r\n");
                 sb.Append("光谱平均次数:").Append(this.avgTimes).Append("\r\n");
                 sb.Append("实验人员:").Append(this.person).Append("\r\n");
+                sb.Append("光源类型:").Append(LrType).Append("\r\n");
+                sb.Append("传感器类型:").Append(SensorType).Append("\r\n");
+                sb.Append("像素:").Append(Pixel).Append("\r\n");
+                sb.Append("光路:").Append(LightPath).Append("\r\n");
+                sb.Append("光程(mm):").Append(LightDistance).Append("\r\n");
+                sb.Append("气体室类型:").Append(GasChamberType).Append("\r\n");
                 textWriter.Write(sb.ToString());
 
             }

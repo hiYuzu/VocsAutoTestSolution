@@ -1018,13 +1018,12 @@ namespace VocsAutoTest.Pages
                 text_vol.Text = paramInfo.Vol.Trim();
                 text_times.Text = paramInfo.AvgTimes.Trim();
                 text_person.Text = paramInfo.Person.Trim();
-
-                lrType.SelectedIndex = 0;
-                sensorType.SelectedIndex = 0;
-                pixel.SelectedIndex = 0;
-                lightPath.SelectedIndex = 0;
-                lightDistance.Text = "1000";
-                gasChamberType.SelectedIndex = 0;
+                lrType.SelectedIndex = paramInfo.LrType;
+                sensorType.SelectedIndex = paramInfo.SensorType;
+                pixel.SelectedIndex = paramInfo.Pixel;
+                lightPath.SelectedIndex = paramInfo.LightPath;
+                lightDistance.Text = paramInfo.LightDistance.Trim();
+                gasChamberType.SelectedIndex = paramInfo.GasChamberType;
             }
             catch (Exception ex)
             {
