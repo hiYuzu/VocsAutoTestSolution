@@ -203,7 +203,7 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <TabControl VerticalAlignment="Top" HorizontalAlignment="Left"  Name="tabNeteleInfo" Grid.Row="0" Grid.Column="0" Width="{Binding ElementName=gridCenterColumn,Path=ActualWidth}" BorderThickness="1" Height="220" >
+                    <TabControl VerticalAlignment="Top" HorizontalAlignment="Left"  Name="tabNeteleInfo" Width="{Binding ElementName=gridCenterColumn,Path=ActualWidth}" BorderThickness="1" Height="85">
                         <TabItem Header="日志信息" Background="#cfdce7">
                             <RichTextBox x:Name="LogBox" IsReadOnly="True"/>
                         </TabItem>

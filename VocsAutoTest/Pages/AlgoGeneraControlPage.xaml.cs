@@ -1009,7 +1009,7 @@ namespace VocsAutoTest.Pages
                 paramInfo.LoadParameterInfo(fileName);
                 text_mach_id.Text = paramInfo.MachId.Trim();
                 text_instr_id.Text = paramInfo.InstrId.Trim();
-                text_temp.Text = (int.Parse(paramInfo.Temp.Trim()) - 273).ToString();
+                text_temp.Text = paramInfo.Temp.Trim();
                 text_press.Text = paramInfo.Press.Trim();
                 text_in_fine.Text = paramInfo.InFine.Trim();
                 text_out_fine.Text = paramInfo.OutFine.Trim();
@@ -1070,7 +1070,11 @@ namespace VocsAutoTest.Pages
 
             }
         }
-
+        /// <summary>
+        /// 生成参量
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_generateParameter_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1156,7 +1160,7 @@ namespace VocsAutoTest.Pages
                     }
                 }
                 Dictionary<string, List<string>> map = new Dictionary<string, List<string>>();
-                string[] gasInfo = new string[] { instrId, lrType.SelectedIndex.ToString(), sensorType.SelectedIndex.ToString(), pixel.SelectedIndex.ToString(), temp, press, lightPath.SelectedIndex.ToString(), lightDistance.Text, gasChamberType.SelectedIndex.ToString(), "0" };
+                string[] gasInfo = new string[] { instrId, lrType.SelectedIndex.ToString(), sensorType.SelectedIndex.ToString(), pixel.SelectedIndex.ToString(), (float.Parse(temp) - 273).ToString(), press, lightPath.SelectedIndex.ToString(), lightDistance.Text, gasChamberType.SelectedIndex.ToString(), "0" };
                 List<string> gas1, gas2, gas3;
                 if (Convert.ToInt32(combobox_gas1_name.SelectedValue) != 0)
                 {
@@ -1169,16 +1173,20 @@ namespace VocsAutoTest.Pages
                 }
                 if (Convert.ToInt32(combobox_gas2_name.SelectedValue) != 0)
                 {
-                    gas2 = new List<string>(gasInfo);
-                    gas2.Add(gasRange3.SelectedIndex.ToString());
-                    gas2.Add(combobox_gas3_name.SelectedValue.ToString());
+                    gas2 = new List<string>(gasInfo)
+                    {
+                        gasRange3.SelectedIndex.ToString(),
+                        combobox_gas3_name.SelectedValue.ToString()
+                    };
                     map.Add(((ComboxSource)combobox_gas3_name.SelectedItem).Name, gas2);
                 }
                 if (Convert.ToInt32(combobox_gas3_name.SelectedValue) != 0)
                 {
-                    gas3 = new List<string>(gasInfo);
-                    gas3.Add(gasRange4.SelectedIndex.ToString());
-                    gas3.Add(combobox_gas4_name.SelectedValue.ToString());
+                    gas3 = new List<string>(gasInfo)
+                    {
+                        gasRange4.SelectedIndex.ToString(),
+                        combobox_gas4_name.SelectedValue.ToString()
+                    };
                     map.Add(((ComboxSource)combobox_gas4_name.SelectedItem).Name, gas3);
                 }
 
@@ -1239,7 +1247,7 @@ namespace VocsAutoTest.Pages
                 StringBuilder sb = new StringBuilder();
                 sb.Append("整机ID: ").Append(text_mach_id.Text.Trim()).Append("\r\n");
                 sb.Append("光谱仪ID: ").Append(text_instr_id.Text.Trim()).Append("\r\n");
-                sb.Append("温度: ").Append(int.Parse(text_temp.Text.Trim()) - 273).Append("\r\n");
+                sb.Append("温度: ").Append(text_temp.Text.Trim()).Append("\r\n");
                 sb.Append("压力: ").Append(text_press.Text.Trim()).Append("\r\n");
                 sb.Append("输入光纤ID: ").Append(text_in_fine.Text.Trim()).Append("\r\n");
                 sb.Append("输出光纤ID: ").Append(text_out_fine.Text.Trim()).Append("\r\n");

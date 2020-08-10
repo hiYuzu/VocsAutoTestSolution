@@ -68,25 +68,25 @@ namespace VocsAutoTest.Pages
             chart.AxesY.Add(yAxis);
             series1 = new DataSeries
             {
-                RenderAs = RenderAs.Spline,
+                RenderAs = RenderAs.Line,
                 LegendText = "气体一",
                 XValueType = ChartValueTypes.DateTime
             };
             series2 = new DataSeries
             {
-                RenderAs = RenderAs.Spline,
+                RenderAs = RenderAs.Line,
                 LegendText = "气体二",
                 XValueType = ChartValueTypes.DateTime
             };
             series3 = new DataSeries
             {
-                RenderAs = RenderAs.Spline,
+                RenderAs = RenderAs.Line,
                 LegendText = "气体三",
                 XValueType = ChartValueTypes.DateTime
             };
             series4 = new DataSeries
             {
-                RenderAs = RenderAs.Spline,
+                RenderAs = RenderAs.Line,
                 LegendText = "气体四",
                 XValueType = ChartValueTypes.DateTime
             };
