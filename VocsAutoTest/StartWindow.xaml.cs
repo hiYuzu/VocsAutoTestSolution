@@ -47,6 +47,13 @@ namespace VocsAutoTest
                 };
                 portCombo.Items.Add(item);
             }
+            if(portCombo.Items.Count == 0)
+            {
+                portCombo.Items.Add(new ComboBoxItem
+                {
+                    Content = "Null"
+                });
+            }
             portCombo.SelectedIndex = 0;
         }
 

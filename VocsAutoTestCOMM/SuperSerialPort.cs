@@ -85,6 +85,10 @@ namespace VocsAutoTestCOMM
         /// <param name="stopBits">停止位</param>
         public void SetPortInfo(string portName, int baudRate, string parity, int dataBits, int stopBits)
         {
+            if("Null".Equals(portName))
+            {
+                return;
+            }
             serialPort.PortName = portName;
             serialPort.BaudRate = baudRate;
             serialPort.DataBits = dataBits;
