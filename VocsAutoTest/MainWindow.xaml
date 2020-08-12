@@ -130,7 +130,7 @@
                             <TextBox x:Name="ReadInterval" Text="5" Width="80" Margin="0,8,0,7" Style="{DynamicResource textStyle}"/>
                             <CheckBox x:Name="MTsCheckBox" Content="连续测量次数" Margin="20 13 5 0" VerticalAlignment="Top" Checked="MTsCheckBox_Checked" Unchecked="MTsCheckBox_Unchecked"/>
                             <TextBox x:Name="MTsTextBox" Width="80" Margin="0,8,0,7" IsEnabled="False" Style="{DynamicResource textStyle}"/>
-                            <TextBox x:Name="tempTextBox" Width="80" Margin="20,8,0,7" IsEnabled="True" Visibility="Hidden">
+                            <TextBox x:Name="tempTextBox" Width="80" Margin="20,8,0,7" IsEnabled="True" Visibility="Hidden" Text="25">
                                 <TextBox.Resources>
                                     <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
                                         <VisualBrush.Visual>
@@ -151,7 +151,7 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <TextBox x:Name="pressTextBox" Width="85" Margin="0,8,0,7" IsEnabled="True" Visibility="Hidden">
+                            <TextBox x:Name="pressTextBox" Width="85" Margin="0,8,0,7" IsEnabled="True" Visibility="Hidden" Text="102.4">
                                 <TextBox.Resources>
                                     <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
                                         <VisualBrush.Visual>

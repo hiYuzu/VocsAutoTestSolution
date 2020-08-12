@@ -279,111 +279,6 @@
                         </Grid>
                     </Grid>
                 </TabItem>
-                <!--<TabItem Header="读取浓度命令">
-                    <Grid Margin="0" Height="auto">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Content="光路信息" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="rcc_lPInfo" Grid.Column="1" Grid.Row="0" Height="25" Width="250">
-                            <ComboBoxItem Content="光路1" IsSelected="True"/>
-                            <ComboBoxItem Content="光路2"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="1" Content="仪器状态" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="InstruStatus" Grid.Column="1" Grid.Row="1" Height="25" Width="250">
-                            <ComboBoxItem Content="正常测量" IsSelected="True"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="2" Content="当前温度值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="CurrTemp" Grid.Column="1" Grid.Row="2" Text="" IsReadOnly="True" Height="25" Width="250"/>
-                        <Label Grid.Column="0" Grid.Row="3" Content="当前压力值" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="CurrPress" Grid.Column="1" Grid.Row="3" Text="" IsReadOnly="True" Height="25" Width="250"/>
-                        
-                        <Label Grid.Column="0" Grid.Row="4" Content="气体1类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="gas_1_type" Grid.Column="1" Grid.Row="4" Height="25" Width="250">
-                            <ComboBoxItem Content="SO2" IsSelected="True"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="5" Content="气体1量程类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="gas_1_rangeType" Grid.Column="1" Grid.Row="5" Height="25" Width="250">
-                            <ComboBoxItem Content="量程1（低量程）" IsSelected="True"/>
-                            <ComboBoxItem Content="量程2（高量程）"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="6" Content="气体1当前浓度(ppm)" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_1_currConc" Grid.Column="1" Grid.Row="6" Text="" IsReadOnly="True" Height="25" Width="250"/>
-                        <Label Grid.Column="0" Grid.Row="7" Content="气体1滑动平均后浓度(ppm)" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_1_avgConc" Grid.Column="1" Grid.Row="7" Text="" IsReadOnly="True" Height="25" Width="250"/>
-                        
-                        <Label Grid.Column="0" Grid.Row="8" Content="气体2类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="gas_2_type" Grid.Column="1" Grid.Row="8" Height="25" Width="250">
-                            <ComboBoxItem Content="NO" IsSelected="True"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="9" Content="气体2量程类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="gas_2_rangeType" Grid.Column="1" Grid.Row="9" Height="25" Width="250">
-                            <ComboBoxItem Content="量程1（低量程）" IsSelected="True"/>
-                            <ComboBoxItem Content="量程2（高量程）"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="10" Content="气体2当前浓度(ppm)" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_2_currConc" Grid.Column="1" Grid.Row="10" Text="" IsReadOnly="True" Height="25" Width="250"/>
-                        <Label Grid.Column="0" Grid.Row="11" Content="气体2滑动平均后浓度(ppm)" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_2_avgConc" Grid.Column="1" Grid.Row="11" Text="" IsReadOnly="True" Height="25" Width="250"/>
-
-                        <Label Grid.Column="0" Grid.Row="12" Content="气体3类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="gas_3_type" Grid.Column="1" Grid.Row="12" Height="25" Width="250">
-                            <ComboBoxItem Content="" IsSelected="True"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="13" Content="气体3量程类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="gas_3_rangeType" Grid.Column="1" Grid.Row="13" Height="25" Width="250">
-                            <ComboBoxItem Content="量程1（低量程）" IsSelected="True"/>
-                            <ComboBoxItem Content="量程2（高量程）"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="14" Content="气体3当前浓度(ppm)" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_3_currConc" Grid.Column="1" Grid.Row="14" Text="" IsReadOnly="True" Height="25" Width="250"/>
-                        <Label Grid.Column="0" Grid.Row="15" Content="气体3滑动平均后浓度(ppm)" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_3_avgConc" Grid.Column="1" Grid.Row="15" Text="" IsReadOnly="True" Height="25" Width="250"/>
-
-                        <Label Grid.Column="0" Grid.Row="16" Content="气体4类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="gas_4_type" Grid.Column="1" Grid.Row="16" Height="25" Width="250">
-                            <ComboBoxItem Content="" IsSelected="True"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="17" Content="气体4量程类型" Height="25" HorizontalAlignment="Center"/>
-                        <ComboBox x:Name="gas_4_rangeType" Grid.Column="1" Grid.Row="17" Height="25" Width="250">
-                            <ComboBoxItem Content="量程1（低量程）" IsSelected="True"/>
-                            <ComboBoxItem Content="量程2（高量程）"/>
-                        </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="18" Content="气体4当前浓度(ppm)" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_4_currConc" Grid.Column="1" Grid.Row="18" Text="" IsReadOnly="True" Height="25" Width="250"/>
-                        <Label Grid.Column="0" Grid.Row="19" Content="气体4滑动平均后浓度(ppm)" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="gas_4_avgConc" Grid.Column="1" Grid.Row="19" Text="" IsReadOnly="True" Height="25" Width="250"/>
-                        
-                        <Grid Grid.Column="0" Grid.Row="20" Grid.ColumnSpan="2" Margin="0">
-                            <Button x:Name="ReadConcCommand" Content="读取" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
-                            <Button Content="设置" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}" IsEnabled="False"/>
-                        </Grid>
-                    </Grid>
-                </TabItem> -->
                 <TabItem Header="读写向量表信息">
                     <Grid Margin="0" Height="auto">
                         <Grid.ColumnDefinitions>
@@ -391,6 +286,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
@@ -414,12 +310,16 @@
                             <ComboBoxItem Content="低量程" IsSelected="True"/>
                             <ComboBoxItem Content="高量程"/>
                         </ComboBox>
-                        <Label Grid.Column="0" Grid.Row="3" Content="向量文件" Height="25" HorizontalAlignment="Center"/>
-                        <TextBox x:Name="vectorFilePath" Grid.Column="1" Grid.Row="3" Height="25" TextWrapping="Wrap" Text="" Width="auto" MinWidth="90" MaxWidth="150" MouseDoubleClick="VectorFileFolder_Click" IsReadOnly="True" Style="{DynamicResource textStyle}"/>
-                        <Button  Grid.Column="1" Grid.Row="3" x:Name="VectorFileFolder" Content="..." HorizontalAlignment="Right" Margin="0 0 10 0" Width="40" Height="25" Style="{StaticResource btnOther}" Click="VectorFileFolder_Click"/>
-                        <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="0">
-                            <Button x:Name="ReadVectorInfo" Content="读取" Click="ReadVectorInfo_Click" HorizontalAlignment="Left" Margin="120,30,0,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
-                            <Button x:Name="SetVectorInfo" Content="设置" Click="SetVectorInfo_Click" HorizontalAlignment="Right" Margin="0,30,120,0" VerticalAlignment="Top" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
+                        <Label Grid.Column="0" Grid.Row="3" Content="读/写" Height="25" HorizontalAlignment="Center"/>
+                        <ComboBox x:Name="rwCombo" Grid.Column="1" Grid.Row="3" Height="25" Width="250">
+                            <ComboBoxItem Content="读" IsSelected="True"/>
+                            <ComboBoxItem Content="写"/>
+                        </ComboBox>
+                        <Label Grid.Column="0" Grid.Row="4" Content="向量文件" Height="25" HorizontalAlignment="Center"/>
+                        <TextBox x:Name="vectorFilePath" Grid.Column="1" Grid.Row="4" Height="25" TextWrapping="Wrap" Text="" Width="auto" MinWidth="90" MaxWidth="150" MouseDoubleClick="VectorFileFolder_Click" IsReadOnly="True" Style="{DynamicResource textStyle}"/>
+                        <Button  Grid.Column="1" Grid.Row="4" x:Name="VectorFileFolder" Content="..." HorizontalAlignment="Right" Margin="0 0 10 0" Width="40" Height="25" Style="{StaticResource btnOther}" Click="VectorFileFolder_Click"/>
+                        <Grid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0">
+                            <Button x:Name="RWVector" Content="确定" Click="RWVector_Click" HorizontalAlignment="Center" Margin="0, 30, 0, 0" VerticalAlignment="Center" Width="80" Height="25" Style="{DynamicResource btnOther}"/>
                         </Grid>
                     </Grid>
                 </TabItem>

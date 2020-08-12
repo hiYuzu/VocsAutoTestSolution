@@ -19,10 +19,8 @@ namespace VocsAutoTest
     public partial class MainWindow : Window
     {
         //页面*8
-        //private AlgoGeneraPage algoPage;
         private AlgoComOne algoPage;
         private AlgoGeneraControlPage algoControlPage;
-        //private SpecMeasurePage specPage;
         private SpecComOne specPage;
         private SpecMeasureControlPage specControlPage;
         private ConcentrationMeasurePage concentrationPage;
@@ -192,7 +190,6 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void AboutSysBtn_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show("Copyright © 天津七一二通信广播股份有限公司", "关于系统", MessageBoxButton.OK, MessageBoxImage.Information);
             SuperSerialPort.Instance.Send(new Command { Cmn = "25", ExpandCmn = "55", Data = ""}, true);
         }
         /// <summary>
@@ -285,7 +282,6 @@ namespace VocsAutoTest
             pageFlag = 1;
             if (specPage == null && specControlPage == null)
             {
-                //specPage = new SpecMeasurePage();
                 specPage = new SpecComOne();
                 specControlPage = new SpecMeasureControlPage(specPage);
             }
@@ -350,7 +346,6 @@ namespace VocsAutoTest
             pageFlag = 3;
             if (algoPage == null)
             {
-                //algoPage = new AlgoGeneraPage();
                 algoPage = new AlgoComOne();
             }
             if(algoControlPage == null)

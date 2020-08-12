@@ -273,38 +273,38 @@ namespace VocsAutoTest.Pages
                 byte[] gas_1_lowZC = new byte[4];
                 Array.Copy(data, 2, gas_1_lowZC, 0, 4);
                 Array.Reverse(gas_1_lowZC, 0, gas_1_lowZC.Length);
-                gas_1_lowRangZC.Text = BitConverter.ToSingle(gas_1_lowZC, 0).ToString("f1");
+                gas_1_lowRangZC.Text = BitConverter.ToSingle(gas_1_lowZC, 0).ToString("f3");
                 byte[] gas_1_highZC = new byte[4];
                 Array.Copy(data, 6, gas_1_highZC, 0, 4);
                 Array.Reverse(gas_1_highZC, 0, gas_1_highZC.Length);
-                gas_1_highRangZC.Text = BitConverter.ToSingle(gas_1_highZC, 0).ToString("f1");
+                gas_1_highRangZC.Text = BitConverter.ToSingle(gas_1_highZC, 0).ToString("f3");
 
                 byte[] gas_2_lowZC = new byte[4];
                 Array.Copy(data, 10, gas_2_lowZC, 0, 4);
                 Array.Reverse(gas_2_lowZC, 0, gas_2_lowZC.Length);
-                gas_2_lowRangZC.Text = BitConverter.ToSingle(gas_2_lowZC, 0).ToString("f1");
+                gas_2_lowRangZC.Text = BitConverter.ToSingle(gas_2_lowZC, 0).ToString("f3");
                 byte[] gas_2_highZC = new byte[4];
                 Array.Copy(data, 14, gas_2_highZC, 0, 4);
                 Array.Reverse(gas_2_highZC, 0, gas_2_highZC.Length);
-                gas_2_highRangZC.Text = BitConverter.ToSingle(gas_2_highZC, 0).ToString("f1");
+                gas_2_highRangZC.Text = BitConverter.ToSingle(gas_2_highZC, 0).ToString("f3");
 
                 byte[] gas_3_lowZC = new byte[4];
                 Array.Copy(data, 18, gas_3_lowZC, 0, 4);
                 Array.Reverse(gas_3_lowZC, 0, gas_3_lowZC.Length);
-                gas_3_lowRangZC.Text = BitConverter.ToSingle(gas_3_lowZC, 0).ToString("f1");
+                gas_3_lowRangZC.Text = BitConverter.ToSingle(gas_3_lowZC, 0).ToString("f3");
                 byte[] gas_3_highZC = new byte[4];
                 Array.Copy(data, 22, gas_1_highZC, 0, 4);
                 Array.Reverse(gas_3_highZC, 0, gas_3_highZC.Length);
-                gas_3_highRangZC.Text = BitConverter.ToSingle(gas_3_highZC, 0).ToString("f1");
+                gas_3_highRangZC.Text = BitConverter.ToSingle(gas_3_highZC, 0).ToString("f3");
 
                 byte[] gas_4_lowZC = new byte[4];
                 Array.Copy(data, 26, gas_4_lowZC, 0, 4);
                 Array.Reverse(gas_4_lowZC, 0, gas_4_lowZC.Length);
-                gas_4_lowRangZC.Text = BitConverter.ToSingle(gas_4_lowZC, 0).ToString("f1");
+                gas_4_lowRangZC.Text = BitConverter.ToSingle(gas_4_lowZC, 0).ToString("f3");
                 byte[] gas_4_highZC = new byte[4];
                 Array.Copy(data, 30, gas_4_highZC, 0, 4);
                 Array.Reverse(gas_4_highZC, 0, gas_4_highZC.Length);
-                gas_1_highRangZC.Text = BitConverter.ToSingle(gas_4_highZC, 0).ToString("f1");
+                gas_1_highRangZC.Text = BitConverter.ToSingle(gas_4_highZC, 0).ToString("f3");
             }));
             ExceptionUtil.Instance.LogMethod("读取光谱仪零点系数成功");
         }
@@ -366,38 +366,38 @@ namespace VocsAutoTest.Pages
                 byte[] gas_1_lowCC = new byte[4];
                 Array.Copy(data, 2, gas_1_lowCC, 0, 4);
                 Array.Reverse(gas_1_lowCC, 0, gas_1_lowCC.Length);
-                gas_1_lowRangCC.Text = BitConverter.ToSingle(gas_1_lowCC, 0).ToString("f1");
+                gas_1_lowRangCC.Text = BitConverter.ToSingle(gas_1_lowCC, 0).ToString("f3");
                 byte[] gas_1_highCC = new byte[4];
                 Array.Copy(data, 6, gas_1_highCC, 0, 4);
                 Array.Reverse(gas_1_highCC, 0, gas_1_highCC.Length);
-                gas_1_highRangCC.Text = BitConverter.ToSingle(gas_1_highCC, 0).ToString("f1");
+                gas_1_highRangCC.Text = BitConverter.ToSingle(gas_1_highCC, 0).ToString("f3");
 
                 byte[] gas_2_lowCC = new byte[4];
                 Array.Copy(data, 10, gas_2_lowCC, 0, 4);
                 Array.Reverse(gas_2_lowCC, 0, gas_2_lowCC.Length);
-                gas_2_lowRangCC.Text = BitConverter.ToSingle(gas_2_lowCC, 0).ToString("f1");
+                gas_2_lowRangCC.Text = BitConverter.ToSingle(gas_2_lowCC, 0).ToString("f3");
                 byte[] gas_2_highCC = new byte[4];
                 Array.Copy(data, 14, gas_2_highCC, 0, 4);
                 Array.Reverse(gas_2_highCC, 0, gas_2_highCC.Length);
-                gas_2_highRangCC.Text = BitConverter.ToSingle(gas_2_highCC, 0).ToString("f1");
+                gas_2_highRangCC.Text = BitConverter.ToSingle(gas_2_highCC, 0).ToString("f3");
 
                 byte[] gas_3_lowCC = new byte[4];
                 Array.Copy(data, 18, gas_3_lowCC, 0, 4);
                 Array.Reverse(gas_3_lowCC, 0, gas_3_lowCC.Length);
-                gas_3_lowRangCC.Text = BitConverter.ToSingle(gas_3_lowCC, 0).ToString("f1");
+                gas_3_lowRangCC.Text = BitConverter.ToSingle(gas_3_lowCC, 0).ToString("f3");
                 byte[] gas_3_highCC = new byte[4];
                 Array.Copy(data, 22, gas_1_highCC, 0, 4);
                 Array.Reverse(gas_3_highCC, 0, gas_3_highCC.Length);
-                gas_3_highRangCC.Text = BitConverter.ToSingle(gas_3_highCC, 0).ToString("f1");
+                gas_3_highRangCC.Text = BitConverter.ToSingle(gas_3_highCC, 0).ToString("f3");
 
                 byte[] gas_4_lowCC = new byte[4];
                 Array.Copy(data, 26, gas_4_lowCC, 0, 4);
                 Array.Reverse(gas_4_lowCC, 0, gas_4_lowCC.Length);
-                gas_4_lowRangCC.Text = BitConverter.ToSingle(gas_4_lowCC, 0).ToString("f1");
+                gas_4_lowRangCC.Text = BitConverter.ToSingle(gas_4_lowCC, 0).ToString("f3");
                 byte[] gas_4_highCC = new byte[4];
                 Array.Copy(data, 30, gas_4_highCC, 0, 4);
                 Array.Reverse(gas_4_highCC, 0, gas_4_highCC.Length);
-                gas_1_highRangCC.Text = BitConverter.ToSingle(gas_4_highCC, 0).ToString("f1");
+                gas_1_highRangCC.Text = BitConverter.ToSingle(gas_4_highCC, 0).ToString("f3");
             }));
             ExceptionUtil.Instance.LogMethod("读取光谱仪标定系数成功");
         }
@@ -454,17 +454,33 @@ namespace VocsAutoTest.Pages
             {
                 ExceptionUtil.Instance.ShowLoadingAction(true);
                 string path = currentFilePath != "" ? currentFilePath : System.Windows.Forms.Application.StartupPath;
-                SaveFileDialog sfd = new SaveFileDialog
+                FileDialog fileDialog;
+                //读
+                if(rwCombo.SelectedIndex == 0)
                 {
-                    InitialDirectory = path,
-                    RestoreDirectory = true,
-                    Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* "
-                };
-                if (sfd.ShowDialog() == true)
+                    fileDialog = new SaveFileDialog
+                    {
+                        InitialDirectory = path,
+                        RestoreDirectory = true,
+                        Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* "
+                    };
+                  
+                }
+                //写
+                else
                 {
-                    vectorFilePath.Text = sfd.FileName;
-                    ExceptionUtil.Instance.LogMethod("向量文件已设置为：" + sfd.FileName);
-                    currentFilePath = sfd.FileName.Substring(0, sfd.FileName.LastIndexOf('\\'));
+                    fileDialog = new OpenFileDialog
+                    {
+                        InitialDirectory = path,
+                        RestoreDirectory = true,
+                        Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* "
+                    };
+                }
+                if (fileDialog.ShowDialog() == true)
+                {
+                    vectorFilePath.Text = fileDialog.FileName;
+                    ExceptionUtil.Instance.LogMethod("向量文件已设置为：" + fileDialog.FileName);
+                    currentFilePath = fileDialog.FileName.Substring(0, fileDialog.FileName.LastIndexOf('\\'));
                 }
             }
             catch
@@ -476,27 +492,24 @@ namespace VocsAutoTest.Pages
                 ExceptionUtil.Instance.ShowLoadingAction(false);
             }
         }
-        private void ReadVectorInfo_Click(object sender, RoutedEventArgs e)
-        {
-            if (vectorFilePath.Text.EndsWith(".txt"))
-            {
-                ExceptionUtil.Instance.LogMethod("开始读取向量表信息...");
-                RWVectorInfoImpl.Instance.SendVectorCmn(lP.SelectedIndex.ToString("x2"), gas.SelectedIndex.ToString("x2"), range.SelectedIndex.ToString("x2"), vectorFilePath.Text);
-            }
-            else
-            {
-                MessageBox.Show("向量文件必须为txt文档！");
-            }
-        }
-
-        private void SetVectorInfo_Click(object sender, RoutedEventArgs e)
+        private void RWVector_Click(object sender, RoutedEventArgs e)
         {
             if (!vectorFilePath.Text.EndsWith(".txt"))
             {
                 MessageBox.Show("请设置正确的向量文件！");
                 return;
             }
-            RWVectorInfoImpl.Instance.SetVectorInfo(lP.SelectedIndex.ToString("x2"), gas.SelectedIndex.ToString("x2"), range.SelectedIndex.ToString("x2"), vectorFilePath.Text);
+            //读
+            if (rwCombo.SelectedIndex == 0)
+            {
+                ExceptionUtil.Instance.LogMethod("开始读取向量表信息...");
+                RWVectorInfoImpl.Instance.SendVectorCmn(lP.SelectedIndex.ToString("x2"), gas.SelectedIndex.ToString("x2"), range.SelectedIndex.ToString("x2"), vectorFilePath.Text);
+            }
+            //写
+            else
+            {
+                RWVectorInfoImpl.Instance.SetVectorInfo(lP.SelectedIndex.ToString("x2"), gas.SelectedIndex.ToString("x2"), range.SelectedIndex.ToString("x2"), vectorFilePath.Text);
+            }
         }
         #endregion
 
