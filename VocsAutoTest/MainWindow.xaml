@@ -151,7 +151,7 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <TextBox x:Name="pressTextBox" Width="85" Margin="0,8,0,7" IsEnabled="True" Visibility="Hidden" Text="102.4">
+                            <TextBox x:Name="pressTextBox" Width="85" Margin="0,8,0,7" IsEnabled="True" Visibility="Hidden" Text="101.325">
                                 <TextBox.Resources>
                                     <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
                                         <VisualBrush.Visual>
