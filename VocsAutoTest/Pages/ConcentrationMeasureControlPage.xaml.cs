@@ -93,42 +93,68 @@ namespace VocsAutoTest.Pages
             //DataForward.Instance.ReadConcMeasure -= new DataForwardDelegate(GetConcMeasureData);
         }
 
-        private void GetConcMeasureData(object sender, Command command) {
-            if (command != null)
+        private void GetConcMeasureData(object sender, Command command)
+        {
+            try
             {
-                try
+                byte[] data = ByteStrUtil.HexToByte(command.Data);
+                byte statusCode = data[1];
+                string msg = string.Empty;
+                bool error = true;
+                switch(statusCode)
                 {
-                    byte[] data = ByteStrUtil.HexToByte(command.Data);
-                    List<float> concList = new List<float>();
-                    byte[] pressData = new byte[4];
-                    byte[] tempData = new byte[4];
-                    Array.Copy(data, 7, tempData, 0, 4);
-                    Array.Copy(data, 11, pressData, 0, 4);
-                    byte[] concData = new byte[data.Length - 15];
-                    Array.Copy(data, 15, concData, 0, data.Length - 15);
-                    for (int i = 0; i < concData.Length / 10; i++)
-                    {
-                        byte[] conc = new byte[4];
-                        Array.Copy(concData, 10 * i + 6, conc, 0, 4);
-                        Array.Reverse(conc);
-                        concList.Add(BitConverter.ToSingle(conc, 0));
-                    }
-                    Array.Reverse(pressData);
-                    Array.Reverse(tempData);
-                    Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        UpadateUI(concList, BitConverter.ToSingle(pressData, 0), BitConverter.ToSingle(tempData, 0));
-                    }));
-                    concentrationPage.UpdateChart(concList);
+                    case 01:
+                        msg = "设备正在调零，请等待";
+                        break;
+                    case 02:
+                        msg = "设备正在标定，请等待";
+                        break;
+                    case 03:
+                        msg = "光谱数据读取中，请等待";
+                        break;
+                    case 04:
+                        msg = "设备维护中...";
+                        break;
+                    case 05:
+                        msg = "设备故障";
+                        break;
+                    case 0xAA:
+                        msg = "设备待机中";
+                        break;
+                    default:
+                        error = false;
+                        break;
                 }
-                catch(Exception e)
+                if (error)
                 {
-                    ExceptionUtil.Instance.ExceptionMethod(e.Message, true);
+                    ExceptionUtil.Instance.ExceptionMethod(msg, true);
+                    return;
                 }
+                List<float> concList = new List<float>();
+                byte[] pressData = new byte[4];
+                byte[] tempData = new byte[4];
+                Array.Copy(data, 7, tempData, 0, 4);
+                Array.Copy(data, 11, pressData, 0, 4);
+                byte[] concData = new byte[data.Length - 15];
+                Array.Copy(data, 15, concData, 0, data.Length - 15);
+                for (int i = 0; i < concData.Length / 10; i++)
+                {
+                    byte[] conc = new byte[4];
+                    Array.Copy(concData, 10 * i + 6, conc, 0, 4);
+                    Array.Reverse(conc);
+                    concList.Add(BitConverter.ToSingle(conc, 0));
+                }
+                Array.Reverse(pressData);
+                Array.Reverse(tempData);
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    UpadateUI(concList, BitConverter.ToSingle(pressData, 0), BitConverter.ToSingle(tempData, 0));
+                }));
+                concentrationPage.UpdateChart(concList);
             }
-            else 
+            catch (Exception e)
             {
-            
+                ExceptionUtil.Instance.ExceptionMethod(e.Message, true);
             }
         }
 

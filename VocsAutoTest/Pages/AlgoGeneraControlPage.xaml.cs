@@ -1159,7 +1159,7 @@ namespace VocsAutoTest.Pages
                     }
                 }
                 Dictionary<string, List<string>> map = new Dictionary<string, List<string>>();
-                string[] gasInfo = new string[] { instrId, lrType.SelectedIndex.ToString(), sensorType.SelectedIndex.ToString(), pixel.SelectedIndex.ToString(), (float.Parse(temp) - 273).ToString(), press, lightPath.SelectedIndex.ToString(), lightDistance.Text, gasChamberType.SelectedIndex.ToString(), "0" };
+                string[] gasInfo = new string[] { instrId, lrType.SelectedIndex.ToString(), sensorType.SelectedIndex.ToString(), pixel.SelectedIndex.ToString(), (float.Parse(temp) - 273).ToString(), (float.Parse(press) / 1000).ToString(), lightPath.SelectedIndex.ToString(), lightDistance.Text, gasChamberType.SelectedIndex.ToString(), "0" };
                 List<string> gas1, gas2, gas3;
                 if (Convert.ToInt32(combobox_gas1_name.SelectedValue) != 0)
                 {

@@ -141,7 +141,6 @@ namespace VocsAutoTestCOMM
                 }
             }
             return true;
-
         }
 
         public void Close()
