@@ -51,9 +51,9 @@ namespace VocsAutoTest
         private void InitParam()
         {
             IsPixel = true;
-            IsVoltage = true;
+            IsVoltage = false;
             XAxisTitle = "像素";
-            YAxisTitle = "电压值(V)";
+            YAxisTitle = "积分值";
             SpecChart.BeginUpdate();
             SpecChart.ChartType = ChartType.Line;
             UpdateData();

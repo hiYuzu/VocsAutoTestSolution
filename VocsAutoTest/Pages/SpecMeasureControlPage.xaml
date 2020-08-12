@@ -41,8 +41,8 @@
             <Border BorderBrush="Gray" BorderThickness="0, 1, 0, 1" HorizontalAlignment="Left" Height="83" Margin="-225,68,0,0" VerticalAlignment="Top" Width="450"/>
             <TextBlock HorizontalAlignment="Left" Margin="0,76,0,0" TextWrapping="Wrap" Text="Y轴" VerticalAlignment="Top"/>
             <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="26" Width="123" Margin="0,96,0,0" VerticalAlignment="Top"/>
-            <RadioButton x:Name="voltageValue" Content="电压值" GroupName="yAxis" HorizontalAlignment="Left" Margin="4,102,0,0" VerticalAlignment="Top" IsChecked="True" Unchecked="VoltageValue_Unchecked"/>
-            <RadioButton x:Name="integralValue" Content="积分值" GroupName="yAxis" HorizontalAlignment="Left" Margin="64,102,0,0" VerticalAlignment="Top" Unchecked="IntegralValue_Unchecked"/>
+            <RadioButton x:Name="voltageValue" Content="电压值" GroupName="yAxis" HorizontalAlignment="Left" Margin="4,102,0,0" VerticalAlignment="Top" Unchecked="VoltageValue_Unchecked"/>
+            <RadioButton x:Name="integralValue" Content="积分值" GroupName="yAxis" HorizontalAlignment="Left" Margin="64,102,0,0" VerticalAlignment="Top" IsChecked="True" Unchecked="IntegralValue_Unchecked"/>
         </Grid>
         <Grid Grid.Column="0" Grid.Row="1">
             <CheckBox x:Name="showSpecific" Content="显示具体值" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="ShowSpecific_Checked" Unchecked="ShowSpecific_Unchecked"/>
