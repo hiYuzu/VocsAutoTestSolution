@@ -207,10 +207,10 @@ namespace VocsAutoTest.Pages
                     ModifyImportCurveBox();
                 }
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
                 MessageBox.Show("导入历史数据失败");
-                ExceptionUtil.Instance.ExceptionMethod(e.Message, true);
+                ExceptionUtil.Instance.ExceptionMethod(ex.Message, true);
             }
             finally
             {
