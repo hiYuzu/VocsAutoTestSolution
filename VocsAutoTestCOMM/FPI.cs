@@ -99,6 +99,7 @@ namespace VocsAutoTestCOMM
         {
             StringBuilder encoderData = new StringBuilder();
             data = data.ToUpper();
+            data = data.Replace(" ", "");
             for (int i = 0; i < data.Length; i += 2)
             {
                 encoderData.Append(data.Substring(i, 2));
