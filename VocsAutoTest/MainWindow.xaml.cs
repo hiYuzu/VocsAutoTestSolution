@@ -10,6 +10,7 @@ using VocsAutoTestCOMM;
 using VocsAutoTestBLL;
 using VocsAutoTestBLL.Model;
 using System.Text;
+using VocsAutoTest.Tools;
 
 namespace VocsAutoTest
 {
@@ -27,6 +28,7 @@ namespace VocsAutoTest
         //private ConcentrationComOne concentrationPage;
         private ConcentrationMeasureControlPage concentrationControlPage;
         private VocsMgmtPage vocsMgmtPage;
+        private readonly SpecDataSave specDataSave;
         //日志栏折叠
         private bool isLogBoxOpen = true;
         //日志栏高度
@@ -44,6 +46,7 @@ namespace VocsAutoTest
             DataForward.Instance.StartService();
             InitBottomInfo();
             measureMgr = MeasureMgrImpl.Instance;
+            specDataSave = SpecDataSave.Instance;
             VocsCollectBtn_Click(null, null);
             PassPortImpl.GetInstance().PassValueEvent += new PassPortDelegate(ReceievedValues);
             DataForward.Instance.ReadDeviceNo += new DataForwardDelegate(SetDeviceNo);
@@ -449,6 +452,11 @@ namespace VocsAutoTest
                     measureMgr.StartMeasure = false;
                     SingleMeasure.IsEnabled = true;
                     MultiMeasure.Content = "连续测量";
+                    //关闭连续保存
+                    if(specDataSave.StartSave)
+                    {
+                        specControlPage.StartSave_Click(null, null);
+                    }
                 }
                 else
                 {
@@ -488,8 +496,12 @@ namespace VocsAutoTest
                     break;
                 case 2:
                     measureMgr.lightPath = lightPath.SelectedIndex.ToString();
-                    measureMgr.tempValues = BitConverter.GetBytes(float.Parse(tempTextBox.Text));
-                    measureMgr.pressValues = BitConverter.GetBytes(float.Parse(pressTextBox.Text));
+                    byte[] tempValues = BitConverter.GetBytes(float.Parse(tempTextBox.Text));
+                    byte[] pressValues = BitConverter.GetBytes(float.Parse(pressTextBox.Text));
+                    Array.Reverse(tempValues);
+                    Array.Reverse(pressValues);
+                    measureMgr.tempValues = tempValues;
+                    measureMgr.pressValues = pressValues;
                     break;
                 case 3:
                     measureMgr.specType = DataType.SelectedIndex.ToString();

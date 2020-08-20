@@ -459,7 +459,7 @@ namespace VocsAutoTest.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void StartSave_Click(object sender, RoutedEventArgs e)
+        public void StartSave_Click(object sender, RoutedEventArgs e)
         {
             if (!specDataSave.StartSave && !MeasureMgrImpl.Instance.StartMeasure)
             {
