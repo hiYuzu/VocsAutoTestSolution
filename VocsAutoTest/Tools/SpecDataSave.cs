@@ -155,9 +155,7 @@ namespace VocsAutoTest.Tools
             else
             {
                 DateTime dt = DateTime.Now;
-                //past单位：100ns
                 long past = dt.Ticks - oldTime1.Ticks;
-                //past单位：ms
                 past = (long)(past / 10000);
                 if (past >= intervalTime)
                 {
