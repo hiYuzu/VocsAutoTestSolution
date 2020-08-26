@@ -113,7 +113,8 @@ namespace VocsAutoTest.Tools
         }
         public void SaveSpecDataContin(string[] data)
         {
-            if (!isIntervalSave)//无间隔保存
+            //无间隔保存
+            if (!isIntervalSave)
             {
                 if (fbDataList.Count == 0)
                 {
@@ -152,6 +153,7 @@ namespace VocsAutoTest.Tools
                     }
                 }
             }
+            //间隔保存
             else
             {
                 DateTime dt = DateTime.Now;
