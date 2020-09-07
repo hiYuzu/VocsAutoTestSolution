@@ -73,7 +73,7 @@ namespace VocsAutoTestBLL.Impl
                 Cmn = "2C",
                 ExpandCmn = "55",
                 Data = this.lpInfo + this.gas + this.range + "0" + currentPackage
-            }, true);
+            });
             resetFlag = true;
             errorCount++;
         }
@@ -393,7 +393,7 @@ namespace VocsAutoTestBLL.Impl
                             Cmn = "2C",
                             ExpandCmn = "66",
                             Data = lpInfo + gas + range + currPkgNum.ToString("x2") + pkgNum.ToString("x2") + datas.Substring(startIndex, length)
-                        }, true);
+                        });
                         startIndex = length * currPkgNum;
                         Thread.Sleep(DefaultArgument.INTERVAL_TIME);
                     }
@@ -404,7 +404,7 @@ namespace VocsAutoTestBLL.Impl
                             Cmn = "2C",
                             ExpandCmn = "66",
                             Data = lpInfo + gas + range + currPkgNum.ToString("x2") + pkgNum.ToString("x2") + datas.Substring(startIndex)
-                        }, true);
+                        });
                     }
                 }
             }

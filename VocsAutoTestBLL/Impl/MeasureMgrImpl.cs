@@ -137,7 +137,7 @@ namespace VocsAutoTestBLL.Impl
             {
                 //浓度测量
                 string data = lightPath + ByteStrUtil.ByteToHexStr(tempValues) + ByteStrUtil.ByteToHexStr(pressValues);
-                SuperSerialPort.Instance.Send(new Command { Cmn = "29", ExpandCmn = "55", Data = data }, true);
+                SuperSerialPort.Instance.Send(new Command { Cmn = "29", ExpandCmn = "55", Data = data });
             }
             else if (pageFlag == 3)
             {

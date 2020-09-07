@@ -164,7 +164,7 @@ namespace VocsAutoTestCOMM
         /// </summary>
         /// <param name="command">命令对象</param>
         /// <param name="isForward">是否转发</param>
-        public bool Send(Command command, bool isForward)
+        public bool Send(Command command)
         {
             if (command != null && Open())
             {
@@ -175,11 +175,11 @@ namespace VocsAutoTestCOMM
             }
             return false;
         }
-        public bool SendAll(List<Command> commands, bool isForward)
+        public bool SendAll(List<Command> commands)
         {
             foreach (Command command in commands)
             {
-                if (!Send(command, isForward))
+                if (!Send(command))
                 {
                     return false;
                 }

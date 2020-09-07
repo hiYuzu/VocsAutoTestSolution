@@ -60,7 +60,7 @@ namespace VocsAutoTestBLL.Impl
                 Cmn = "24",
                 ExpandCmn = "55",
                 Data = lightPath + dataType + "0" + currentPackage.ToString()
-            }, true);
+            });
             resetFlag = true;
             errorCount++;
         }
