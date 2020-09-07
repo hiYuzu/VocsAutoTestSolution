@@ -8,15 +8,15 @@
       d:DesignWidth="450"
       Title="VocsMgmtPage" Background="AliceBlue">
 
-    <Grid Margin="0,0,0,0" Height="auto">
+    <Grid Margin="0" Height="auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Column="0" Grid.Row="0" Margin="0,0,0,0">
-            <TabControl Margin="0,0,0,0">
+        <Grid Grid.Column="0" Grid.Row="0" Margin="0">
+            <TabControl Margin="0">
                 <TabItem Header="公共参数">
                     <Grid Margin="0" Height="auto">
                         <Grid.ColumnDefinitions>
@@ -291,7 +291,7 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="60"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Content="光路" Height="25" HorizontalAlignment="Center"/>
                         <ComboBox x:Name="lP" Grid.Column="1" Grid.Row="0" Height="25" Width="250">

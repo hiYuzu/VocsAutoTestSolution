@@ -28,6 +28,7 @@ namespace VocsAutoTest
         //private ConcentrationComOne concentrationPage;
         private ConcentrationMeasureControlPage concentrationControlPage;
         private VocsMgmtPage vocsMgmtPage;
+        private VocsControlPage vocsControlPage;
         private readonly SpecDataSave specDataSave;
         //日志栏折叠
         private bool isLogBoxOpen = true;
@@ -193,7 +194,7 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void AboutSysBtn_Click(object sender, RoutedEventArgs e)
         {
-            SuperSerialPort.Instance.Send(new Command { Cmn = "25", ExpandCmn = "55", Data = ""}, true);
+            SuperSerialPort.Instance.Send(new Command { Cmn = "25", ExpandCmn = "55", Data = ""});
         }
         /// <summary>
         /// 退出系统
@@ -269,6 +270,24 @@ namespace VocsAutoTest
             };
             this.tempTextBox.Visibility = Visibility.Hidden;
             this.pressTextBox.Visibility = Visibility.Hidden;
+        }
+        private void VocsControlBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (measureMgr.StartMeasure)
+            {
+                MessageBox.Show("请停止测量!");
+                return;
+            }
+            if(vocsControlPage == null)
+            {
+                vocsControlPage = new VocsControlPage();
+            }
+            ControlPage.Content = new Frame()
+            {
+                Content = vocsControlPage
+            };
+            this.tempTextBox.Visibility = Visibility.Hidden;
+            this.tempTextBox.Visibility = Visibility.Hidden;
         }
         /// <summary>
         /// 光谱采集

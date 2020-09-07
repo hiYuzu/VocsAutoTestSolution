@@ -22,7 +22,7 @@ namespace VocsAutoTest.Pages
         private void ReadCommParam_Click(object sender, RoutedEventArgs e)
         {
             DataForward.Instance.ReadCommParam += new DataForwardDelegate(SetComm);
-            SuperSerialPort.Instance.Send(new Command {Cmn = "20", ExpandCmn = "55", Data = "" }, true);
+            SuperSerialPort.Instance.Send(new Command {Cmn = "20", ExpandCmn = "55", Data = "" });
         }
 
         private void SetComm(object sender, Command command)
@@ -59,7 +59,7 @@ namespace VocsAutoTest.Pages
             string data = GetCommParamData();
             if(data != "")
             {
-                SuperSerialPort.Instance.Send(new Command { Cmn = "20", ExpandCmn = "66", Data = data }, true);
+                SuperSerialPort.Instance.Send(new Command { Cmn = "20", ExpandCmn = "66", Data = data });
             }
         }
 
@@ -101,7 +101,7 @@ namespace VocsAutoTest.Pages
         private void ReadLPParam_Click(object sender, RoutedEventArgs e)
         {
             DataForward.Instance.ReadLPParam += new DataForwardDelegate(SetLightPath);
-            SuperSerialPort.Instance.Send(new Command { Cmn = "21", ExpandCmn = "55", Data = alpp_lPInfo.SelectedIndex.ToString("x2") + " 0F" }, true);
+            SuperSerialPort.Instance.Send(new Command { Cmn = "21", ExpandCmn = "55", Data = alpp_lPInfo.SelectedIndex.ToString("x2") + " 0F" });
         }
 
         private void SetLightPath(object sender, Command command)
@@ -149,7 +149,7 @@ namespace VocsAutoTest.Pages
             string data = GetLPParamData();
             if (data != "")
             {
-                SuperSerialPort.Instance.Send(new Command { Cmn = "21", ExpandCmn = "66", Data = data }, true);
+                SuperSerialPort.Instance.Send(new Command { Cmn = "21", ExpandCmn = "66", Data = data });
             }
         }
         private string GetLPParamData()
@@ -196,7 +196,7 @@ namespace VocsAutoTest.Pages
         private void ReadRangeSwitch_Click(object sender, RoutedEventArgs e)
         {
             DataForward.Instance.ReadRangeSwitch += new DataForwardDelegate(SetRange);
-            SuperSerialPort.Instance.Send(new Command { Cmn = "26", ExpandCmn = "55", Data = rs_lpInfo.SelectedIndex.ToString("x2") + " 0F" }, true);
+            SuperSerialPort.Instance.Send(new Command { Cmn = "26", ExpandCmn = "55", Data = rs_lpInfo.SelectedIndex.ToString("x2") + " 0F" });
         }
 
         private void SetRange(object sender, Command command)
@@ -232,7 +232,7 @@ namespace VocsAutoTest.Pages
             string data = GetRangeSwitchData();
             if (data != "")
             {
-                SuperSerialPort.Instance.Send(new Command { Cmn = "26", ExpandCmn = "66", Data = data }, true);
+                SuperSerialPort.Instance.Send(new Command { Cmn = "26", ExpandCmn = "66", Data = data });
             }
         }
         private string GetRangeSwitchData()
@@ -262,7 +262,7 @@ namespace VocsAutoTest.Pages
         private void ReadZeroCoeffi_Click(object sender, RoutedEventArgs e)
         {
             DataForward.Instance.ReadZeroParam += new DataForwardDelegate(SetZero);
-            SuperSerialPort.Instance.Send(new Command { Cmn = "27", ExpandCmn = "55", Data = zc_lPInfo.SelectedIndex.ToString("x2") + " 0F" }, true);
+            SuperSerialPort.Instance.Send(new Command { Cmn = "27", ExpandCmn = "55", Data = zc_lPInfo.SelectedIndex.ToString("x2") + " 0F" });
         }
         private void SetZero(object sender, Command command)
         {
@@ -313,7 +313,7 @@ namespace VocsAutoTest.Pages
             string data = GetZeroData();
             if (data != "")
             {
-                SuperSerialPort.Instance.Send(new Command { Cmn = "27", ExpandCmn = "66", Data = data }, true);
+                SuperSerialPort.Instance.Send(new Command { Cmn = "27", ExpandCmn = "66", Data = data });
             }
         }
         private string GetZeroData()
@@ -355,7 +355,7 @@ namespace VocsAutoTest.Pages
         private void ReadCaliCoeffi_Click(object sender, RoutedEventArgs e)
         {
             DataForward.Instance.ReadCaliParam += new DataForwardDelegate(SetCali);
-            SuperSerialPort.Instance.Send(new Command { Cmn = "28", ExpandCmn = "55", Data = cc_lPInfo.SelectedIndex.ToString("x2") + " 0F" }, true);
+            SuperSerialPort.Instance.Send(new Command { Cmn = "28", ExpandCmn = "55", Data = cc_lPInfo.SelectedIndex.ToString("x2") + " 0F" });
         }
         private void SetCali(object sender, Command command)
         {
@@ -406,7 +406,7 @@ namespace VocsAutoTest.Pages
             string data = GetCaliData();
             if (data != "")
             {
-                SuperSerialPort.Instance.Send(new Command { Cmn = "28", ExpandCmn = "66", Data = data }, true);
+                SuperSerialPort.Instance.Send(new Command { Cmn = "28", ExpandCmn = "66", Data = data });
             }
         }
         private string GetCaliData()

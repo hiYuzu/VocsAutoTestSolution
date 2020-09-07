@@ -1,0 +1,65 @@
+﻿<Page x:Class="VocsAutoTest.Pages.VocsControlPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VocsAutoTest.Pages"
+      mc:Ignorable="d" 
+      d:DesignWidth="450"
+      Title="VocsControlPage" Background="AliceBlue">
+
+    <Grid Margin="0" Height="auto">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0"  Grid.Column="0" Content="控制氙灯开关" Height="25" HorizontalAlignment="Center"/>
+        <ComboBox x:Name="lightSourceCtrl" Grid.Row="0" Grid.Column="1" Height="25" Width="80" HorizontalAlignment="Center">
+            <ComboBoxItem Content="关闭光源" IsSelected="True"/>
+            <ComboBoxItem Content="打开光源"/>
+        </ComboBox>
+        <Button Grid.Row="0" Grid.Column="2" Content="设置" Click="OpenCloseLS_Click" Height="25" Width="80" HorizontalAlignment="Center" Style="{DynamicResource btnOther}"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="命令" Height="25" HorizontalAlignment="Center"/>
+        <ComboBox x:Name="orderType" Grid.Row="1" Grid.Column="1" Height="25" Width="80" HorizontalAlignment="Center">
+            <ComboBoxItem Content="停止" IsSelected="True"/>
+            <ComboBoxItem Content="启动"/>
+        </ComboBox>
+        <Label Grid.Row="2" Grid.Column="0" Content="光路信息" Height="25" HorizontalAlignment="Center"/>
+        <ComboBox x:Name="lightPath" Grid.Row="2" Grid.Column="1" Height="25" Width="80" HorizontalAlignment="Center">
+            <ComboBoxItem Content="光路1" IsSelected="True"/>
+            <ComboBoxItem Content="光路2"/>
+        </ComboBox>
+        <Button Grid.Row="2" Grid.Column="2" Content="调零" Click="Zero_Click" Height="25" Width="80" HorizontalAlignment="Center" Style="{DynamicResource btnOther}"/>
+        <Label Grid.Row="3" Grid.Column="0" Content="气体类型" Height="25" HorizontalAlignment="Center"/>
+        <ComboBox x:Name="gas" Grid.Row="3" Grid.Column="1" Height="25" Width="80" HorizontalAlignment="Center">
+            <ComboBoxItem Content="气体1" IsSelected="True"/>
+            <ComboBoxItem Content="气体2"/>
+            <ComboBoxItem Content="气体3"/>
+            <ComboBoxItem Content="气体4"/>
+        </ComboBox>
+        <Label Grid.Row="4" Grid.Column="0" Content="量程类型" Height="25" HorizontalAlignment="Center"/>
+        <ComboBox x:Name="range"  Grid.Row="4" Grid.Column="1" Height="25" Width="80" HorizontalAlignment="Center">
+            <ComboBoxItem Content="低量程" IsSelected="True"/>
+            <ComboBoxItem Content="高量程"/>
+        </ComboBox>
+        <Label Grid.Row="5" Grid.Column="0" Content="当前温度值(℃)" Height="25" HorizontalAlignment="Center"/>
+        <TextBox x:Name="temp" Grid.Row="5" Grid.Column="1" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="80"/>
+        <Label Grid.Row="6" Grid.Column="0" Content="当前压力值(kPa)" Height="25" HorizontalAlignment="Center"/>
+        <TextBox x:Name="press" Grid.Row="6" Grid.Column="1" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="80"/>
+        <Label Grid.Row="7" Grid.Column="0" Content="标定浓度" Height="25" HorizontalAlignment="Center"/>
+        <TextBox x:Name="caliConc" Grid.Row="7" Grid.Column="1" Text="0" TextAlignment="Left" VerticalContentAlignment="Center" Height="25" Width="80"/>
+        <Button Grid.Row="7" Grid.Column="2" Content="标定" Click="Cali_Click" Height="25" Width="80" HorizontalAlignment="Center" Style="{DynamicResource btnOther}"/>
+    </Grid>
+</Page>

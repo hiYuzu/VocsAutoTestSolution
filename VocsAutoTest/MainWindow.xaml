@@ -83,6 +83,11 @@
                                 <ImageBrush ImageSource="Images/Menu/connect.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
+                        <Button Content="光谱仪控制" x:Name="VocsControlBtn" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="VocsControlBtn_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Menu/connect.png" Stretch="Uniform"/>
+                            </Button.Background>
+                        </Button>
                         <Button Content="光谱采集" x:Name="VocsCollectBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="VocsCollectBtn_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Menu/disconnect.png" Stretch="Uniform"/>
