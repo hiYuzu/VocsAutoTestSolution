@@ -44,7 +44,7 @@ namespace VocsAutoTest.Pages
         {
             if (ValidData())
             {
-                SuperSerialPort.Instance.Send(new Command { Cmn = "2B", ExpandCmn = "66", Data = lightPath.SelectedIndex.ToString("x2") + gas.SelectedIndex.ToString("x2") + range.SelectedIndex.ToString("x2") + tempValue.ToString() + pressValue.ToString() + caliConcValue.ToString() + orderType.SelectedIndex.ToString("x2") });
+                SuperSerialPort.Instance.Send(new Command { Cmn = "2B", ExpandCmn = "66", Data = lightPath.SelectedIndex.ToString("x2") + gas.SelectedIndex.ToString("x2") + range.SelectedIndex.ToString("x2") + ByteStrUtil.ByteToHex(tempValue) + ByteStrUtil.ByteToHex(pressValue) + ByteStrUtil.ByteToHex(caliConcValue) + orderType.SelectedIndex.ToString("x2") });
             }
         }
 
