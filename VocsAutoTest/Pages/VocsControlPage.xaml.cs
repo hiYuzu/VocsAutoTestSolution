@@ -32,7 +32,7 @@ namespace VocsAutoTest.Pages
 
         private void OpenCloseLS_Click(object sender, RoutedEventArgs e)
         {
-            SuperSerialPort.Instance.Send(new Command { Cmn = "23", ExpandCmn = "66", Data = lightSourceCtrl.SelectedIndex.ToString("x2") });
+            SuperSerialPort.Instance.Send(new Command { Cmn = "23", ExpandCmn = "66", Data = lightSourceCtrl.SelectedIndex.ToString() + "" + lightSourceCtrl.SelectedIndex.ToString() });
         }
 
         private void Zero_Click(object sender, RoutedEventArgs e)
