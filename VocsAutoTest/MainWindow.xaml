@@ -131,8 +131,8 @@
                                 <ComboBoxItem Content="光路2"/>
                             </ComboBox>
                             <Rectangle Height="10" Margin="70 15 0 0"  Stretch="Fill" Width="10"  VerticalAlignment="Top" Fill="Green"/>
-                            <Label  VerticalContentAlignment="Top" HorizontalContentAlignment="Center" FontStyle="Normal"  Height="23" Width="90" Margin="0,8" Content="读数间隔(s)"/>
-                            <TextBox x:Name="ReadInterval" Text="5" Width="80" Margin="0,8,0,7" Style="{DynamicResource textStyle}"/>
+                            <Label  VerticalContentAlignment="Top" HorizontalContentAlignment="Center" FontStyle="Normal"  Height="23" Width="90" Margin="0,8" Content="读数间隔(ms)"/>
+                            <TextBox x:Name="ReadInterval" Text="5000" Width="80" Margin="0,8,0,7" Style="{DynamicResource textStyle}"/>
                             <CheckBox x:Name="MTsCheckBox" Content="连续测量次数" Margin="20 13 5 0" VerticalAlignment="Top" Checked="MTsCheckBox_Checked" Unchecked="MTsCheckBox_Unchecked"/>
                             <TextBox x:Name="MTsTextBox" Width="80" Margin="0,8,0,7" IsEnabled="False" Style="{DynamicResource textStyle}"/>
                             <TextBox x:Name="tempTextBox" Width="80" Margin="20,8,0,7" IsEnabled="True" Visibility="Hidden" Text="25">

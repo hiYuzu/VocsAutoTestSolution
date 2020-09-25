@@ -14,8 +14,8 @@ namespace VocsAutoTestBLL.Impl
     {
         //测量次数
         public int measureTimes = 0;
-        //读数间隔时间单位：秒
-        public int timeInterval = 5;
+        //读数间隔时间单位：毫秒
+        public int TimeInterval { get; set; } = 5000;
         //开始测量标志
         public bool StartMeasure { get; set; } = false;
         //光谱数据类型
@@ -93,21 +93,8 @@ namespace VocsAutoTestBLL.Impl
                             Console.WriteLine(e.Message);
                         }
                     }
-                    int waite = timeInterval * 1000;
-                    while (waite > 0)
-                    {
-                        if (!StartMeasure) break;
-                        if (waite > 1000)
-                        {
-                            Thread.Sleep(1000);
-                            waite -= 1000;
-                        }
-                        else
-                        {
-                            Thread.Sleep(waite);
-                            waite = 0;
-                        }
-                    }
+                    if (!StartMeasure) break;                
+                    Thread.Sleep(TimeInterval);
                     times++;
                     errorCount = 0;
                 }

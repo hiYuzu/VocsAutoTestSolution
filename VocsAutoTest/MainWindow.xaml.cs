@@ -94,25 +94,7 @@ namespace VocsAutoTest
             if (isShow)
                 _loading.Visibility = Visibility.Visible;
         }
-        /// <summary>
-        /// 读取间隔订阅
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="command"></param>
-        public void SetReadInterval(object sender, Command command)
-        {
-            byte[] data = ByteStrUtil.HexToByte(command.Data);
-            byte[] timeInterval = new byte[2];
-            if(data[1] == 09)
-            {
-                Array.Copy(data, 2 , timeInterval, 0, 2);
-                Array.Reverse(timeInterval, 0, 2);
-                Dispatcher.Invoke(new Action(() =>
-                {
-                    ReadInterval.Text = BitConverter.ToUInt16(timeInterval, 0).ToString();
-                }));  
-            }
-        }
+
         /// <summary>
         /// 初始化底部信息
         /// 版本号/时间
@@ -506,7 +488,7 @@ namespace VocsAutoTest
             {
                 measureMgr.measureTimes = 1;
             }
-            measureMgr.timeInterval = int.Parse(ReadInterval.Text);
+            measureMgr.TimeInterval = int.Parse(ReadInterval.Text);
             switch (pageFlag)
             {
                 case 1:
