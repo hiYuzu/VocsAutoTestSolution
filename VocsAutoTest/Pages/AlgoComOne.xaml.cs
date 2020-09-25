@@ -8,24 +8,10 @@ using System.Windows.Media;
 using System.Collections;
 
 using C1.WPF.C1Chart;
+using VocsAutoTest.Tools;
 
 namespace VocsAutoTest.Pages
 {
-    class ColorRandom
-    {
-        public static Color ColorSelect()
-        {
-            long tick = DateTime.Now.Ticks;
-            Random random = new Random((int)(tick & 0xffffffffL) | (int)(tick >> 32));
-
-            int R = random.Next(255);
-            int G = random.Next(255);
-            int B = random.Next(255);
-            B = (R + G > 400) ? R + G - 400 : B;
-            B = (B > 255) ? 255 : B;
-            return Color.FromRgb((byte)R, (byte)G, (byte)B);
-        }
-    }
     /// <summary>
     /// AlgoComOne.xaml 的交互逻辑
     /// </summary>
@@ -219,7 +205,7 @@ namespace VocsAutoTest.Pages
                 {
                     Label = "数据_" + index,
                     ConnectionStrokeThickness = 1,
-                    ConnectionFill = new SolidColorBrush(ColorRandom.ColorSelect())
+                    ConnectionFill = new SolidColorBrush(RandomColor.ColorSelect())
                 };
                 double[] valueY = new double[lineData.Length];
                 double[] valueX = new double[lineData.Length];

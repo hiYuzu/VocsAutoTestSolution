@@ -64,6 +64,7 @@ namespace VocsAutoTest
             SpecChart.View.AxisX.Title = XAxisTitle;
             SpecChart.View.AxisY.Title = YAxisTitle;
             SpecChart.View.AxisX.Min = 1;
+            SpecChart.View.AxisX.MinorUnit = 0.1;
             foreach (DataSeries ds in SpecChart.Data.Children)
             {
                 ds.SymbolStyle = FindResource("sstyle") as Style;
@@ -370,6 +371,7 @@ namespace VocsAutoTest
                 dataSeries.XValuesSource = valueX;
                 dataSeries.ValuesSource = valueY;
             }
+            dataSeries.ConnectionFill = new SolidColorBrush(RandomColor.ColorSelect());
             return dataSeries;
         }
         /// <summary>
