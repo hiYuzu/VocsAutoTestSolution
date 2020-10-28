@@ -25,7 +25,6 @@ namespace VocsAutoTest
         private int lineNum = 0;
         //测量数据线
         private DataSeries currentDataSeries = null;
-        private readonly ChartData chartData = new ChartData();
         public bool IsPixel { get; set; }
         public bool IsVoltage { get; set; }
         public string XAxisTitle { get; set; }
@@ -33,8 +32,8 @@ namespace VocsAutoTest
         public bool TitleEnabled { get; set; }
         //电压积分转换系数
         public double FACTOR_VOL_TO_INTEG = (4.096 / 65536.0);
-        public List<List<string>> YListCollect { get; } = new List<List<string>>();
-        public string[] CurrentData { get; private set; }
+        public static List<List<string>> YListCollect { get; } = new List<List<string>>();
+        public static string[] CurrentData { get; private set; }
 
         public SpecComOne()
         {

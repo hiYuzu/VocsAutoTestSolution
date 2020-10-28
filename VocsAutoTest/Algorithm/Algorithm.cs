@@ -1,7 +1,7 @@
-﻿using MathWorks.MATLAB.NET.Arrays;
-using System;
+﻿using System;
 using System.Reflection;
 using VocsAutoTest.Tools;
+using MathWorks.MATLAB.NET.Arrays;
 
 namespace VocsAutoTest.Algorithm
 {

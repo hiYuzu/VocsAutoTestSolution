@@ -17,7 +17,6 @@ namespace VocsAutoTest.Pages
     public partial class SpecMeasureControlPage : Page
     {
         private int pixelNumber = 512;
-        //private readonly SpecMeasurePage specPage;
         private readonly SpecComOne specPage;
         private readonly SpecDataSave specDataSave;
         private List<string> historyData = null;
@@ -26,7 +25,7 @@ namespace VocsAutoTest.Pages
             InitializeComponent();
             if (page != null)
             {
-                this.specPage = page;
+                specPage = page;
             }
             specDataSave = SpecDataSave.Instance;
             specPage.SetWave(3, pixelNumber, 185);
@@ -223,7 +222,7 @@ namespace VocsAutoTest.Pages
         private void ModifyImportCurveBox()
         {
             importCurve.Items.Clear();
-            for (int i = 0; i < specPage.YListCollect.Count; i++)
+            for (int i = 0; i < SpecComOne.YListCollect.Count; i++)
             {
                 ComboBoxItem item = new ComboBoxItem
                 {
@@ -239,9 +238,9 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void ImportCurve_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(specPage.YListCollect.Count > 0)
+            if(SpecComOne.YListCollect.Count > 0)
             {
-                historyData = specPage.YListCollect[importCurve.SelectedIndex];
+                historyData = SpecComOne.YListCollect[importCurve.SelectedIndex];
             }
             else
             {
@@ -308,16 +307,16 @@ namespace VocsAutoTest.Pages
                 int xValue = int.Parse(xPixel.Text);
                 MESY.Text = "";
                 IMPY.Text = "";
-                if (specPage.CurrentData != null && specPage.CurrentData.Length >= xValue)
+                if (SpecComOne.CurrentData != null && SpecComOne.CurrentData.Length >= xValue)
                 {
                     string value = string.Empty;
                     if(specPage.IsVoltage)
                     {
-                        value = (Convert.ToDouble(specPage.CurrentData[xValue - 1]) * specPage.FACTOR_VOL_TO_INTEG).ToString();
+                        value = (Convert.ToDouble(SpecComOne.CurrentData[xValue - 1]) * specPage.FACTOR_VOL_TO_INTEG).ToString();
                     }
                     else
                     {
-                        value = (Convert.ToDouble(specPage.CurrentData[xValue - 1])).ToString();
+                        value = (Convert.ToDouble(SpecComOne.CurrentData[xValue - 1])).ToString();
                     }
                     MESY.Text = value;
                 }
@@ -386,6 +385,21 @@ namespace VocsAutoTest.Pages
 
         }
         /// <summary>
+        /// 计算半高宽
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComputeFMHW_Click(object sender, RoutedEventArgs e)
+        {
+            PixelRangeSettingWindow prsw = new PixelRangeSettingWindow
+            {
+                Owner = MainWindow.GetWindow(this),
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            prsw.Show();
+        }
+
+        /// <summary>
         /// 计算顶点
         /// </summary>
         /// <param name="sender"></param>
@@ -393,9 +407,9 @@ namespace VocsAutoTest.Pages
         private void ComputeTopPoint_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            if(specPage.YListCollect.Count > 0)
+            if(SpecComOne.YListCollect.Count > 0)
             {
-                foreach (List<string> data in specPage.YListCollect)
+                foreach (List<string> data in SpecComOne.YListCollect)
                 {
                     string[] datas = data.ToArray();
                     double[] doubledata = new double[datas.Length];
@@ -439,6 +453,7 @@ namespace VocsAutoTest.Pages
             }
             return maxIndex / 4.0f + 1;
         }
+
         /// <summary>
         /// 单次保存
         /// </summary>
@@ -446,7 +461,7 @@ namespace VocsAutoTest.Pages
         /// <param name="e"></param>
         private void SingleSave_Click(object sender, RoutedEventArgs e)
         {
-            string[] data = specPage.CurrentData;
+            string[] data = SpecComOne.CurrentData;
             if (data == null)
             {
                 MessageBox.Show("没有可以保存的数据");
@@ -454,6 +469,7 @@ namespace VocsAutoTest.Pages
             }
             specDataSave.SaveCurrentData(data);
         }
+
         /// <summary>
         /// 开始连续保存
         /// </summary>

@@ -11,7 +11,11 @@ using VocsAutoTestBLL;
 using VocsAutoTestBLL.Model;
 using System.Text;
 using VocsAutoTest.Tools;
-
+using System.Collections.Generic;
+using System.IO;
+using MathWorks.MATLAB.NET.Arrays;
+using System.Collections;
+using GaussFit;
 namespace VocsAutoTest
 {
     /// <summary>
@@ -25,7 +29,6 @@ namespace VocsAutoTest
         private SpecComOne specPage;
         private SpecMeasureControlPage specControlPage;
         private ConcentrationMeasurePage concentrationPage;
-        //private ConcentrationComOne concentrationPage;
         private ConcentrationMeasureControlPage concentrationControlPage;
         private VocsMgmtPage vocsMgmtPage;
         private VocsControlPage vocsControlPage;
@@ -55,6 +58,7 @@ namespace VocsAutoTest
             ExceptionUtil.Instance.ExceptionEvent += new ExceptionDelegate(ShowExceptionMsg);
             ExceptionUtil.Instance.ShowLoadingAction += ShowLoading;
         }
+        
         /// <summary>
         /// 异常日志保存
         /// </summary>

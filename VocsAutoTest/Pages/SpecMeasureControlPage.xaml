@@ -80,7 +80,8 @@
             <Button x:Name="SetSpecLimit" Content="设置光谱限值" HorizontalAlignment="Right" Margin="0,60,50,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource btnOther}" Click="SetSpecLimit_Click"/>
             <Button x:Name="ClearHistoricalSeries" Content="清除历史曲线" HorizontalAlignment="Left" Margin="50,92,0,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource ResourceKey=btnOther}" Click="ClearHistoricalSeries_Click"/>
             <Button x:Name="ClearAllSeries" Content="清除全部曲线" HorizontalAlignment="Left" Margin="186,92,0,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource btnOther}" Click="ClearAllSeries_Click"/>
-            <Button x:Name="ComputeTopPoint" Content="计算顶点" HorizontalAlignment="Right" Margin="0,92,50,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource btnOther}" Click="ComputeTopPoint_Click"/>
+            <!-- <Button x:Name="ComputeTopPoint" Content="计算顶点" HorizontalAlignment="Right" Margin="0,92,50,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource btnOther}" Click="ComputeTopPoint_Click"/> -->
+            <Button x:Name="ComputeFMHW" Content="计算半宽" HorizontalAlignment="Right" Margin="0,92,50,0" VerticalAlignment="Top" Width="85" Height="25" Style="{StaticResource btnOther}" Click="ComputeFMHW_Click"/>
         </Grid>
 
     </Grid>
