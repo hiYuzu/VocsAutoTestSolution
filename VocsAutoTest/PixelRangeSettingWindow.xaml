@@ -15,6 +15,7 @@
         <Label Content="结束像素(含):" FontWeight="Bold" HorizontalAlignment="Left" Margin="40,100,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="pixelEnd" HorizontalAlignment="Left" Margin="120,100,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="80" Height="25"/>
 
+        <Label Content="拟合时间较长请耐心等待..." HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,140,0,0"/>
         <Button Content="确认" Click="Confirm_Click" HorizontalAlignment="Left" Margin="20,184,0,0" VerticalAlignment="Top" Width="80" Height="25"/>
         <Button Content="取消" Click="Cancel_Click" HorizontalAlignment="Left" Margin="144,184,0,0" VerticalAlignment="Top" Width="80" Height="25"/>
     </Grid>
