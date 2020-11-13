@@ -35,6 +35,8 @@ namespace VocsAutoTest
         public static List<List<string>> YListCollect { get; } = new List<List<string>>();
         public static string[] CurrentData { get; private set; }
 
+        private readonly RandomColor randomColor = new RandomColor();
+
         public SpecComOne()
         {
             InitializeComponent();
@@ -370,7 +372,7 @@ namespace VocsAutoTest
                 dataSeries.XValuesSource = valueX;
                 dataSeries.ValuesSource = valueY;
             }
-            dataSeries.ConnectionFill = new SolidColorBrush(RandomColor.ColorSelect());
+            dataSeries.ConnectionFill = new SolidColorBrush(randomColor.ColorSelect());
             return dataSeries;
         }
         /// <summary>

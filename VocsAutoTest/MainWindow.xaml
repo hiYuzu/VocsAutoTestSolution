@@ -64,7 +64,7 @@
                     </Button.Background>
                 </Button>
                 <!---logo位置-->
-                <Rectangle Margin="0 0 10 0" Stroke="Black" HorizontalAlignment="Right" Width="130" Grid.Row="1" Grid.ColumnSpan="3" StrokeThickness="0" >
+                <Rectangle Margin="0 0 10 0" Stroke="Black" HorizontalAlignment="Right" Width="250" Grid.Row="1" StrokeThickness="0" Grid.Column="2" >
                     <Rectangle.Fill>
                         <ImageBrush ImageSource="Images/skin/logo.png" Stretch="Uniform"/>
                     </Rectangle.Fill>
@@ -75,32 +75,32 @@
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
                         <Button Content="串口设置" Name="PortBtn" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="PortBtn_Click">
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/Menu/User.png" Stretch="Uniform"/>
+                                <ImageBrush ImageSource="Images/Menu/uart.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
                         <Button Content="光谱仪管理" x:Name="VocsMgmtBtn" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="VocsMgmtBtn_Click">
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/Menu/connect.png" Stretch="Uniform"/>
+                                <ImageBrush ImageSource="Images/Menu/manager.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
                         <Button Content="光谱仪控制" x:Name="VocsControlBtn" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="VocsControlBtn_Click">
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/Menu/connect.png" Stretch="Uniform"/>
+                                <ImageBrush ImageSource="Images/Menu/control.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
                         <Button Content="光谱采集" x:Name="VocsCollectBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="VocsCollectBtn_Click">
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/Menu/disconnect.png" Stretch="Uniform"/>
+                                <ImageBrush ImageSource="Images/Menu/collect.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
                         <Button Content="浓度测量" x:Name="ConcentrationMeasureBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="ConcentrationMeasureBtn_Click">
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/Menu/search.png" Stretch="Uniform"/>
+                                <ImageBrush ImageSource="Images/Menu/measure.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
-                        <Button Content="算法生成" Name="AlgoGeneraBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="AlgoGeneraBtn_Click">
+                        <Button Visibility="Visible" Content="算法生成" Name="AlgoGeneraBtn" Style="{DynamicResource ButtonList}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="AlgoGeneraBtn_Click">
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/Menu/total.png" Stretch="Uniform"/>
+                                <ImageBrush ImageSource="Images/Menu/algo.png" Stretch="Uniform"/>
                             </Button.Background>
                         </Button>
                         <Button Content="关于系统" Name="AboutSysBtn" Style="{DynamicResource ButtonList_2}" HorizontalAlignment="Left" Height="82" VerticalAlignment="Top" Width="78" Click="AboutSysBtn_Click">

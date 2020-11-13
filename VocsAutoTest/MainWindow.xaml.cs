@@ -171,7 +171,7 @@ namespace VocsAutoTest
         {
             byte[] deviceNo = ByteStrUtil.HexToByte(command.Data);
             this.deviceNo = Encoding.Default.GetString(deviceNo).ToUpper();
-            MessageBox.Show("Copyright © 天津七一二通信广播股份有限公司\n光谱仪软件版本：" + this.deviceNo, "关于系统", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Copyright © 天津津普利环保科技股份有限公司\n光谱仪软件版本：" + this.deviceNo, "关于系统", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         /// <summary>
         /// 关于系统

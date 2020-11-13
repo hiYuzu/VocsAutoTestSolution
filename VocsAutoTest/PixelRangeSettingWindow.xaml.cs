@@ -40,47 +40,55 @@ namespace VocsAutoTest
         {
             if (CheckData())
             {
-                GaussFitParam gaussFit = new GaussFitParam();
-                //y = y0+(A/(w*sqrt(pi/2)))*exp(-2*((x-xc)/w)*2);
-                //其中y0为最小值，A为积分值，w为半高宽，xc为峰值对应坐标值
-                //第一列为像素位置，第二列为积分值
-                String showMsg = String.Empty;
-                float[,] data = new float[Count, 2];
-                string[] currentData = SpecComOne.CurrentData;
-                List<List<string>> historyDataList = SpecComOne.YListCollect;
-                if (currentData != null && currentData.Length > 0)
+                try
                 {
-                    //当前测量数据
-                    for (int i = 0; i < Count; i++)
-                    {
-                        data[i, 0] = i;
-                        data[i, 1] = float.Parse(currentData[i + PixelStart - 1]);
-                    }
-                    Array current = gaussFit.GetGaussFitParam(ToMWArray(data)).ToArray();
-                    double[,] d = (double[,])current;
-                    showMsg = "当前测量拟合半高宽：" + d[0, 2].ToString("0.00") + "\n";
-                }
-                else if (historyDataList.Count > 0)
-                {
-                    //导入的历史数据
-                    foreach (List<string> historyData in historyDataList)
+                    GaussFitParam gaussFit = new GaussFitParam();
+                    //y = y0+(A/(w*sqrt(pi/2)))*exp(-2*((x-xc)/w)*2);
+                    //其中y0为最小值，A为积分值，w为半高宽，xc为峰值对应坐标值
+                    //第一列为像素位置，第二列为积分值
+                    String showMsg = String.Empty;
+                    float[,] data = new float[Count, 2];
+                    string[] currentData = SpecComOne.CurrentData;
+                    List<List<string>> historyDataList = SpecComOne.YListCollect;
+                    if (currentData != null && currentData.Length > 0)
                     {
                         //当前测量数据
                         for (int i = 0; i < Count; i++)
                         {
                             data[i, 0] = i;
-                            data[i, 1] = float.Parse(historyData[i + PixelStart - 1]);
+                            data[i, 1] = float.Parse(currentData[i + PixelStart - 1]);
                         }
-                        Array array = gaussFit.GetGaussFitParam(ToMWArray(data)).ToArray();
-                        double[,] d = (double[,])array;
-                        showMsg = showMsg + "历史数据拟合半高宽：" + d[0, 2].ToString("0.00") + "\n";
+                        Array current = gaussFit.GetGaussFitParam(ToMWArray(data)).ToArray();
+                        double[,] d = (double[,])current;
+                        showMsg = "当前测量拟合半高宽：" + d[0, 2].ToString("0.00") + "\n";
+                    }
+                    if (historyDataList.Count > 0)
+                    {
+                        //导入的历史数据
+                        foreach (List<string> historyData in historyDataList)
+                        {
+                            //当前测量数据
+                            for (int i = 0; i < Count; i++)
+                            {
+                                data[i, 0] = i;
+                                data[i, 1] = float.Parse(historyData[i + PixelStart - 1]);
+                            }
+                            Array array = gaussFit.GetGaussFitParam(ToMWArray(data)).ToArray();
+                            double[,] d = (double[,])array;
+                            showMsg = showMsg + "历史数据拟合半高宽：" + d[0, 2].ToString("0.00") + "\n";
+                        }
                     }
                     showMsg = showMsg.Substring(0, showMsg.Length - 1);
-                } else
-                {
-                    showMsg = "当前无任何数据！";
+                    if(showMsg.Equals(string.Empty))
+                    {
+                        showMsg = "当前无任何数据！";
+                    }
+                    MessageBox.Show(showMsg);
                 }
-                MessageBox.Show(showMsg);
+                catch (Exception ex)
+                {
+                    ExceptionUtil.Instance.ExceptionMethod(ex.Message, true);
+                }
             }
             else
             {

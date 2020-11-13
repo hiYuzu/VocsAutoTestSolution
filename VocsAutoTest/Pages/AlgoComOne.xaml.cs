@@ -28,6 +28,8 @@ namespace VocsAutoTest.Pages
         private DataSeries currentDataSeries = new DataSeries();
         private bool hadCurrent = false;
 
+        private readonly RandomColor randomColor = new RandomColor();
+
         public AlgoComOne()
         {
             InitializeComponent();
@@ -205,7 +207,7 @@ namespace VocsAutoTest.Pages
                 {
                     Label = "数据_" + index,
                     ConnectionStrokeThickness = 1,
-                    ConnectionFill = new SolidColorBrush(RandomColor.ColorSelect())
+                    ConnectionFill = new SolidColorBrush(randomColor.ColorSelect())
                 };
                 double[] valueY = new double[lineData.Length];
                 double[] valueX = new double[lineData.Length];
