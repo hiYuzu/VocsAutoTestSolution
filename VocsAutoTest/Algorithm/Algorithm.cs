@@ -2,6 +2,7 @@
 using System.Reflection;
 using VocsAutoTest.Tools;
 using MathWorks.MATLAB.NET.Arrays;
+using VocsAutoTestCOMM;
 
 namespace VocsAutoTest.Algorithm
 {
@@ -32,6 +33,7 @@ namespace VocsAutoTest.Algorithm
             catch (Exception ex)
             {
                 Console.WriteLine("加载paravector.dll失败,是否已经安装matlab？", ex);
+                ExceptionUtil.Instance.ExceptionMethod("加载paravector.dll失败,是否已经安装matlab？", true);
             }
         }
 

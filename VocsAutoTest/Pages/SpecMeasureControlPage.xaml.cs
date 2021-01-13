@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using VocsAutoTest.Algorithm;
@@ -202,8 +203,17 @@ namespace VocsAutoTest.Pages
                 op.Filter = " 文本文件(*.txt)|*.txt|所有文件(*.*)|*.* ";
                 if (op.ShowDialog() == true)
                 {
+
                     specPage.ImportHistoricalData(op.FileName);
                     ModifyImportCurveBox();
+                    /*
+                    Thread importHistoryThread = new Thread(ImportHistoryThread)
+                    {
+                        Name = "ImportHistoryThread",
+                        IsBackground = true
+                    };
+                    importHistoryThread.Start(op.FileName);
+                    */
                 }
             }
             catch(Exception ex)
@@ -216,6 +226,14 @@ namespace VocsAutoTest.Pages
                 ExceptionUtil.Instance.ShowLoadingAction(false);
             }
         }
+        /*
+        private void ImportHistoryThread(object fileName)
+        {
+            // Exception : SpecComOne CreateHistoricalChart --> 子线程无权访问对象
+            specPage.ImportHistoricalData(fileName.ToString());
+            ModifyImportCurveBox();
+        }
+        */
         /// <summary>
         /// 修改“选择导入曲线”下拉框数据
         /// </summary>

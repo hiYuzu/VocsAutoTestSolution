@@ -16,6 +16,8 @@ namespace VocsAutoTest
         private int PixelStart { get; set; }
         private int PixelEnd { get; set; }
         private int Count { get; set; }
+
+        private bool fiting = false;
         public PixelRangeSettingWindow()
         {
             ExceptionUtil.Instance.ShowLoadingAction(true);
@@ -29,6 +31,11 @@ namespace VocsAutoTest
         /// <param name="e"></param>
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
+            if(fiting)
+            {
+                MessageBox.Show("正在拟合，请稍后");
+                return;
+            }
             if (!CheckData())
             {
                 MessageBox.Show("非法参数！");
@@ -76,6 +83,7 @@ namespace VocsAutoTest
 
         private void GaussFitThread()
         {
+            fiting = true;
             String showMsg = String.Empty;
             float[,] data = new float[Count, 2];
             string[] currentData = SpecComOne.CurrentData;
@@ -109,6 +117,7 @@ namespace VocsAutoTest
                 showMsg = "当前无任何数据！\n";
             }
             MessageBox.Show(showMsg.Substring(0, showMsg.Length - 1));
+            fiting = false;
         }
 
         private String FitResult(float[,] data)
@@ -125,7 +134,7 @@ namespace VocsAutoTest
             }
             catch (Exception ex)
             {
-                ExceptionUtil.Instance.ExceptionMethod(ex.Message, true);
+                ExceptionUtil.Instance.ExceptionMethod("拟合过程出现异常：" + ex.Message, true);
                 return "error";
             }
         }
